@@ -1,0 +1,168 @@
+% Some custom commands to make typing easier. Feel free to add to it
+
+
+% quick homomorphism
+\newcommand{\homo}[1]{\varphi (#1)}
+% quick inverse
+\newcommand{\inv}[1]{#1^{-1}}
+% quick generating set
+\newcommand{\genset}[1]{\langle #1 \rangle}
+% split problem into multiple parts
+\newcommand{\spl}{\rule{\textwidth}{0.4pt}}
+% quick normal subgroup
+\newcommand{\nsub}{\trianglelefteq}
+% quick Z/nZ
+\newcommand{\znz}[1]{\mathbb{Z\text{/#1}Z}}
+
+% quick projective surface
+\newcommand{\proj}[1]{\mathbb P^{#1}(\mathbb C)}
+% quick elliptic curve
+\newcommand{\ellip}{E(\mathbb{C})}
+% quick ramification
+\newcommand{\ram}[1]{e_{#1}}
+
+% todo list
+\usepackage[color=yellow]{todonotes}
+\newcommand{\tbd}[1]{\todo[inline]{#1}
+\addcontentsline{toc}{subsubsection}{TODO}}
+
+% scaling tikz
+\usepackage{adjustbox}
+
+% format bullets
+% \usepackage[shortlabels]{enumitem}
+
+% Document inherent packages to be loaded
+\usepackage{amsmath, amsfonts, amssymb, amsthm, graphicx, url, xcolor, enumerate, tcolorbox}
+
+%geometry helps manage margins, among other things.
+\usepackage[rmargin=2in,lmargin=1in,tmargin=1in,bmargin=1in]{geometry}
+\newcommand{\sidenote}[1]{\marginpar{\footnotesize \begin{itemize}
+    \item[$\leftarrow$]\raggedright #1
+\end{itemize}}}
+
+\setlength{\headheight}{16pt}
+\setlength{\marginparwidth}{1.5in}
+\makeatletter      % make title smaller   
+\def\@maketitle{   % custom maketitle 
+\begin{center}
+    {\Large \@title} \\[0.1in] \@author \\ {\small \@date}
+\end{center}  
+}
+\setcounter{secnumdepth}{0}
+
+\usepackage[colorlinks = true,
+            linkcolor = teal,
+            urlcolor  = teal,
+            citecolor = teal,
+            anchorcolor = teal]{hyperref}
+
+\usepackage[all,2cell,ps]{xy}
+\usepackage{tikz, tikz-cd}
+\usepackage{faktor}
+\allowdisplaybreaks
+\graphicspath{{Images/}}
+
+\theoremstyle{definition}  % to get rid of the italics
+\newtheorem{theorem}{\bt{Theorem}}%[section]
+\newtheorem{proposition}[theorem]{\bt{Proposition}}
+\newtheorem{corollary}[theorem]{\gt{Corollary}}
+\newtheorem{lemma}[theorem]{\bt{Lemma}}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheorem{defn}{\rt{Definition}}
+
+\newtheorem{eg}{\textcolor{violet}{Example}}
+\newtheorem{noneg}[eg]{\textcolor{violet}{Non-example}}
+
+\newtheorem*{rmk}{Remark}
+
+
+%Import the natbib package and sets a bibliography  and citation styles
+\usepackage{natbib}
+
+% Create headers
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{updated}{%
+    \fancyhead{MATH103 Notes \hfill\hfill Xuehuai He}
+    \fancyfoot{\hyperlink{toc}{Back to TOC}\hfill\thepage \hfill \textcolor{lightgray}{\today}}
+}
+
+% \newcommand{\Belyi}{Bely\u{\i}~}
+% \newcommand{\thm}[3]{\vskip 0.2in \begin{center} \fbox{\begin{minipage}{0.8\linewidth} \begin{theorem}[#1] \label{#2} #3 \end{theorem} \end{minipage}} \end{center} \vskip 0.2in}
+% \newcommand{\prop}[3]{\vskip 0.2in \begin{center} \fbox{\begin{minipage}{0.8\linewidth} \begin{proposition}[#1] \label{#2} #3 \end{proposition} \end{minipage}} \end{center} \vskip 0.2in}
+% \newcommand{\cor}[3]{\vskip 0.2in \begin{center} \fbox{\begin{minipage}{0.8\linewidth} \begin{corollary}[#1] \label{#2} #3 \end{corollary} \end{minipage}} \end{center} \vskip 0.2in}
+% \newcommand{\conj}[3]{\vskip 0.2in \begin{center} \fbox{\begin{minipage}{0.8\linewidth} \begin{conjecture}[#1] \label{#2} #3 \end{conjecture} \end{minipage}} \end{center} \vskip 0.2in}
+
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Mon}{Mon}
+\DeclareMathOperator{\lcm}{lcm}
+
+
+\newcommand{\rt}[1]{\textcolor{magenta}{#1}}
+\newcommand{\gt}[1]{\textcolor{brown}{#1}}
+\newcommand{\bt}[1]{\textcolor{cyan}{#1}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\F}{\mathbb{F}}
+
+\newcommand{\ifnif}{\textit{if and only if }}
+
+\newcommand{\addlink}[1]{\addcontentsline{toc}{subsubsection}{#1}}
+
+\newcommand{\circled}[1]{\begin{tikzpicture}[baseline=(word.base)]
+\node[draw, rounded corners, text height=8pt, text depth=2pt, inner sep=2pt, outer sep=0pt, use as bounding box] (word) {#1};
+\end{tikzpicture}
+}
+
+\newcommand{\ontangent}[1]{
+
+    \spl
+
+\textcolor{darkgray}{\textit{(Scratch work begins)}}
+{#1}
+\textcolor{darkgray}{\textit{(Scratch ends here)}}
+
+\spl
+
+}
+
+\usepackage{ulem}
+\usepackage{float}
+\usepackage{libertinus}
+
+% Make enumeration better
+\usepackage{enumitem}
+\setlist[itemize]{parsep=0pt,topsep=0pt}
+\setlist[enumerate]{parsep=0pt,topsep=0pt}
+
+% \definecolor{pomona}{HTML}{#0057b8}
+
+\parskip = .2in
+\parindent = 0in
+
+% clever ref (load last)
+\usepackage[capitalise]{cleveref}
+\newcommand{\fref}{\cref}
+\newcommand{\Fref}{\Cref}
+\newcommand{\prettyref}{\cref}
+\newcommand{\newrefformat}[2]{}
+
+ %Cleveref definitions
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{thm}{Theorem}{Theorems}
+\crefname{defn}{Definition}{Definitions}
+\crefname{notn}{Notation}{Notations}
+\crefname{const}{Construction}{Constructions}
+\crefname{prop}{Proposition}{Propositions}
+\crefname{rem}{Remark}{Remarks}
+\crefname{cor}{Corollary}{Corollaries}
+\crefname{equation}{Equation}{Equations}
+\crefname{ex}{Example}{Examples}
