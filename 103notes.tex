@@ -16,7 +16,7 @@
 
 \newpage
 \pagestyle{updated}
-\section{Combinatorics}
+\section{A Recurrence Relations}
 \subsection{A1 Intro}
 \rmk Let there be a set $\{1,2,\dots,n\}$. The number of subsets of it is $2^n$ since for each number, we could say ``include'' or ``exclude''.
 
@@ -183,4 +183,129 @@ Conjecture: maybe Fibonnacci?
 \defn Simplex numbers: $T_{k+1}(n) = T_k(1) + \dots +T_k(n)$
 \addlink{Simplex numbers}
 
+\section{B Ramsey Theory}
+Invented by Frank Ramsey in 1930. We would need:
+\begin{itemize}
+    \item Graph Theory
+    \item Pigeonhole Principle
+    \item Quantifiers
+    \item Counterexamples
+\end{itemize}
+
+\subsection{Pigeonhole principle}
+\begin{theorem}[Dirichlet's Pigeonhole Principle]
+    If you put $n+1$ pigeons in $n$ pigeonholes, then (at least) one pigeonhole will contain (at least) two pigeons.
+\end{theorem}
+\begin{proof}[Proof omitted]
+\end{proof}
+
+\eg Given 5 points in a square of side length 2, show that there must exist two points whose mutual distance is $\leq \sqrt{2}$.\sidenote{\includegraphics[width=\linewidth]{Images/image-2.png}}
+\begin{proof}
+    Divide square into 4 smaller squares. We now have 4 pigeonholes and 5 dots:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=100pt]{Images/image-3.png}
+    \end{figure}
+    These two points in the same pigeonhole have distance $\leq \sqrt{1^2+1^2}=\sqrt{2}$.
+\end{proof}
+
+\eg There exists two people in NYC who have exactly the same number of hairs on their head.
+
+\eg There are 30 people at a party talking with each other. Afterwards, there will be two people who talked with the same number of people.
+\begin{proof}
+    If we put a person who talked to $i$ people into box $i$, we get 30 boxes; however, we cannot have someone who talked to 0 people and someone who talked at 29 people at the same time! Hence, we combine the box 0 and box 29, and only one of which could be the case.
+
+    Now we have 29 boxes and 30 people. By pigeonhole principle, there must be two people who talked with the same amount of people.
+\end{proof}
+
+\begin{theorem}[Strong Pigeonhole Principle]
+    Given pigeonholes $1,2,\dots,n$ with \uline{capacities} $c_1,c_2,\dots, c_n$ where $c_i\geq 0$; if we have at least $c_1+c_2+\dots+c_n+1$ pigeons in these pigeonholes, then at least one pigeonhole overflows.
+\end{theorem}
+\begin{proof}
+    Suppose BWOC that no pigeonhole overflows. Then for all $i=1,2,\dots,n$, we have the number of pigeons in $i\leq c_i$.
+
+    We add up and get inequalities:\begin{align*}
+        \text{total \# pigeons} \leq c_1+c_2+\dots + c_n
+    \end{align*}
+    Contradiction!
+\end{proof}
+
+\eg There are five people supporting two teams. Then at least one team is supported by 3 people.
+\begin{proof}
+    Assume BWOC that the two teams only have two supporters. Let $c_1=c_2=2$. However, by SPP, $5\geq 2+2+1$, hence one pigeonhole overflows. Therefore, one team must have $>2$ supporters.
+\end{proof}
+
+\subsection{First Ramsey Theorem}
+
+There are 6 people taking a class. Then: \begin{itemize}[align=left]
+        \item[\underline{either}] there exists 3 people such that each pair of them have previously taken a class together,
+        \item[\underline{or (inclusive)}] there exists 3 people such that no two have taken a class together.
+    \end{itemize}
+
+\begin{theorem}
+    If we have 6 vertices and we draw all edges between them (a $K_6$ graph)\sidenote{$K_6$ stands for \textit{complete graph on 6 vertices.} It has 15 edges.}, then for every possible way of coloring the edges \rt{red} and \bt{blue}, there must exist a \textbf{monochromatic} triangle.
+
+    \[\begin{tikzcd}[ampersand replacement=\&,cramped]
+        \& \bullet \\
+        \bullet \&\& \bullet \\
+        \bullet \&\& \bullet \\
+        \& \bullet
+        \arrow[color=magenta, no head, from=1-2, to=2-1]
+        \arrow[color=magenta, no head, from=1-2, to=2-3]
+        \arrow[color=magenta, no head, from=2-3, to=3-3]
+        \arrow[color=cyan, no head, from=3-3, to=4-2]
+        \arrow[color=magenta, no head, from=4-2, to=3-1]
+        \arrow[color=cyan, no head, from=2-1, to=2-3]
+        \arrow[color=magenta, no head, from=2-3, to=3-1]
+        \arrow[color=cyan, no head, from=3-1, to=2-1]
+        \arrow[color=magenta, no head, from=2-1, to=3-3]
+        \arrow[color=cyan, no head, from=3-3, to=3-1]
+        \arrow[color=magenta, no head, from=1-2, to=4-2]
+        \arrow[color=magenta, no head, from=2-1, to=4-2]
+        \arrow[color=cyan, no head, from=4-2, to=2-3]
+        \arrow[color=cyan, no head, from=1-2, to=3-3]
+        \arrow[color=cyan, no head, from=1-2, to=3-1]
+    \end{tikzcd}\]
+\end{theorem}
+\begin{proof}
+    Pick any vertex and call it $A$. It has 5 edges colored \rt{red} and \bt{blue}. By the SPP, there exists at least 3 edges of the same color. WLOG let these three edges be \rt{red} and call the other three vertices $B,C,D$.
+    \[\begin{tikzcd}[ampersand replacement=\&,cramped]
+        \&\& {\bullet B} \\
+        {A\,\bullet} \&\&\& {\bullet C} \\
+        \&\& {\bullet D}
+        \arrow[color=magenta, no head, from=2-1, to=1-3]
+        \arrow[color=magenta, no head, from=2-1, to=2-4]
+        \arrow[color=magenta, no head, from=2-1, to=3-3]
+        \arrow[dashed, no head, from=1-3, to=2-4]
+        \arrow[dashed, no head, from=3-3, to=2-4]
+        \arrow[dashed, no head, from=1-3, to=3-3]
+    \end{tikzcd}\]
+    \begin{itemize}
+        \item If $BC$ is \rt{red}, then $ABC$ is a \rt{red} triangle.
+        \item If $CD$ is \rt{red}, then $ACD$ is a \rt{red} triangle.
+        \item If $BD$ is \rt{red}, then $ABD$ is a \rt{red} triangle.
+        \item If none of the above has happened, then $BC,CD,BD$ are all \bt{blue}, meaning that $BCD$ is a \bt{blue} triangle!
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}
+    If there are 5 instead of 6 vertices, then the above coloring prediction cannot be made with certainty.
+\end{theorem}
+\begin{proof}[Counterexample]
+    \[\begin{tikzcd}[ampersand replacement=\&,cramped,column sep=tiny]
+        \&\& \bullet \\
+        \bullet \&\&\&\& \bullet \\
+        \& \bullet \&\& \bullet
+        \arrow[color=magenta, no head, from=1-3, to=2-1]
+        \arrow[color=cyan, no head, from=2-1, to=2-5]
+        \arrow[color=magenta, no head, from=1-3, to=2-5]
+        \arrow[color=cyan, no head, from=1-3, to=3-2]
+        \arrow[color=cyan, no head, from=1-3, to=3-4]
+        \arrow[color=magenta, no head, from=2-1, to=3-2]
+        \arrow[color=magenta, no head, from=3-2, to=3-4]
+        \arrow[color=magenta, no head, from=3-4, to=2-5]
+        \arrow[color=cyan, no head, from=3-2, to=2-5]
+        \arrow[color=cyan, no head, from=2-1, to=3-4]
+    \end{tikzcd}\]
+\end{proof}
 \end{document} 
