@@ -192,7 +192,7 @@ Invented by Frank Ramsey in 1930. We would need:
     \item Counterexamples
 \end{itemize}
 
-\subsection{Pigeonhole principle}
+\subsection{B1 Pigeonhole principle}
 \begin{theorem}[Dirichlet's Pigeonhole Principle]
     If you put $n+1$ pigeons in $n$ pigeonholes, then (at least) one pigeonhole will contain (at least) two pigeons.
 \end{theorem}
@@ -235,7 +235,7 @@ Invented by Frank Ramsey in 1930. We would need:
     Assume BWOC that the two teams only have two supporters. Let $c_1=c_2=2$. However, by SPP, $5\geq 2+2+1$, hence one pigeonhole overflows. Therefore, one team must have $>2$ supporters.
 \end{proof}
 
-\subsection{First Ramsey Theorem}
+\subsection{B2 First Ramsey Theorem}
 
 There are 6 people taking a class. Then: \begin{itemize}[align=left]
         \item[\underline{either}] there exists 3 people such that each pair of them have previously taken a class together,
@@ -308,4 +308,199 @@ There are 6 people taking a class. Then: \begin{itemize}[align=left]
         \arrow[color=cyan, no head, from=2-1, to=3-4]
     \end{tikzcd}\]
 \end{proof}
+
+
+\subsection{B3 $K_p\to K_q,\, K_r$}
+
+In graphy theory, $K_n$ is the \textbf{complete} graph on $n$ vertices.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcll}
+        $K_1$ &$\bullet$& 1 vertex & 0 edges\\
+        $K_2$ &\begin{tikzcd}[ampersand replacement=\&,cramped]
+            \bullet \& \bullet
+            \arrow[no head, from=1-1, to=1-2]
+        \end{tikzcd}& 2 vertices & 1 edge\\[0.1in]
+        $K_3$ &\begin{tikzcd}[ampersand replacement=\&,cramped,column sep=3pt,row sep=scriptsize]
+            \& \bullet \\
+            \bullet \&\& \bullet
+            \arrow[no head, from=1-2, to=2-1]
+            \arrow[no head, from=1-2, to=2-3]
+            \arrow[no head, from=2-1, to=2-3]
+        \end{tikzcd}& 3 vertices & 3 edges\\[0.3in]
+        $K_4$ &\begin{tikzcd}[ampersand replacement=\&,cramped,sep=scriptsize]
+            \bullet \& \bullet \\
+            \bullet \& \bullet
+            \arrow[no head, from=1-1, to=1-2]
+            \arrow[no head, from=1-1, to=2-1]
+            \arrow[no head, from=2-1, to=2-2]
+            \arrow[no head, from=1-2, to=2-2]
+            \arrow[no head, from=2-1, to=1-2]
+            \arrow[no head, from=1-1, to=2-2]
+        \end{tikzcd}& 4 vertices & 6 edges\\[0.3in]
+        $K_5$ &\begin{tikzcd}[ampersand replacement=\&,cramped,column sep=1.5pt, row sep=13pt]
+            \&\& \bullet \\
+            \bullet \&\&\&\& \bullet \\
+            \& \bullet \&\& \bullet
+            \arrow[color=magenta, no head, from=1-3, to=2-1]
+            \arrow[color=cyan, no head, from=2-1, to=2-5]
+            \arrow[color=magenta, no head, from=1-3, to=2-5]
+            \arrow[color=cyan, no head, from=1-3, to=3-2]
+            \arrow[color=cyan, no head, from=1-3, to=3-4]
+            \arrow[color=magenta, no head, from=2-1, to=3-2]
+            \arrow[color=magenta, no head, from=3-2, to=3-4]
+            \arrow[color=magenta, no head, from=3-4, to=2-5]
+            \arrow[color=cyan, no head, from=3-2, to=2-5]
+            \arrow[color=cyan, no head, from=2-1, to=3-4]
+        \end{tikzcd}& 5 vertices & 10 edges\\[0.4in]
+        $K_6$ &\begin{tikzcd}[ampersand replacement=\&,cramped,column sep=12pt, row sep=8pt]
+            \& \bullet \\
+            \bullet \&\& \bullet \\
+            \bullet \&\& \bullet \\
+            \& \bullet
+            \arrow[color=magenta, no head, from=1-2, to=2-1]
+            \arrow[color=magenta, no head, from=1-2, to=2-3]
+            \arrow[color=magenta, no head, from=2-3, to=3-3]
+            \arrow[color=cyan, no head, from=3-3, to=4-2]
+            \arrow[color=magenta, no head, from=4-2, to=3-1]
+            \arrow[color=cyan, no head, from=2-1, to=2-3]
+            \arrow[color=magenta, no head, from=2-3, to=3-1]
+            \arrow[color=cyan, no head, from=3-1, to=2-1]
+            \arrow[color=magenta, no head, from=2-1, to=3-3]
+            \arrow[color=cyan, no head, from=3-3, to=3-1]
+            \arrow[color=magenta, no head, from=1-2, to=4-2]
+            \arrow[color=magenta, no head, from=2-1, to=4-2]
+            \arrow[color=cyan, no head, from=4-2, to=2-3]
+            \arrow[color=cyan, no head, from=1-2, to=3-3]
+            \arrow[color=cyan, no head, from=1-2, to=3-1]
+        \end{tikzcd}& 6 vertices & 15 edges\\
+    \end{tabular}
+\end{table}
+\rmk Note that $K_n$ has $1+2+3+\dots+(n-1)=\frac{n(n-1)}{2}$ edges, hence is the $n-1$-th triangular number.
+
+Ramsey Theory uses the following language convention: the expression \begin{align*}
+    K_p\to K_q,\, K_r
+\end{align*}
+represents a statement with the following meaning:
+
+\defn If the edges of $K_p$ are colored \rt{red}/\bt{blue}, then it necessarily follows that either the $K_p$ contains a \rt{red $K_q$}, or $K_p$ contains a \bt{blue $K_r$} (or possibly both).
+
+We want to know whether this statement is true for a given triple of $(p,q,r)$.
+
+\eg We proved in \textbf{B2} that $K_6\to K_3, K_3$.
+
+\noneg We also showed that $K_5\to K_3,K_3$ is false \sidenote{write $K_5\not\to K_3,K_3$}by exhibiting a coloring of $K_5$ that does not have a red or blue triangle (counterexample).
+
+\eg It is known that $K_{18}\to K_4, K_4$ and $K_{17}\not \to K_4,K_4$.
+
+\eg Also, $K_9\to K_3,K_4$ and $K_8\not \to K_3,K_4$.\sidenote{Here we have to decide in advance which color goes with the $K_3$ and which goes with the $K_4$ due to asymmetry.}
+\[\begin{tikzcd}[ampersand replacement=\&,cramped,row sep=26pt]
+	\& \bullet \& \bullet \\
+	\bullet \&\&\& \bullet \\
+	\bullet \&\&\& \bullet \\
+	\& \bullet \& \bullet
+	\arrow[color=magenta, no head, from=1-2, to=2-1]
+	\arrow[color=magenta, no head, from=1-3, to=1-2]
+	\arrow[color=magenta, no head, from=2-4, to=1-3]
+	\arrow[color=magenta, no head, from=3-4, to=2-4]
+	\arrow[color=magenta, no head, from=4-3, to=3-4]
+	\arrow[color=magenta, no head, from=4-2, to=4-3]
+	\arrow[color=magenta, no head, from=3-1, to=4-2]
+	\arrow[color=magenta, no head, from=2-1, to=3-1]
+	\arrow[color=cyan, no head, from=2-4, to=1-2]
+	\arrow[color=cyan, no head, from=3-4, to=1-2]
+	\arrow[color=magenta, no head, from=4-3, to=1-2]
+	\arrow[color=cyan, no head, from=4-2, to=1-2]
+	\arrow[color=cyan, no head, from=3-1, to=1-2]
+	\arrow[color=cyan, no head, from=2-1, to=1-3]
+	\arrow[color=cyan, no head, from=3-1, to=1-3]
+	\arrow[color=magenta, no head, from=4-2, to=1-3]
+	\arrow[color=cyan, no head, from=4-3, to=1-3]
+	\arrow[color=cyan, no head, from=3-4, to=1-3]
+	\arrow[color=cyan, no head, from=2-1, to=2-4]
+	\arrow[color=magenta, no head, from=3-1, to=2-4]
+	\arrow[color=cyan, no head, from=4-2, to=2-4]
+	\arrow[color=cyan, no head, from=4-3, to=2-4]
+	\arrow[color=magenta, no head, from=2-1, to=3-4]
+	\arrow[color=cyan, no head, from=3-1, to=3-4]
+	\arrow[color=cyan, no head, from=4-2, to=3-4]
+	\arrow[color=cyan, no head, from=3-1, to=4-3]
+	\arrow[color=cyan, no head, from=2-1, to=4-3]
+\end{tikzcd}
+\]
+\[\text{This $K_8$ has no red triangle and no blue }K_4.\]
+
+\addlink{Ramsey's theorem}
+\theorem[Ramsey] Let $q,r$ be positive integers. Then there always exists a positive integer $p$ such that \[K_p\to K_q,K_r\] is true.
+
+We would see the following tabel giving us values of $p$ that work.
+
+Define a function $N(q,r)$ recursively: \sidenote{$q,r\in \Z^+$}
+\begin{itemize}
+    \item Base case: $N(1,r)=N(q,1)=1$
+    \item Recurrence: $N(q,r)=N(q-1,r)+N(q,r-1)$ if $q,r\geq 2$.
+\end{itemize}
+We compute the value of $N(q,r)$ for:\sidenote{They do look like simplex numbers!}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcccccc}
+    $q\backslash r$ & 1 & 2 & 3  & 4  & 5   & 6   \\
+    1                  & 1 & 1 & 1  & 1  & 1   & 1   \\
+    2                  & 1 & 2 & 3  & 4  & 5   & 6   \\
+    3                  & 1 & 3 & 6  & 10 & 15  & 21  \\
+    4                  & 1 & 4 & 10 & 20 & 35  & 56  \\
+    5                  & 1 & 5 & 15 & 35 & 70  & 126 \\
+    6                  & 1 & 6 & 21 & 56 & 126 & 252
+    \end{tabular}
+\end{table}
+We would want to prove that $K_{N(q,r)}\to K_q,K_r$ for all $q,r\geq 1$.
+\begin{proof}
+    By induction.
+    \begin{enumerate}[align=left]
+        \item[\textit{Base case}:] \begin{tabular}[t]{rl}
+            If $q=r=1$, then $N=1$, we need to show that& $K_1\to K_1,K-r$\\
+            and & $K_1\to K_q,K_1$
+        \end{tabular} for all $q,r$. 
+        
+        That is, suppose $K_1$ has its edges colored \rt{red}/\bt{blue}, then there exists a \rt{red $K_1$} or a \bt{blue $K_r$}, and \textit{vice versa}. 
+        
+        Since there are no edges, this is vacuously true.
+
+        \item[\textit{Inductive step}:] We will show\sidenote{This works because as we fill out the table above, each new number we write in will work because it's the sum of the left and above numbers and they both work.} 
+        that \uline{if we are given that} $A,B$ are numbers such that \begin{align*}
+            K_A&\to K_{q-1},K_r\\
+            \text{and }K_B&\to K_q, K_{r-1}
+        \end{align*}
+        are true, \uline{then} $K_{A+B}\to K_q,K_r$.
+
+        Consider $K_{A+B}$ colored \rt{red} and \bt{blue}. We will show that it has a \rt{red $K_q$} or a \bt{blue $K_r$}.
+        
+        Pick a vertex and call it $X$. It would have $A+B-1$ edges in total. We claim that \dashuline{$X$ either has at least $A$ \rt{red} edges, or at least $B$ \bt{blue} edges}. This is indeed true, because if not, the number of \rt{red} edges would be $\leq A-1$ and the number of \bt{blue} edges would be $\leq B-1$ and so the total number of edges would be $\leq A+B-2<A+B-1$, which is a contradiction.
+
+        Now, if $X$ has a \rt{red claw} of size $A$:\sidenote{The neighbouring vertices connected by black edges form $K_A$, yet to be colored.}
+        \[\begin{tikzcd}[ampersand replacement=\&,cramped]
+            X \&\& \dots \& {K_A} \\
+            \&\& \bullet \\
+            \dots \& \bullet
+            \arrow[color=magenta, dashed, no head, from=1-1, to=1-3]
+            \arrow[color=magenta, no head, from=1-1, to=2-3]
+            \arrow[color=magenta, no head, from=1-1, to=3-2]
+            \arrow[color=magenta, dashed, no head, from=1-1, to=3-1]
+            \arrow[no head, from=1-3, to=2-3]
+            \arrow[no head, from=1-3, to=3-2]
+            \arrow[no head, from=2-3, to=3-2]
+            \arrow[no head, from=3-1, to=3-2]
+            \arrow[no head, from=3-1, to=2-3]
+        \end{tikzcd}\]
+        From our inductive hypothesis $K_A\to K_{q-1},K_r$, we must have \begin{itemize}[align=left]
+            \item[\textbf{either}] \rt{red $K_{q-1}$}, in which case we combine with the vertex $X$ and the red claw to get at least one \rt{red $K_q$}.
+            \item[\textbf{or}] \bt{blue $K_r$}, in which case we are done. 
+        \end{itemize}
+        Similarly, if $X$ has a \bt{blue claw} of size $B$, then we make the same argument.
+        \vspace{0.2in}
+        
+        Hence, we know that $K_{A+B}\to K_q,K_r$ is true whenever $K_A\to K_{q-1},K_r$ and $K_B\to K_{q},K_{r-1}$.
+    \end{enumerate}
+\end{proof}
+
 \end{document} 
