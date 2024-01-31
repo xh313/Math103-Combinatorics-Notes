@@ -51,11 +51,13 @@
 }
 \setcounter{secnumdepth}{0}
 
+% new color for the hypers
+\definecolor{hyperpurp}{RGB}{108,113,196}
 \usepackage[colorlinks = true,
-            linkcolor = teal,
-            urlcolor  = teal,
-            citecolor = teal,
-            anchorcolor = teal]{hyperref}
+            linkcolor = hyperpurp,
+            urlcolor  = hyperpurp,
+            citecolor = hyperpurp,
+            anchorcolor = hyperpurp]{hyperref}
 
 \usepackage[all,2cell,ps]{xy}
 \usepackage{tikz, tikz-cd}
@@ -103,7 +105,7 @@
 
 
 \newcommand{\rt}[1]{\textcolor{magenta}{#1}}
-\newcommand{\gt}[1]{\textcolor{brown}{#1}}
+\newcommand{\gt}[1]{\textcolor{teal}{#1}}
 \newcommand{\bt}[1]{\textcolor{cyan}{#1}}
 
 \newcommand{\N}{\mathbb{N}}
