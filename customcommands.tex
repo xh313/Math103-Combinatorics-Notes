@@ -75,6 +75,7 @@
 \newtheorem{defn}{\rt{Definition}}
 
 \newtheorem{eg}{\textcolor{violet}{Example}}
+\newtheorem{cautiouseg}[eg]{\textcolor{magenta}{Tricky example}}
 \newtheorem{noneg}[eg]{\textcolor{violet}{Non-example}}
 
 \newtheorem*{rmk}{Remark}
@@ -135,6 +136,11 @@
 \spl
 
 }
+
+\newcommand{\drawing}[2]{\begin{figure}[H]
+    \centering
+    \includegraphics[width=#1]{Images/#2}
+\end{figure}}
 
 \usepackage{ulem}
 \usepackage{float}

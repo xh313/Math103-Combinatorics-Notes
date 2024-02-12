@@ -12,7 +12,7 @@
 {\parskip=0.05in
 \tableofcontents}
 
-\spl
+% \spl
 
 \newpage
 \pagestyle{updated}
@@ -696,5 +696,365 @@ For example:\begin{align*}
 \begin{proof}
     We know $K_6\to K_3,K_3$. Pick a vertex that has 5 neighbors. By the strong pigeonhole principle, we must have three edges of the same color $\implies$ either red or blue $K_{1,3}$.
 \end{proof}
+
+\section{C Counting}
+\subsection{C1 Three principles}
+\subsubsection{Addition principle}\sidenote{aka. counting by cases}
+\defn If a set $S$ is \textit{partitioned}\sidenote{that is, $S=\bigcup S_i$ and $S_i\cap S_j=\emptyset$ whenever $i\neq j$} into subsets $S_1,S_2,\dots S_n$, then the cardinality of $S$ is $$|S|=|S_1|+\dots +|S_n|.$$
+
+The art lies in:\begin{itemize}
+    \item making each $S_i$ easy to count, and
+    \item not having too many $S_i$ if there is no formula for $|S_i|$.
+\end{itemize}
+
+\rmk[Variations] If the $S_i$ cover $S$ but they overlap\sidenote{The inclusion/exclusion principle handles overlaps precisely}, then we have the inequality $\displaystyle |S|<\sum_{i=1}^{n}|S_i|$ because the overlap implies that we are \textit{overcounting}.
+
+\eg Let $S$ be the set of \textit{good}\sidenote{\textit{good} meaning no adjacent elements} subsets of $[5]=\{1,2,3,4,5\}$. We could first try:\begin{itemize}
+    \item $S_1$ contains the subsets that contain 5
+    \item $S_2$ contains the subsets that don't contain 5
+\end{itemize}
+We have previously shown that $|S_1|=$ number of \textit{good} subsets of [3] and $|S_2|=$ number of \textit{good} subsets of [4].
+
+Alternatively, we could also let $T_i$ be the \textit{good} subsets of $[5]$ with cardinality $i$. Then $S$ is \uline{partitioned} into $T_0\cup T_1\cup T_2\cup T_3$. We count:
+\[\begin{tikzcd}[ampersand replacement=\&,cramped]
+	{T_0:} \& \emptyset \& {|T_0|=1} \\
+	{T_1:} \& {1,2,3,4,5} \& {|T_1|=5} \\
+	{T_2:} \& {13,14,15,24,25,35} \& {|T_2|=6} \\
+	{T_3:} \& 135 \& {|T_3|=1}
+	\arrow["{|S|=13}", shift left=5, bend left=40, no head, from=1-3, to=4-3]
+\end{tikzcd}\]
+
+\subsubsection{Subtraction principle}
+\defn Let $A\subseteq S$ and $A^c$ be its complement in $S$. Then $A, A^c$ partition $S$ and $|S|=|A|+|A^c|$. This means that $$|A|=|S|-|A^c|.$$
+
+\eg How many 2-digit numbers have distinct nonzero digits?
+
+Let $S$ be the set of all 2-digit numbers $\{10,11,\dots,99\}$ and let $A$ be the subset of those with nonzero distinct digits. We count:\begin{align*}
+    A^c: &11,22,\dots,99 &&\text{(distinct fails)}\\
+    &10,20,\dots, 90 &&\text{(nonzero fails)}
+\end{align*}
+Hence $|A|=|S|-|A^c|=90-18=72$.
+
+\subsubsection{Multiplication principle}
+\defn Suppose we have to do two tasks in sequence\sidenote{Note: sometimes the 2nd task could depend on the 1st one}. We suppose:\begin{itemize}
+    \item Task 1 has $m$ outcomes
+    \item Task 2 has $n$ outcomes, regardless of how Task 1 was carried out.
+\end{itemize}
+Then there are $mn$ ways of carrying out both tasks.\sidenote{Similarly for 3 or more tasks in sequence}
+
+\eg How many 2-digit numbers have distinct nonzero digits?
+
+Let \circled{a}\circled{b} be the two digits in these numbers. Let Task 1 be selecting digit \circled{a} and Task 2 be selecting digit \circled{b}.\begin{itemize}
+    \item Task 1: 9 ways (1,2,\dots,9)
+    \item Task 2: 8 ways (1,2\dots,9 but not same as \circled{a})
+\end{itemize}
+Hence there are $9\times 8=72$ such numbers.
+
+\cautiouseg How many \textbf{odd} numbers in the range 1000-9999 have distinct digits?
+\begin{itemize}[align=left]
+    \item[\textbf{Attempt 1}:] Let \circled{a}\circled{b}\circled{c}\circled{d} be the 4 digits in these numbers and assign them Tasks 1-4. We have: \begin{itemize}
+        \item Task 1: 9 ways (1-9)
+        \item Task 2: 9 ways (0-9 except \circled{a})
+        \item Task 3: 8 ways (0-9 except \circled{a},\circled{b})
+        \item \rt{Task 4}: Could be 2 or 3 or 4 or 5 (depending on how many odd digits had already been used)
+    \end{itemize}
+    Hence, the best we can say\sidenote{BAD! This is a large range!} here is that the answer is between $9\times9\times8\times2$ and $9\times9\times8\times5$.
+
+    \item[\textbf{Attempt 2}:] Let \circled{a}\circled{b}\circled{c}\circled{d} be the 4 digits in these numbers and try the order \circled{d}\circled{a}\circled{b}\circled{c} for Tasks 1-4. We have: \begin{itemize}
+        \item Task 1: 5 ways $(1,3,5,7,9)$
+        \item Task 2: 8 ways (1-9 except \circled{d})
+        \item Task 3: 8 ways (0-9 except \circled{a}, \circled{d})
+        \item Task 4: 7 ways (0-9 except \circled{a}, \circled{d}, \circled{b})
+    \end{itemize}
+    Therefore, the number of ways is $5\times 8\times 8\times 7=2240$.
+\end{itemize}
+
+\eg How many numebrs $0,1,\dots 99999$ have exactly one digit 6?
+
+We can assign tasks:\begin{itemize}
+    \item Task 1: choose a location for 6, giving us 5 ways
+    \item Task 2: assign the remaining digits from left to right, giving us $9^4$ ways
+\end{itemize}
+
+Hence there are $5\times 9^4=32805$ such numbers.
+
+\noneg How many integers $0,1,\dots 99999$ have \textit{at least} one digit 6?
+
+\textbf{Attempt:} We can assign tasks:\begin{itemize}
+    \item Task 1: choose a location for 6, giving us 5 ways
+    \item Task 2: assign the remaining digits from left to right, giving us $10^4$ ways
+\end{itemize}
+
+But the answer of 50000 is \rt{\textbf{wrong}}! But why?
+
+The counting process for this problem is corresponding the ways of performing tasks to valid 5-digit numbers:
+\drawing{0.6\linewidth}{image-4.png}
+We have correctly counting the \gt{green} set. However, for this to count the \bt{blue} set, we need $f$ to be \textbf{bijective}. That is, every valid number must be obtained in exactly one way. However, in this case, our $f$ is surjective but not injective. For instance, 62516 will be counted \textit{twice}:\begin{itemize}
+    \item 6\_\_\_\_ then 62516; or
+    \item \_\_\_\_6 then 62516.
+\end{itemize}
+Hence, 50000 > correct answer!
+
+\textbf{Correct way:} Using the subtract principle to deduct numbers that don't have 6: $10^5-9^5=40951<50000$.
+
+\subsection{C2 Probability}
+\defn \begin{align*}
+    \text{Probability} = \frac{\text{number of favourable cases}}{\text{number of total cases}}
+\end{align*}
+
+\eg Probability of 3 dice rolling the same number: $P=\frac{6}{6^3}=\frac{1}{36}$.
+
+\subsection{C3 The counting framework}
+Here is a very general problem:
+
+``How many distinguishable ways to map a multiset $S$ to a multiset $T$ satisfying given constraints?''
+
+\eg There are fruits and plates. Let $S=\{3\cdot \text{apple}, 1\cdot \text{banana}\}$ and $T=\{2\cdot \text{circle}, 1\cdot \text{rectangle}\}$. How many ways are there to serve fruit on plates such that the rectangular plate has an even number of fruit?
+\drawing{0.6\linewidth}{image-5.png}
+
+\textbf{Ans:} Organize by number of fruit on rectangle.
+\drawing{0.6\linewidth}{image-6.png}
+\drawing{0.6\linewidth}{image-7.png}
+\drawing{0.6\linewidth}{image-8.png}
+
+Hence there are 9 ways.
+
+\subsubsection{The general counting problem}
+Let there be multisets \begin{align*}
+    S&=\{a_1\cdot 1, a_2\cdot2, \dots, a_s\cdot s\} &\text{object types }1,2,\dots,s\\
+    T&=\{b_1\cdot U_1, b_2\cdot U_2,\dots,b_t\cdot U_t\} &\text{box types }U_1,\dots,U_t\\
+\end{align*}
+How many distinguishable maps $f: S\to T$ are there, subject to restrictions on the numbers $u_i=\left|\inv{f}(U_i)\right|$?\sidenote{The number of items mapped to boxes of type $U_i$}
+
+\rmk[Special cases] To recognize which situation applies to the problem:
+\begin{itemize}
+    \item By objects:\begin{itemize}
+        \item Distinct: $S=\{1,2,\dots,s\}$
+        \item Identical: $S=\{s\cdot 1\}$
+    \end{itemize}
+    \item By boxes: \begin{itemize}
+        \item Distinct: $T=\{U_1,\dots, U_t\}$
+        \item Identical: $T=\{t\cdot U_1\}$
+    \end{itemize}
+    \item For each case above, we can apply constraints:\begin{itemize}
+        \item $0\leq u_i\leq 1$
+        \item $0\leq u_i<\infty$\qquad{no constraint}
+        \item $1\leq u_i<\infty$\qquad{nonempty}
+        \item $0\leq u_i\leq n_i$ for some $n_i\in \N_0$\qquad{max. capacity}
+        \item $u_i\in N_i\subseteq \N$
+    \end{itemize}
+\end{itemize}
+\drawing{0.95\linewidth}{table3-1.pdf}
+
+\eg We have 10 distinct books to be shared between 2 children. Each child needs 2 books to avoid a crisis.\sidenote{Table entry \circled{15}}
+\begin{itemize}
+    \item Distinct objects $\{1,2,\dots,10\}$
+    \item Distinct boxes $\{U_1,U_2\}$
+    \item Constraints: $u_i\in [2,\infty[$
+\end{itemize}
+
+\eg[Attempt 1] 10 distinct books, 5 of them to be arranged on shelf (order matters)\sidenote{Table entry \circled{15}}
+\begin{itemize}
+    \item $S=\{1,2,\dots,10\}$
+    \item $T=\{U_1,U_2,\dots,U_5, \rt{U_6}\}$ (positions on shelf + extra for unshelved books)
+    \item $u_1=\dots=u_5=1, u_6=5$
+\end{itemize}
+
+\eg[Attempt 2] 10 distinct books, 5 of them to be arranged on shelf (order matters)\sidenote{Table entry \circled{1}, easier!}
+\begin{itemize}
+    \item $S=\{1,2,\dots,5\}$ (numbered stickers to arrange books)
+    \item $T=\{U_1,U_2,\dots,U_{10}\}$ (10 books)
+    \item $0\leq u_1\leq 1$ (each book can get 0 or 1 sticker)
+\end{itemize}
+
+\eg I have 10 books and will take 5 on holiday.
+\begin{itemize}
+    \item Take 1:\sidenote{Table entry \circled{15}} \begin{itemize}
+        \item $S=\{1,2,\dots,10\}$
+        \item $T=\{U_1,U_2\}$
+        \item $u_1=u_2=5$
+    \end{itemize}
+    \item Take 2:\sidenote{Table entry \circled{2}} \begin{itemize}
+        \item $S=\{5\cdot 1\}$ (identical `stickers' marking on-holiday)
+        \item $T=\{U_1,U_2\,\dots,U_{10}\}$
+        \item $0\leq u_1\leq 1$ (each book can get 0 or 1 sticker)
+    \end{itemize}
+\end{itemize}
+
+\subsection{C4 Permutations of a set}
+\rmk Recall $[n]=\{1,2,\dots,n\}$.
+
+\defn Let $0\leq s\leq t$. \begin{itemize}
+    \item An \textbf{$s$-permutation} of $[t]$ is an ordered list of $s$ distinct elements of $[t]$.
+    \item A \textbf{$t$-permutation} of $[t]$ is just a \textbf{permutation} of $[t]$.
+\end{itemize}
+
+\eg 10 books, arrange 5 on shelf: 5-perm of $[10]$
+\eg 20 athletes, Gold, Silver and Bronze awarded: 3-perm of [20]
+
+\begin{theorem}
+    The number of $s$-perms of $[t]$ is \[\underset{s\text{ terms}}{\underbrace{t(t-1)\dots (t-s+1)}}\]
+\end{theorem}
+\begin{proof}
+    Select elements of the list one-by-one. We have $t$ ways to pick the first, $t-1$ ways of picking the second, etc.
+\end{proof}
+
+\defn[$s$-th falling-factorial function] This inspires the following notation \[(x)_s=x(x-1)\dots(x-s+1)=\frac{t!}{(t-s)!}\]\sidenote{There is also a rising $(x)^s=x(x+1)\dots(x+s-1)$}
+\rmk $(x)_0=1, (n)_n=n!$
+
+\eg Number of ways to shelve 5 books out of 10 is $$(10)_5=10\times9\times8\times7\times6=30240$$
+
+\subsection{C5 Circular permutations}
+
+A circular 5-perm of $[n]$ is an arrangement of $s$ distinct elements of $[n]$ around a round table. The difference from a non-circular perm is that the orientation of the table does not matter! How many ways to do so?
+
+If there is a head of the table and positions are marked clockwise, then it would be the same as the $s$-perm $(n)_s$.
+
+However, we consider all ways of marking the `head' of the tablen to be equivalent, so we divide $s$ upon that. Hence, we get the answer $\displaystyle\frac{1}{s}(n)_s=\frac{n!}{s(n-s)!}$.
+
+\subsection{C6 Table entries 3,4,5}
+\begin{itemize}
+    \item \circled{3}: $s$ distinct objects, $t$ identical boxes, 0 or 1 per box.
+    \[\# \text{ ways} = \begin{cases}
+        1 & s\leq t\\
+        0 &\text{otherwise}
+    \end{cases}\]
+    \item \circled{4}: $s$ identical objects, $t$ identical boxes, 0 or 1 per box.
+    \[\# \text{ ways} = \begin{cases}
+        1 & s\leq t\\
+        0 &\text{otherwise}
+    \end{cases}\]
+    \item \circled{5}: $s$ distinct objects, $t$ distinct boxes, no restrictions.
+    \[\# \text{ ways} = \underset{s \text{ times}}{\underbrace{t\times t\times\dots \times t}}=t^s\]
+\end{itemize}
+
+\rmk $0^0=1$ in combinatorics.\sidenote{NOT in analysis!!}
+
+\subsection{C7 Combinations of sets: table entries 2,6,10}
+If we let $0\leq s\leq t$, then an \textbf{$s$-combination of} [$t$] is a subset of size $s$ of $[t]$.
+
+\defn The binomial coefficient $t\choose s$ is defined (combinatorially) to be the number of $s$-combinations of $[t]$.
+
+\begin{theorem}
+    \[{t\choose s} = \frac{(t)_s}{s!}=\frac{t!}{(t-s)!s!}\]
+\end{theorem}
+\begin{proof}
+    Consider the number of $s$-perms of $[t]$. 
+    
+    We can count it directly: $(t)_s$.
+
+    Alternatively, make task 1 `selecting a subset of size $s$', which gives us $t\choose s$ ways. Make task 2 the ways of ordering a subset, which give $s!$ ways. By multiplication principle, the number of $s$-perms of $[t]$ is ${t\choose s}s!$.
+
+    We have $(t)_s={t\choose s}s!$, giving us the formula above.
+\end{proof}
+
+\eg All of the following are equivalent and satisfy table entry \circled 2\sidenote{$0\leq u_i\leq 1$}:
+\begin{itemize}
+    \item Select $s$ books out of $t$ distinct books;
+    \item Place $s$ stickers on $t$ books, at most one sticker per book;
+    \item Put $s$ identical objects into $t$ distinct boxes, each box can only have at most 1 object.
+\end{itemize}
+
+\eg These equivalent problems satisfy table entry \circled 6:\sidenote{$0\leq u_i<\infty$}
+\begin{itemize}
+    \item Solutions to $x_1+x_2+x_3+x_4+x_5=12$ where $x_i\geq 0$ are integers.
+    \item Packing a box of 12 bagels of 5 different types of bagels with unlimited supply.
+    \item Number of permutations of 12 objects and 4 `drawer dividers': \[\bullet\bullet \,|\, \bullet\bullet\bullet \,|\, \bullet\bullet\,|\, \bullet\bullet\bullet\bullet \,|\, \bullet\]
+\end{itemize}
+
+\rmk In general, when we count the number of anagrams $s~\bullet$s and $t-1 \mid$s, there are $s+t-1$ total symbols. We must select $s$ of the $s+t-1$ positions to be $\bullet$. Hence, the number of ways would be\sidenote{LHS is choose $\bullet$, RHS is choose $\mid$.} \[{{s+t-1}\choose s}={{s+t-1}\choose t-1}\]
+
+\eg Entry \circled{10} is the same as \circled 6 except that each box must be nonempty:\begin{itemize}
+    \item Solutions to $x_1+\dots + x_s=t$ where $x_i\geq 1$ integers.
+    \item Select $s$ bagels from $t$ types, with each type chosen at least once. 
+    
+    This reduces to the prev problem: select one of each type of bagel first; then, we choose $s-t$ bagels of $t$ types.
+
+    \item Anagrams with $s$ $\bullet$s and $t-1$ $\mid$: must avoid $||$ and $|$ at beginning or end. Then we could think about placing $t-1$ dividers in the $s-1$ spaces between $\bullet$s, giving us $s-1\choose t-1$ ways.
+\end{itemize}
+
+\subsection{C8 Anagrams}
+\eg Find the number of anagrams of the word \begin{center}
+    COMBINATORIALISTICALLY
+\end{center}
+First, suppose all 22 letters were distinct. We put subscripts:
+\[\mathrm{C_1O_1MBI_1NA_1T_1O_2RI_2A_2L_1I_3ST_2I_4C_2A_3L_2L_3Y}\]
+Now we have this multiset: \[\{\mathrm{2C, 2O, M, B, 4I, N, 3A, 2T, R, 3L, S, Y}\}\]
+We want to find the ways of arranging this!
+\begin{itemize}
+    \item Assuming everything is distinct: 22! ways.
+    \item Same assumption but with two tasks in multiplication:\begin{itemize}
+        \item Task 1: Arrange without subscripts (what we want)
+        \item Task 2: Add subscripts: the number of ways to add them is \[2!\times 2!\times 1!\times 1!\times 4!\times 1!\times 3!\times 2!\times 1!\times 3!\times 1!\times 1!\]
+    \end{itemize}
+\end{itemize}
+Therefore, our answer would be (in multinomial coefficient)\sidenote{DO NOT LEAVE OUT 1s}\begin{align*}
+    &\frac{22!}{2!\times 2!\times 1!\times 1!\times 4!\times 1!\times 3!\times 2!\times 1!\times 3!\times 1!\times 1!}
+    =&{ 22\choose 2,2,1,1,4,1,3,2,1,3,1,1}
+\end{align*}
+
+\subsection{C9 More circular tables}
+\eg \label[example]{alien-conference} An alien conference has 9 Martian hare delegates and 16 Jovian hare delegates, with each type of hare identical. How many distinguishable ways are there to seat them at a circular table?
+
+Method: first consider the ways of arrangement at a marked table.
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Circle [id:dp9867838680866461] 
+    \draw   (77,85.13) .. controls (77,56.34) and (100.34,33) .. (129.13,33) .. controls (157.92,33) and (181.26,56.34) .. (181.26,85.13) .. controls (181.26,113.92) and (157.92,137.26) .. (129.13,137.26) .. controls (100.34,137.26) and (77,113.92) .. (77,85.13) -- cycle ;
+    %Shape: Cross [id:dp053203375302823375] 
+    \draw   (131.27,39.77) -- (135.62,44.13) -- (132.36,47.39) -- (135.62,50.66) -- (131.27,55.02) -- (128,51.75) -- (124.73,55.02) -- (120.38,50.66) -- (123.64,47.39) -- (120.38,44.13) -- (124.73,39.77) -- (128,43.04) -- cycle ;
+    \end{tikzpicture}
+    \]
+
+\begin{itemize}
+    \item We seat 9 Martian hares and fill out the rest with Jovian ones: $\displaystyle {25\choose 9}$.
+    \item We place all hares (the answer we want) and then mark the table. In the end we should get the same answer of $\displaystyle{ 25\choose 9}$.\begin{itemize}
+        \item How do we mark the table? There are 25 places that can be marked, but \dashuline{not all of them are distinct}! For instance:
+        \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+            
+            %Shape: Circle [id:dp9867838680866461] 
+            \draw   (77,85.13) .. controls (77,56.34) and (100.34,33) .. (129.13,33) .. controls (157.92,33) and (181.26,56.34) .. (181.26,85.13) .. controls (181.26,113.92) and (157.92,137.26) .. (129.13,137.26) .. controls (100.34,137.26) and (77,113.92) .. (77,85.13) -- cycle ;
+            %Curve Lines [id:da9747269900319728] 
+            \draw    (125,23) .. controls (156.93,22.53) and (190.58,39.19) .. (190.28,98.71) ;
+            \draw [shift={(190.26,100.53)}, rotate = 270.94] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+            
+            % Text Node
+            \draw (122.13,39) node [anchor=north west][inner sep=0.75pt]   [align=left] {M};
+            % Text Node
+            \draw (139.13,44) node [anchor=north west][inner sep=0.75pt]   [align=left] {M};
+            % Text Node
+            \draw (151.13,56) node [anchor=north west][inner sep=0.75pt]   [align=left] {J};
+            % Text Node
+            \draw (161.13,65) node [anchor=north west][inner sep=0.75pt]   [align=left] {J};
+            % Text Node
+            \draw (160.13,84) node [anchor=north west][inner sep=0.75pt]   [align=left] {M};
+            % Text Node
+            \draw (180,108) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {repeat this \\pattern 5 times};
+            
+            
+            \end{tikzpicture}\]
+        then the table only has 5 distinct markings due to rotational symmetry.
+    \end{itemize}
+\end{itemize}
+\begin{theorem}
+    Consider an arrangement on a circular table with $n$ spots. Let $R_k$ be the action of rotating this table by $k$ places. Define:\sidenote{$F$ is the \textit{stabilizer} of the group action} \[F=\{k\in \Z\mid R_k\text{ leaves the arrangement unchanged}\}\]
+    Then we have: \begin{enumerate}
+        \item $F$ is the set of multiples of some $d|n$.
+        \item A length $d$ pattern would be repeated $\frac{n}{d}$ times (so there are only $\frac{n}{d}$ distinct markings)
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Let $d$ be the smallest positive integer such that $R_d\in F$. \sidenote{Review Abstract Alg. 1}
+    Suppose BWOC $k\in F$ but $d\not\mid k$. Then let $k=md+r$ with $r\leq d$, and rotation by $r$ would be: $R_kR_{-md}$. Since $k\in F$, this also fixes the arrangement. However, $r<d$ contradicts the fact that $d$ is the smallest positive integer such that $R_d\in F$. 
+\end{proof}
+
+Back to \cref{alien-conference}: \(F=d\Z\) where $d=1,5,25$.
+\begin{itemize}
+    \item If $d=1$, 25 ways of marking the table.
+    \item $d=5$, 5 ways of marking.
+    \item $d=25$, 1 way of marking.
+\end{itemize}
 
 \end{document} 
