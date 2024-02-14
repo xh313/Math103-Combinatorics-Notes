@@ -988,6 +988,7 @@ We want to find the ways of arranging this!
         \item Task 2: Add subscripts: the number of ways to add them is \[2!\times 2!\times 1!\times 1!\times 4!\times 1!\times 3!\times 2!\times 1!\times 3!\times 1!\times 1!\]
     \end{itemize}
 \end{itemize}
+\addlink{Multinomial coefficient}
 Therefore, our answer would be (in multinomial coefficient)\sidenote{DO NOT LEAVE OUT 1s}\begin{align*}
     &\frac{22!}{2!\times 2!\times 1!\times 1!\times 4!\times 1!\times 3!\times 2!\times 1!\times 3!\times 1!\times 1!}
     =&{ 22\choose 2,2,1,1,4,1,3,2,1,3,1,1}
@@ -1056,5 +1057,52 @@ Back to \cref{alien-conference}: \(F=d\Z\) where $d=1,5,25$.
     \item $d=5$, 5 ways of marking.
     \item $d=25$, 1 way of marking.
 \end{itemize}
+
+\addlink{Multichoose notation}
+\defn[Multichoose notation] Define the ways to select a bag of $k$ items from $n$ different types of item to be $\left({n\choose k}\right) = {k+n-1\choose k}= {k+n-1\choose n-1}$.
+
+\section{D Binomial Coefficients}
+We know that $n\choose k$ is the number of $k$-subsets of $[n]$, which is $\frac{n!}{k!(n-k)!}$.
+
+\subsection{D1 Binomial identities}
+\begin{proposition}\label{binomial-prop1}
+    \[{n\choose k}={n\choose n-k}\]
+    That is, the number of ways to get $k$-subsets in $[n]$ is the same as that of $n-k$-subsets.
+\end{proposition}
+\begin{proposition}
+    \label{binomial-prop2}
+    \[{n\choose 0}+{n\choose 1}+\dots+{n\choose n}=2^n\]
+    This is because the RHS counts \textbf{all} subsets of $[n]$, while each summand on the LHS counts the number of $k$-subsets thereof.
+\end{proposition}
+\begin{proposition}
+    \label{binomial-prop3}
+    For $n\geq 1$, \[{n\choose 0}+{n\choose 2}+\dots+{n\choose 2\lfloor\frac{n}{2}\rfloor}=2^{n-1}\]\sidenote{$\lfloor a\rfloor$ is the largest integer $\leq a$}
+    This is because the RHS chooses any subset of $[n-1]$, then makes the subset \textbf{even} by putting or not putting the $n$ into it (the $n$ doesn't get to choose).
+\end{proposition}
+\begin{proposition}[Binomial recurrence]
+    \label{binomial-prop4}
+    \[\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}\]
+    This is because the LHS chooses $k$-subsets of $[n]$, and the RHS splits the case into 1) the subset contains $n$, which gives us $\binom{n-1}{k-1}$ ways to choose the rest, and 2) the subset doesn't contain $n$, which gives us $\binom{n-1}{k}$.
+\end{proposition}
+
+This allows us to construct the table:
+\[\begin{tabular}{l|lllll}
+    $n\backslash k$ & 0 & 1 & 2 & 3 & 4 \\\hline
+    0                  & 1 & 0 & 0 & 0 & 0 \\
+    1                  & 1 & 1 & 0 & 0 & 0 \\
+    2                  & 1 & 2 & 1 & 0 & 0 \\
+    3                  & 1 & 3 & 3 & 1 & 0 \\
+    4                  & 1 & 4 & 6 & 4 & 1
+    \end{tabular}\]
+
+\begin{proposition}
+    \label{binomial-prop5}
+    \[{n\choose 0}^2+{n\choose 1}^2+\dots+{n\choose n}^2=\binom{2n}{n}\]
+    Say there are $2n$ students: $n$ in class G and $n$ in class S. We need to choose $n$ students.
+    \begin{itemize}
+        \item Method 1: choose $n$ students: $\binom{2n}{n}$
+        \item Method 2: let $k=0,1,\dots,n$. Select $k$ S to go and select $k$ G to NOT go. Then we have $\binom{n}{k}$ for each of the process. Hence, the total number of ways is $\sum_{k=0}^{n}\binom{n}{k}^2$.
+    \end{itemize}
+\end{proposition}
 
 \end{document} 
