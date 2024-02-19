@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 \input{customcommands}
 
+\usepackage{lscape}
+
 %=============
 
 \begin{document}
@@ -36,7 +38,7 @@
 
 We have $f(n)=f(n-1)+f(n-2)$ for all $n\geq 2$. Hence, $f(n)$ is the sequence that satisfies the recurrence relation and the initial conditions $f(0)=1, f(1)=2$.
 
-\subsection{A2 Fibonnacci Sequence}
+\subsection{A2 Fibonnacci sequence}
 \begin{align*}
     0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,\dots
 \end{align*}
@@ -516,7 +518,7 @@ We would want to prove that $K_{N(q,r)}\to K_q,K_r$ for all $q,r\geq 1$.
     \end{enumerate}
 \end{proof}
 
-\subsection{B4 Ramsey Numbers}
+\subsection{B4 Ramsey numbers}
 Recall: Let $m,n$ be positive integers. We know that there are numbers $p\in \N$ such that $K_p\to K_m,K_n$.
 
 \rmk If $p$ works, then so does any $q\geq p$ as $K_q$ would contain copies of $K_p$.
@@ -1104,5 +1106,122 @@ This allows us to construct the table:
         \item Method 2: let $k=0,1,\dots,n$. Select $k$ S to go and select $k$ G to NOT go. Then we have $\binom{n}{k}$ for each of the process. Hence, the total number of ways is $\sum_{k=0}^{n}\binom{n}{k}^2$.
     \end{itemize}
 \end{proposition}
+
+\subsection{D2 Binomial theorem}
+\begin{theorem}
+    Let $n\geq 0$ be an integer. \sidenote{This gives a relationship between the Karaji/Pascal triangle and polynomial algebra.}Then: \[(x+y)^n=\sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^k\]
+\end{theorem}
+\begin{proof}
+    \[(x+y)^n = (x+y)(x+y)\dots (x+y)\]
+    A typical term looks like $n$ terms $x,y$ multiplied together, in some amount: $x^{n-k}y^k$.
+
+    We get that term by selecting $k$ partentheses to take the $y$ from, and we take $x$ from the rest. This gives $n\choose k$ ways.
+\end{proof}
+\eg \[\begin{aligned}(x+y)^{0}&=1,\\[8pt](x+y)^{1}&=x+y,\\[8pt](x+y)^{2}&=x^{2}+2xy+y^{2},\\[8pt](x+y)^{3}&=x^{3}+3x^{2}y+3xy^{2}+y^{3},\\[8pt](x+y)^{4}&=x^{4}+4x^{3}y+6x^{2}y^{2}+4xy^{3}+y^{4},\\[8pt](x+y)^{5}&=x^{5}+5x^{4}y+10x^{3}y^{2}+10x^{2}y^{3}+5xy^{4}+y^{5},\\[8pt](x+y)^{6}&=x^{6}+6x^{5}y+15x^{4}y^{2}+20x^{3}y^{3}+15x^{2}y^{4}+6xy^{5}+y^{6},\\[8pt](x+y)^{7}&=x^{7}+7x^{6}y+21x^{5}y^{2}+35x^{4}y^{3}+35x^{3}y^{4}+21x^{2}y^{5}+7xy^{6}+y^{7},\\[8pt]\dots \end{aligned}\]
+
+\eg \begin{align*}
+    1.01^5&= \sum_{k=0}^{5}\binom{5}{k}0.01^k\\
+    &= 1.010510100501
+\end{align*}
+
+
+\begin{landscape}
+    \addlink{The Karaji/Pascal triangle}
+		\begin{table}[htbp]
+            \caption{Jia-Karaji triangle up to $n=20$.}
+			\setlength{\tabcolsep}{4.5pt}
+			\def\arraystretch{1.2}
+		\small
+		\begin{tabular}{lllllllllllllllllllll}
+		1 &    &     &      &      &       &       &       &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 1  &     &      &      &       &       &       &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 2  & 1   &      &      &       &       &       &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 3  & 3   & 1    &      &       &       &       &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 4  & 6   & 4    & 1    &       &       &       &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 5  & 10  & 10   & 5    & 1     &       &       &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 6  & 15  & 20   & 15   & 6     & 1     &       &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 7  & 21  & 35   & 35   & 21    & 7     & 1     &        &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 8  & 28  & 56   & 70   & 56    & 28    & 8     & 1      &        &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 9  & 36  & 84   & 126  & 126   & 84    & 36    & 9      & 1      &        &        &        &       &       &       &      &      &     &    &   \\
+		1 & 10 & 45  & 120  & 210  & 252   & 210   & 120   & 45     & 10     & 1      &        &        &       &       &       &      &      &     &    &   \\
+		1 & 11 & 55  & 165  & 330  & 462   & 462   & 330   & 165    & 55     & 11     & 1      &        &       &       &       &      &      &     &    &   \\
+		1 & 12 & 66  & 220  & 495  & 792   & 924   & 792   & 495    & 220    & 66     & 12     & 1      &       &       &       &      &      &     &    &   \\
+		1 & 13 & 78  & 286  & 715  & 1287  & 1716  & 1716  & 1287   & 715    & 286    & 78     & 13     & 1     &       &       &      &      &     &    &   \\
+		1 & 14 & 91  & 364  & 1001 & 2002  & 3003  & 3432  & 3003   & 2002   & 1001   & 364    & 91     & 14    & 1     &       &      &      &     &    &   \\
+		1 & 15 & 105 & 455  & 1365 & 3003  & 5005  & 6435  & 6435   & 5005   & 3003   & 1365   & 455    & 105   & 15    & 1     &      &      &     &    &   \\
+		1 & 16 & 120 & 560  & 1820 & 4368  & 8008  & 11440 & 12870  & 11440  & 8008   & 4368   & 1820   & 560   & 120   & 16    & 1    &      &     &    &   \\
+		1 & 17 & 136 & 680  & 2380 & 6188  & 12376 & 19448 & 24310  & 24310  & 19448  & 12376  & 6188   & 2380  & 680   & 136   & 17   & 1    &     &    &   \\
+		1 & 18 & 153 & 816  & 3060 & 8568  & 18564 & 31824 & 43758  & 48620  & 43758  & 31824  & 18564  & 8568  & 3060  & 816   & 153  & 18   & 1   &    &   \\
+		1 & 19 & 171 & 969  & 3876 & 11628 & 27132 & 50388 & 75582  & 92378  & 92378  & 75582  & 50388  & 27132 & 11628 & 3876  & 969  & 171  & 19  & 1  &   \\
+		1 & 20 & 190 & 1140 & 4845 & 15504 & 38760 & 77520 & 125970 & 167960 & 184756 & 167960 & 125970 & 77520 & 38760 & 15504 & 4845 & 1140 & 190 & 20 & 1
+		\end{tabular}
+		\end{table}
+	\end{landscape}
+
+\subsection{D3 Further binomial identities}
+
+Immediate consequences from the binomial theorem:
+\begin{corollary}
+    \((1+x)^n = \sum_{k=1}^{n}\binom{n}{k}x^k\)
+\end{corollary}
+And therefore,
+\begin{corollary}
+    $2^n=\sum_{k=0}^{n}\binom{n}{k}$, $0^n=\sum_{k=0}^{n}(-1)^k\binom{n}{k}$\sidenote{take $x=1$ or $x=-1$}
+\end{corollary}
+
+\begin{theorem} Observe:
+    \begin{enumerate}[label=(\alph*)]
+        \item \[\sum_{k=1}^{n}k\binom{n}{k}=1\binom{n}{1}+2\binom{n}{2}+\dots +n\binom{n}{n}=n\cdot 2^{n-1}\]
+        \item \[\sum_{k=1}^{n}k\binom{n}{k}=1\binom{n}{1}+2\binom{n}{2}+\dots +n\binom{n}{n}=(n+1)n2^{n-2}\]
+    \end{enumerate}
+\end{theorem}
+\ontangent{
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=tiny]
+            {0\cdot 1} \\
+            0\cdot1 \& 1\cdot1 \&\&\&\& {=1=1\times 1} \\
+            0\cdot1 \& 1\cdot2 \& 2\cdot1 \&\&\& {=4=2\times 2} \\
+            0\cdot1 \& 1\cdot3 \& 2\cdot3 \& 3\cdot1 \&\& {=12=3\times 4} \\
+            0\cdot1 \& 1\cdot4 \& 2\cdot6 \& 3\cdot4 \& 4\cdot1 \& {=32=4\times 8}
+        \end{tikzcd}\]
+        \item \[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=tiny]
+            {0\cdot 1} \\
+            0\cdot1 \& 1\cdot1 \&\&\&\& {=1=1\times 1} \\
+            0\cdot1 \& 1\cdot2 \& 4\cdot1 \&\&\& {=6=3\times 2} \\
+            0\cdot1 \& 1\cdot3 \& 4\cdot3 \& 9\cdot1 \&\& {=24=6\times 4} \\
+            0\cdot1 \& 1\cdot4 \& 4\cdot6 \& 9\cdot4 \& 16\cdot1 \& {=80=10\times 8}
+        \end{tikzcd}\]
+    \end{enumerate}
+}
+\begin{proof}[Proof (a), method 1]
+    We know $\sum_{k=0}^{n}\binom{n}{k}x^k \equiv (1+x)^n$. Hence, we can take  the derivative of both sides: \[\sum_{k=1}^{n}k\binom{n}{k}x^{k-1}\equiv n(1+x)^{n-1}\]
+    Now let $x=1$ and obtain $\sum_{k=1}^{n}k\binom{n}{k}=n\cdot 2^{n-1}$.
+\end{proof}
+\begin{proof}[Proof (b), method 1]
+    Similar to proof (a) but we first multiply both sides of the differentiated equation in (a) by $x$: $\sum_{k=1}^{n}k\binom{n}{k}x^{k}\equiv xn(1+x)^{n-1}$. Then we differentiate it again and plug in $x=1$.\sidenote{check this!}
+\end{proof}
+\begin{proof}[Proof (a), method 2]
+    We let there be $n$ people, with $k$ of them selected to jointhe  elite squad™. One of the person in elite squad™ is given a secret microfiche. In how many ways can this be done?
+
+    \begin{itemize}[align=left]
+        \item[Way 1:] Choose $k$ be the size of the elite squad™, so $k$ could be anything from 1 to $n$. We need to choose $k$ people among $n$, giving us $n\choose k$ ways. Then, we choose one person among the $k$ to give a microfiche. The total number of ways is $\sum_{k=1}^{n}{n\choose k}k$.
+        \item[Way 2:] Assign a microfiche, which can be done in $n$ ways. Decide who else is in the squad: it is either `yes' (in the elite squad™) or `no'. Hence, we make a binary decision for $n-1$ people, which gives us $2^{n-1}$ ways. The total number of ways is $n\cdot 2^{n-1}$.
+    \end{itemize}
+    Both methods give the same answer.
+\end{proof}
+\begin{proof}[Proof (b), method 2]
+    We let there be $n$ people, with $k$ of them selected to jointhe  elite squad™. One of the person in elite squad™ is given a homework problem. One of the person (could be the same) in elite squad™ is given an investigation problem. In how many ways can this be done?
+
+    \begin{itemize}[align=left]
+        \item[Way 1:] Choose $k$ be the size of the elite squad™, so $k$ could be anything from 1 to $n$. We need to choose $k$ people among $n$, giving us $n\choose k$ ways. Then, we choose one person among the $k$ to give homework, and choose again to give an investigation. The total number of ways is $\sum_{k=1}^{n}{n\choose k}k^2$.
+        \item[Way 2:] We first consider the case where the homework and investigation go to the same person. Assign them, which can be done in $n$ ways. Decide who else is in the squad: it is either `yes' (in the elite squad™) or `no'. Hence, we make a binary decision for $n-1$ people, which gives us $2^{n-1}$ ways. The total number of ways is $n\cdot 2^{n-1}$.
+        
+        Next, we consider the case where the homework and investigation go to different people. Assign homework, which can be done in $n$ ways. Then, assign investigation, which can be given to the rest $n-1$ people. We then decide who else is in the squad, giving us $2^{n-2}$ ways.
+
+        Hence, we have \(n\cdot 2^{n-1}+ n(n-1)\cdot 2^{n-2}= n(n+1)2^{n-2}\) ways.
+    \end{itemize}
+    Both methods give the same answer.
+\end{proof}
 
 \end{document} 
