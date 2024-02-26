@@ -1280,6 +1280,7 @@ In general, the number of points on the plane satisfying $x_0+x_1+\dots + x_d=k-
 
 \section{E Catalan numbers}
 
+\subsection{E1 Examples}
 \eg How many sequecnes $a_1,a_2,\dots,a_n$ are there, where $n$ of the terms are $+1$ and $n$ are $-1$, such that the partial sums are all nonnegative? That is, $a_1+a_2+\dots+a_k\geq 0$ for all $k$?
 
 The problem concerns a multiset: $n$ objects of type 1 and $n$ of type 2. We want to count the number of permutations such that the number of type 1 occuring in the first $k$ letters is $\geq $ the number of type 2 occuring in the first $k$ letters for all $k=0,1,\dots,2n$. 
@@ -1310,5 +1311,214 @@ We can calculate a few:
 %         \end{itemize} 
 %     \end{itemize}
 % }
+
+\eg $C_n$ is also the number of anagrams of $\underset{n}{\underbrace{NN\dots N}}\underset{n}{\underbrace{EE\dots E}}$ such that every initial segment has more $N$ than $E$.
+
+\textbf{\underline{Conjecture:}} $\displaystyle C_n=\frac{1}{n+1}{2n\choose n}$
+
+\subsection{E2 First attempt}
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1.,xscale=1.]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Grid [id:dp05086476571583698] 
+    \draw  [draw opacity=0] (117,67) -- (237.26,67) -- (237.26,187.51) -- (117,187.51) -- cycle ; \draw   (117,67) -- (117,187.51)(137,67) -- (137,187.51)(157,67) -- (157,187.51)(177,67) -- (177,187.51)(197,67) -- (197,187.51)(217,67) -- (217,187.51)(237,67) -- (237,187.51) ; \draw   (117,67) -- (237.26,67)(117,87) -- (237.26,87)(117,107) -- (237.26,107)(117,127) -- (237.26,127)(117,147) -- (237.26,147)(117,167) -- (237.26,167)(117,187) -- (237.26,187) ; \draw    ;
+    %Shape: Right Triangle [id:dp10810256190463985] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.56 ] (237,67) -- (117,187) -- (237,187) -- cycle ;
+    %Straight Lines [id:da0992245402697518] 
+    \draw    (327.46,140.2) -- (206,140.2) ;
+    \draw [shift={(204,140.2)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+    %Straight Lines [id:da160597462279765] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (237,68.5) -- (198.5,68.5) -- (198.5,88.5) -- (178.5,88.5) -- (178.5,128.5) -- (158.5,128.5) -- (158.5,134.86) -- (158.5,148.5) -- (138.5,148.5) -- (138.5,168.5) -- (118.5,168.5) -- (118.5,187)(237,65.5) -- (195.5,65.5) -- (195.5,85.5) -- (175.5,85.5) -- (175.5,125.5) -- (155.5,125.5) -- (155.5,134.86) -- (155.5,145.5) -- (135.5,145.5) -- (135.5,165.5) -- (115.5,165.5) -- (115.5,187) ;
+    
+    % Text Node
+    \draw (244.4,118.6) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {Do not enter};
+    % Text Node
+    \draw (59.6,194.2) node [anchor=north west][inner sep=0.75pt]   [align=left] {Start $\displaystyle ( 0,0)$};
+    % Text Node
+    \draw (206.8,43.8) node [anchor=north west][inner sep=0.75pt]   [align=left] {End $\displaystyle ( n,n)$};
+    
+    
+    \end{tikzpicture}
+    \]
+
+    \textbf{Question:} when is the \textbf{first time} we return to the diagonal? That is, what is the smallest $k\in \{1,2,\dots,n\}$ such that we get $(k,k)$?
+
+    \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Grid [id:dp43629158818005953] 
+        \draw  [draw opacity=0] (117,67) -- (237.26,67) -- (237.26,187.51) -- (117,187.51) -- cycle ; \draw   (117,67) -- (117,187.51)(137,67) -- (137,187.51)(157,67) -- (157,187.51)(177,67) -- (177,187.51)(197,67) -- (197,187.51)(217,67) -- (217,187.51)(237,67) -- (237,187.51) ; \draw   (117,67) -- (237.26,67)(117,87) -- (237.26,87)(117,107) -- (237.26,107)(117,127) -- (237.26,127)(117,147) -- (237.26,147)(117,167) -- (237.26,167)(117,187) -- (237.26,187) ; \draw    ;
+        %Shape: Right Triangle [id:dp910522544221946] 
+        \draw  [color={rgb, 255:red, 248; green, 231; blue, 28 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.56 ][line width=2.25]  (237,67) -- (117,187) -- (237,187) -- cycle ;
+        %Straight Lines [id:da5998488809695885] 
+        \draw    (327.46,140.2) -- (206,140.2) ;
+        \draw [shift={(204,140.2)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Straight Lines [id:da8771947101201794] 
+        \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (237,68.5) -- (198.5,68.5) -- (198.5,87) -- (198.5,108.5) -- (158.5,108.5) -- (158.5,128.5) -- (138.5,128.5) -- (138.5,148.5) -- (118.5,148.5) -- (118.5,187)(237,65.5) -- (195.5,65.5) -- (195.5,87) -- (195.5,105.5) -- (155.5,105.5) -- (155.5,125.5) -- (135.5,125.5) -- (135.5,145.5) -- (115.5,145.5) -- (115.5,187) ;
+        %Straight Lines [id:da3429548095568469] 
+        \draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=2.25]    (117,167) -- (177,107) ;
+        %Shape: Rectangle [id:dp8136563088561988] 
+        \draw  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ][line width=1.5]  (117,107) -- (177,107) -- (177,167) -- (117,167) -- cycle ;
+        %Shape: Rectangle [id:dp9042619059945287] 
+        \draw  [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=1.5]  (197,67) -- (237,67) -- (237,107) -- (197,107) -- cycle ;
+        
+        % Text Node
+        \draw (244.4,118.6) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {Do not enter};
+        % Text Node
+        \draw (59.6,194.2) node [anchor=north west][inner sep=0.75pt]   [align=left] {Start $\displaystyle ( 0,0)$};
+        % Text Node
+        \draw (207.6,43.8) node [anchor=north west][inner sep=0.75pt]   [align=left] {End $\displaystyle ( n,n)$};
+        % Text Node
+        \draw (199,110.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$( k,k)$};
+        
+        
+        \end{tikzpicture}
+        \]
+
+Steps: \begin{enumerate}
+    \item $(0,0)\to (0,1)$\hfill 1 way
+    \item $(0,1)\to (k-1, k)$ w/o crossing orange line\hfill $C_{k-1}$ ways\sidenote{in the purple square}
+    \item $(k-1,k)\to (k,k)$\hfill 1 way
+    \item $(0,1)\to (k-1, k)$ w/o crossing yellow line\hfill $C_{n-k}$ ways\sidenote{in the green square}
+\end{enumerate}
+Hence\sidenote{the Catalan recurrence} \[C_n=\sum_{k=1}^{n} C_{k-1}C_{n-k}\]
+And so $C_n=C_0C_{n-1}+\dots + C_{n-1}C_0$.
+
+\eg How many ways to triangulate a convex 47-sided polygon by drawing diagonals? ANS: $D_{47}$!
+
+Examples: \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Triangle [id:dp9204215251759331] 
+    \draw   (101.88,107) -- (123.76,147) -- (80,147) -- cycle ;
+    %Shape: Square [id:dp6960645979215019] 
+    \draw   (160,104.86) -- (201.74,104.86) -- (201.74,146.6) -- (160,146.6) -- cycle ;
+    %Shape: Square [id:dp8790419330473327] 
+    \draw   (212,104.86) -- (253.74,104.86) -- (253.74,146.6) -- (212,146.6) -- cycle ;
+    %Straight Lines [id:da10159556423687888] 
+    \draw    (160,104.86) -- (201.74,146.6) ;
+    %Straight Lines [id:da3782077165685771] 
+    \draw    (212,146.6) -- (253.74,104.86) ;
+    
+    % Text Node
+    \draw (77.2,157.8) node [anchor=north west][inner sep=0.75pt]    {$D_{3} =1$};
+    % Text Node
+    \draw (186,160.2) node [anchor=north west][inner sep=0.75pt]    {$D_{4} =2$};
+    
+    
+    \end{tikzpicture}
+\dots    
+
+\textbf{Conjecture:} $D_n=C_{n-2}$
+\begin{proof}[Induction proof]
+    Base case is done as shown above.
+
+    Inductive step: suppose it works for $n=2,3,\dots,k+1$. Now we want to show $D_{k+2}=C_k$.
+
+    \uline{Case $j$}: we pick a side that has a triangle that goes to the vertex $j$.
+    \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Regular Polygon [id:dp5268773396138595] 
+        \draw   (282.94,161.81) -- (263.83,203.81) -- (225.06,228.81) -- (178.92,228.87) -- (140.08,203.98) -- (120.85,162.05) -- (127.35,116.37) -- (157.51,81.46) -- (201.76,68.4) -- (246.05,81.33) -- (276.31,116.16) -- cycle ;
+        %Shape: Polygon [id:ds3458377758370945] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.42 ] (225.06,228.81) -- (178.92,228.87) -- (246.05,81.33) -- cycle ;
+        
+        % Text Node
+        \draw (126.8,202.6) node [anchor=north west][inner sep=0.75pt]    {$1$};
+        % Text Node
+        \draw (101.2,154.8) node [anchor=north west][inner sep=0.75pt]    {$2$};
+        % Text Node
+        \draw (114.8,71.6) node [anchor=north west][inner sep=0.75pt]    {$\dotsc $};
+        % Text Node
+        \draw (246,56.8) node [anchor=north west][inner sep=0.75pt]    {$j$};
+        % Text Node
+        \draw (294.8,141.2) node [anchor=north west][inner sep=0.75pt]    {$\dotsc $};
+        % Text Node
+        \draw (265.83,207.21) node [anchor=north west][inner sep=0.75pt]    {$k$};
+        
+        
+        \end{tikzpicture}
+        \]
+        On the left, we have a $j+1$ sided polygon and so the number of ways of triangulation is $D_{j+1}=C_{j-1}$.
+
+        On the right, we have a $k-j+2$ sided polygon and so the number of ways of triangulation is $D_{k-j+2}=C_{k-j}$.
+
+        Hence, the number of ways in total is $C_{j-1}\cdot C_{k-j}$. We conclude that \[D_{k+2}=\sum_{j=1}^{k}C_{j-1}C_{k-j}=C_k\] by the Catalan recurrence.
+\end{proof}
+
+\subsection{E3 The Catalan bijection}
+Suppose a path $(0,0)\to (n,n)$ is \textbf{good} if it does not cross the diagonal $y=x$. We claim that the count of good paths is $\frac{1}{n+1}\binom{2n}{n}$.
+
+Alternatively, we could show that the number of \textbf{bad} paths is $\#\text{ all paths} - \frac{1}{n+1}\binom{2n}{n}$, which means we want to show:\begin{align*}
+    \#\text{ \textbf{bad} paths} &= \binom{2n}{n} - \frac{1}{n+1}\binom{2n}{n}\\
+    &= \frac{n}{n+1}\binom{2n}{n}\\
+    &= \frac{\rt{n}}{\bt{n+1}}\frac{(2n)!}{\rt{n}!\bt{n!}}\\
+    &= \frac{(2n)!}{\rt{(n-1)!}\bt{(n+1)!}}\\
+    &= {2n\choose n+1}
+\end{align*}
+
+A \textbf{bad} path is one that crosses the diagonal $y=x$, but that is equivalent to touching the subdiagonal $y=x-1$.
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Grid [id:dp8599649850250317] 
+    \draw  [draw opacity=0] (137,87) -- (257.26,87) -- (257.26,207.51) -- (137,207.51) -- cycle ; \draw   (137,87) -- (137,207.51)(157,87) -- (157,207.51)(177,87) -- (177,207.51)(197,87) -- (197,207.51)(217,87) -- (217,207.51)(237,87) -- (237,207.51)(257,87) -- (257,207.51) ; \draw   (137,87) -- (257.26,87)(137,107) -- (257.26,107)(137,127) -- (257.26,127)(137,147) -- (257.26,147)(137,167) -- (257.26,167)(137,187) -- (257.26,187)(137,207) -- (257.26,207) ; \draw    ;
+    %Straight Lines [id:da23566208454469217] 
+    \draw [color={rgb, 255:red, 248; green, 231; blue, 28 }  ,draw opacity=1 ][line width=2.25]    (137,207) -- (227.3,116.7) -- (257,87) ;
+    %Straight Lines [id:da10185715014518837] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=2.25]    (157,207) -- (257,107) ;
+    
+    % Text Node
+    \draw (257.2,64.4) node [anchor=north west][inner sep=0.75pt]    {$y=x$};
+    % Text Node
+    \draw (259,110.4) node [anchor=north west][inner sep=0.75pt]    {$y=x-1$};
+    
+    
+    \end{tikzpicture}
+    \]
+
+\textbf{Claim}: the number of paths $(0,0)\to (n,n)$ that touch the red line is the same as the number of paths $(0,0)\to (n+1,n-1)$.
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da23566208454469217] 
+\draw [color={rgb, 255:red, 248; green, 231; blue, 28 }  ,draw opacity=1 ][line width=2.25]    (137,207) -- (227.3,116.7) -- (257,87) ;
+%Straight Lines [id:da10185715014518837] 
+\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=2.25]    (157,207) -- (257,107) ;
+%Shape: Grid [id:dp17881272925547775] 
+\draw  [draw opacity=0] (137,107) -- (277.36,107) -- (277.36,207.51) -- (137,207.51) -- cycle ; \draw  [color={rgb, 255:red, 0; green, 217; blue, 161 }  ,draw opacity=1 ] (137,107) -- (137,207.51)(157,107) -- (157,207.51)(177,107) -- (177,207.51)(197,107) -- (197,207.51)(217,107) -- (217,207.51)(237,107) -- (237,207.51)(257,107) -- (257,207.51)(277,107) -- (277,207.51) ; \draw  [color={rgb, 255:red, 0; green, 217; blue, 161 }  ,draw opacity=1 ] (137,107) -- (277.36,107)(137,127) -- (277.36,127)(137,147) -- (277.36,147)(137,167) -- (277.36,167)(137,187) -- (277.36,187)(137,207) -- (277.36,207) ; \draw  [color={rgb, 255:red, 0; green, 217; blue, 161 }  ,draw opacity=1 ]  ;
+%Shape: Grid [id:dp45429225148021546] 
+\draw  [draw opacity=0] (137,87) -- (257.26,87) -- (257.26,207.51) -- (137,207.51) -- cycle ; \draw  [color={rgb, 255:red, 187; green, 0; blue, 255 }  ,draw opacity=0.51 ] (137,87) -- (137,207.51)(157,87) -- (157,207.51)(177,87) -- (177,207.51)(197,87) -- (197,207.51)(217,87) -- (217,207.51)(237,87) -- (237,207.51)(257,87) -- (257,207.51) ; \draw  [color={rgb, 255:red, 187; green, 0; blue, 255 }  ,draw opacity=0.51 ] (137,87) -- (257.26,87)(137,107) -- (257.26,107)(137,127) -- (257.26,127)(137,147) -- (257.26,147)(137,167) -- (257.26,167)(137,187) -- (257.26,187)(137,207) -- (257.26,207) ; \draw  [color={rgb, 255:red, 187; green, 0; blue, 255 }  ,draw opacity=0.51 ]  ;
+
+% Text Node
+\draw (242.8,61.6) node [anchor=north west][inner sep=0.75pt]    {$( n,n)$};
+% Text Node
+\draw (278,96) node [anchor=north west][inner sep=0.75pt]    {$( n+1,n-1)$};
+
+
+\end{tikzpicture}
+\]
+The latter quantity is just $2n\choose n+1$.
+
+We use the following bijection:
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Straight Lines [id:da2675009840960558] 
+    \draw    (172,67.6) -- (172,201.26) ;
+    \draw [shift={(172,203.26)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+    \draw [shift={(172,65.6)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+    
+    % Text Node
+    \draw (116.4,36.4) node [anchor=north west][inner sep=0.75pt]   [align=left] {Bad path to $\displaystyle ( n,n)$};
+    % Text Node
+    \draw (109.2,215.4) node [anchor=north west][inner sep=0.75pt]   [align=left] {(Bad) path to $\displaystyle ( n+1,n-1)$};
+    % Text Node
+    \draw (187.6,81) node [anchor=north west][inner sep=0.75pt]   [align=left] {Keep path the same up\\to the first time it hits the \\red subdiagonal. After that,\\swap $\displaystyle N\leftrightarrow E$ (reflect path\\across the red line)};
+    
+    
+    \end{tikzpicture}
+    \]\sidenote{all paths are bad to $(n+1, n-1)$!}
 
 \end{document} 
