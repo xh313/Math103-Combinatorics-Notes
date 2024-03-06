@@ -931,6 +931,7 @@ However, we consider all ways of marking the `head' of the tablen to be equivale
 \end{itemize}
 
 \rmk $0^0=1$ in combinatorics.\sidenote{NOT in analysis!!}
+\drawing{0.95\linewidth}{table3-1.pdf}
 
 \subsection{C7 Combinations of sets: table entries 2,6,10}
 If we let $0\leq s\leq t$, then an \textbf{$s$-combination of} [$t$] is a subset of size $s$ of $[t]$.
@@ -949,6 +950,7 @@ If we let $0\leq s\leq t$, then an \textbf{$s$-combination of} [$t$] is a subset
 
     We have $(t)_s={t\choose s}s!$, giving us the formula above.
 \end{proof}
+
 
 \eg All of the following are equivalent and satisfy table entry \circled 2\sidenote{$0\leq u_i\leq 1$}:
 \begin{itemize}
@@ -1521,4 +1523,273 @@ We use the following bijection:
     \end{tikzpicture}
     \]\sidenote{all paths are bad to $(n+1, n-1)$!}
 
+
+\section{F Stirling numbers}
+\subsection{F1 Table entries 11, 9, 7}
+\drawing{0.95\linewidth}{table3-1.pdf}
+\begin{itemize}[align=left]
+    \item[\circled{11}: ] How many ways to place $s$ distinct objects into $t$ \textbf{unmarked} boxes such that none of the boxes are empty?\sidenote{Distinct objects, identical boxes, $u_i\geq 1$}
+    
+    $\Leftrightarrow$ organizing $s$ distinct people into $t$ nonempty teams.
+    
+    We don't know the (closed-form) answer yet, so we temporarily call it $\squig{s}{t}$.
+
+    \eg We have 4 people: A,B,C and D, and we group them into 3 teams. This is the situation $s=4,t=3$. We group:\begin{itemize}
+        \item AB|C|D
+        \item AC|B|D
+        \item AD|B|C
+        \item BC|A|D
+        \item BD|A|C
+        \item CD|A|B
+    \end{itemize}
+    Therefore, $\squig{4}{3}=6$.
+
+    \item[\circled{9}: ] How many ways to place $s$ distinct objects into $t$ \textbf{named} boxes such that none of the boxes are empty?\sidenote{Distinct objects, distinct boxes, $u_i\geq 1$}
+    
+    $\Leftrightarrow$ organizing $s$ distinct people into $t$ nonempty teams with different team names.
+
+    Compared with \circled{11}, this gives $t!$ more ways due to the labelling. Therefore, the answer is $t!\squig{s}{t}$.
+
+    \rmk This is the same as counting the number of \textit{surjective} functions $$\{1,2,\dots,s\}\to \{1,2,\dots, t\}$$ we expect some relationship with the quantity $t^s$, which counts all functions.
+
+    \item[\circled{7}: ] How many ways to place $s$ distinct objects into $t$ \textbf{unmarked} boxes?\sidenote{Distinct objects, identical boxes, $u_i\geq 0$. i.e. \circled{11} but boxes can be empty}
+    
+    Answer: \(\displaystyle \sum_{k=0}^{t}\squig{s}{k}\) where $k$ is the \# of nonempty boxes.
+\end{itemize}
+
+\rmk Observe: \[\begin{array}[t]{l|l|l|}
+    \cline{2-3}
+    u_i\geq 0 & {^{\circled{5}}\quad} t^s&{^{\circled{7}}\quad} \sum_{k=0}^{t}\squig{s}{k}\\\cline{2-3}
+    u_i\geq 1 & {^{\circled{9}}\quad}t!\squig{s}{t}& {^{\circled{11}}\quad}\squig{s}{t}\\
+    \cline{2-3}
+\end{array}\]
+We can get \circled{9} by multiplying \circled{11} by $t!$, but we cannot get \circled 5 from \circled 7 in the same way due to the empty boxes!
+
+The ways to label boxes in \circled 5 is only $(t)_k$ ways for each \# of nonempty boxes $k$.
+
+\textbf{Conclusion: } \[t^s = \sum_{k=0}^{t}(t)_k\squig{s}k\]
+It follows that the quantities $0^s, 1^s,\dots ,s^s$ are \textit{linearly} related to $\squig{s}0, \squig{s}1,\dots, \squig{s}s$.
+
+\eg Let $s=3$. \[
+    \begin{bmatrix}
+        0\\1\\8\\27
+    \end{bmatrix} =
+    \begin{bmatrix}
+        1&0&0&0\\
+        1&1&0&0\\
+        1&2&2&0\\
+        1&3&6&6
+    \end{bmatrix}\cdot
+    \begin{bmatrix}
+        \squig{3}0\\[6pt]\squig{3}1\\[6pt]\squig{3}2\\[6pt]\squig{3}3
+    \end{bmatrix}
+    \]
+where every entry $(i,j)$ of the matrix is $(i)_j$.
+
+We can invert the matrix to find what $\squig{s}t$ is, but it's computationally quite terrible!
+
+\subsection{F2 Stirling numbers of the second kind}
+
+\defn[Stirling numbers of the second kind] \[\squig{s}t=\text{\# of ways to place $s$ distinct objects into $t$ identical empty boxes}\]
+
+\addlink{Properties of Stirling numbers}
+\begin{proposition}\hfill
+    \begin{enumerate}
+        \item $\squig{s}t=0$ if $t>s$ \hfill too many boxes
+        \item $\squig{s}s=1$ \hfill must have object in its own box
+        \item $\squig{s}1=1$ for $s\geq 1$ \hfill everything in 1 box
+        \item $\squig{s}{s-1}={s\choose 2}$ \hfill which 2 ppl in the team of 2, rest solo
+        \item $\squig{s}2 = 2^{s-1}-1$
+        
+        \item[] Ways:
+        \begin{enumerate}
+            \item Ask who else among the $s-1$ people are my team, count the possibilities. Subtract the case when everyone is in my team for the other team to be nonempty.
+            \item Categorize $s$ people into two \textit{distinct} boxes, which gives us $2^s$ ways. Then, subtract the 2 ways where everyone is in the same box. Finally, since the boxes aren't distinct after all, we divide the result by $2!$.
+        \end{enumerate}
+
+        \item $\squig{s}0 = \begin{cases}
+            1 &\text{if }s=0\\
+            0 &\text{if }s\geq 1
+        \end{cases}$
+    \end{enumerate}
+\end{proposition}
+\begin{table}[H]\centering
+    \begin{tabular}{l|lllllll|l}
+    $s\backslash t$ & 0 & 1 & 2  & 3  & 4  & 5  & 6 & Row sum \\\hline
+    0   & \rt{1} & 0 & 0  & 0  & 0  & 0  & 0 & 1       \\
+    1   & 0 & \rt{1} & 0  & 0  & 0  & 0  & 0 & 1       \\
+    2   & 0 & \rt{1} & \rt{1}  & 0  & 0  & 0  & 0 & 2       \\
+    3   & 0 & \rt{1} & \bt{3}  & \rt{1}  & 0  & 0  & 0 & 5       \\
+    4   & 0 & \rt{1} & \gt{7}  & \bt{6}  & \rt{1}  & 0  & 0 & 15      \\
+    5   & 0 & \rt{1} & \gt{15} & 25 & \bt{10} & \rt{1}  & 0 & 522     \\
+    6   & 0 & \rt{1} & \gt{31} & 90 & 65 & \bt{15} & \rt{1} & 203    
+    \end{tabular}
+\end{table}\sidenote{The row sums are Bell numbers!}
+
+\begin{theorem}
+    \[\squig{s}t = t\squig{s-1}t + \squig{s-1}{t-1}\]
+\end{theorem}
+Understand this as placing people $1,2,\dots, s$ into teams $T_1,\dots,T_t$.
+
+From perspective of person $s$: \begin{itemize}[align=left]
+    \item[Case 1: ] Person $s$ is alone, so $\squig{s-1}{t-1}$ ways to organize the rest.
+    \item[Case 2: ] Person $s$ is not alone. \begin{itemize}
+        \item Organize the rest into $t$ teams, which is $\squig{s-1}t$ ways.
+        \item Join one of the teams, which is $t$ ways.
+    \end{itemize}
+\end{itemize}
+Add the two cases.
+
+\subsection{F3 Stirling numbers of the first kind}
+\defn[Stirling numbers of the first kind] \[{n\brack k} = \# \text{ of ways of seating $n$ people at $k$ circular tables (no empty table)}\]
+
+In general, ${n\brack k} \geq \squig{n}k$ (usually a lot bigger) because of the extra choices needed to seat the $k$ teams at tables.
+
+\eg We let $n=5,k=2$.
+\begin{itemize}[align=left]
+    \item[Case 1: ] split into 3+2 \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Circle [id:dp8811209584476829] 
+        \draw   (100,148.63) .. controls (100,128.4) and (116.4,112) .. (136.63,112) .. controls (156.86,112) and (173.26,128.4) .. (173.26,148.63) .. controls (173.26,168.86) and (156.86,185.26) .. (136.63,185.26) .. controls (116.4,185.26) and (100,168.86) .. (100,148.63) -- cycle ;
+        %Shape: Circle [id:dp0797589490382733] 
+        \draw   (234,167.13) .. controls (234,154.91) and (243.91,145) .. (256.13,145) .. controls (268.35,145) and (278.26,154.91) .. (278.26,167.13) .. controls (278.26,179.35) and (268.35,189.26) .. (256.13,189.26) .. controls (243.91,189.26) and (234,179.35) .. (234,167.13) -- cycle ;
+        
+        % Text Node
+        \draw (96,96.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+        % Text Node
+        \draw (180,119.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+        % Text Node
+        \draw (118,192.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+        % Text Node
+        \draw (250,123.4) node [anchor=north west][inner sep=0.75pt]    {$4$};
+        % Text Node
+        \draw (251,196.4) node [anchor=north west][inner sep=0.75pt]    {$5$};
+        
+        
+        \end{tikzpicture}
+        \]
+        \begin{itemize}
+            \item Choose two people to sit at the table for two: $5\choose 2$=10
+            \item Place around the circular tables: $(3-1)!\times(2-1)!=2$
+        \end{itemize}
+    \item[Case 2: ] split into 4+1 \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Circle [id:dp8811209584476829] 
+        \draw   (100,148.63) .. controls (100,128.4) and (116.4,112) .. (136.63,112) .. controls (156.86,112) and (173.26,128.4) .. (173.26,148.63) .. controls (173.26,168.86) and (156.86,185.26) .. (136.63,185.26) .. controls (116.4,185.26) and (100,168.86) .. (100,148.63) -- cycle ;
+        %Shape: Circle [id:dp0797589490382733] 
+        \draw   (236,141.13) .. controls (236,128.91) and (245.91,119) .. (258.13,119) .. controls (270.35,119) and (280.26,128.91) .. (280.26,141.13) .. controls (280.26,153.35) and (270.35,163.26) .. (258.13,163.26) .. controls (245.91,163.26) and (236,153.35) .. (236,141.13) -- cycle ;
+        
+        % Text Node
+        \draw (90,99.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+        % Text Node
+        \draw (171,100.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+        % Text Node
+        \draw (89,176.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+        % Text Node
+        \draw (170,174.4) node [anchor=north west][inner sep=0.75pt]    {$4$};
+        % Text Node
+        \draw (253,170.4) node [anchor=north west][inner sep=0.75pt]    {$5$};
+        
+        
+        \end{tikzpicture}
+        \]
+        \begin{itemize}
+            \item Choose 1 person to sit alone: 5
+            \item Place around circular table: $(4-1)!=6$
+        \end{itemize}
+\end{itemize}
+Hence, the total ways is ${5\brack 2}=20+30=50$.
+
+\rmk The first task of each case gives us $\squig{5}2=10+5=15$. We can get crude bounds: \[2\squig{5}2<{5\brack 2}<6\squig{5}2\]
+
+\begin{proposition}\hfill
+    \begin{enumerate}
+        \item \({n\brack k}=0\) if $k>n$: too many tables
+        \item \({n\brack 0}=0\) if $n\geq 1$: not enough tables
+        \item \({n\brack n}=1\): one person per table
+        \item \({n\brack 1}=(n-1)!\) for $n\geq 1$: simple circular permutation
+        \item \({n\brack n-1}={n\choose 2}\): which 2 sit at the table for 2
+    \end{enumerate}
+\end{proposition}
+
+\subsubsection{Table of values of \(n\brack k\)}
+\begin{table}[H]\centering
+    \begin{tabular}{l|lllllll|l|l}
+    $s\backslash t$ & 0 & 1 & 2  & 3  & 4  & 5  & 6 & Row sum & Alternating sum\\\hline
+    0   & \rt{1} & 0 & 0  & 0  & 0  & 0  & 0 & 1 & 1      \\
+    1   & 0 & \rt{1} & 0  & 0  & 0  & 0  & 0 & 1 & -1      \\
+    2   & 0 & \bt{1} & \rt{1}  & 0  & 0  & 0  & 0 & 2 & 0      \\
+    3   & 0 & \pt{2} & \bt{3}  & \rt{1}  & 0  & 0  & 0 & 6  &0     \\
+    4   & 0 & \pt{6} & 11  & \bt{6}  & \rt{1}  & 0  & 0 & 24  &0    \\
+    5   & 0 & \pt{24} & 50 & 35 & \bt{10} & \rt{1}  & 0 & 120  &0   \\
+    6   & 0 & \pt{120} & 274 & 225 & 85 & \bt{15} & \rt{1} & 720 &0   
+    \end{tabular}
+\end{table}
+
+\addlink{Recurrence of Stirling numbers of the first kind}
+\begin{theorem}
+    \[{n\brack k}=(n-1){n-1\brack k}+{n-1\brack k-1}\]
+\end{theorem}
+\begin{proof}
+    Consider from the perspective of yourself. We seat $n$ people at $k$ table.\begin{itemize}
+        \item You sit alone: \begin{itemize}
+            \item You seat the rest of the people at $k-1$ tables: $n-1\brack k-1$ ways
+            \item Claim the last table by yourself
+        \end{itemize}
+        \item You don't sit alone: \begin{itemize}
+            \item Seat the rest of the people at $k$ tables: $n-1\brack k$ ways
+            \item You sit to the left of somebody: $n-1$ ways
+        \end{itemize}
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}
+    \[\sum_{k=0}^{n}{n\brack k}=n!\]
+\end{theorem}
+\begin{proof}[Proof outline]
+    We claim: \begin{align*}
+        \text{LHS} &= \#\text{ ways to seat $n$ people at circular tables}\\
+        \text{RHS} &= \#\text{ permutations of }[n]=\{1,2,\dots,n\}
+    \end{align*}
+    and there is a bijections between ways to seat $n$ people at circular tables and permutations of $[n]$. \sidenote{Consider the elements of $S_n$.}
+\end{proof}
+
+\begin{theorem}
+    \[\sum_{k=0}^{n}(-1)^k{n\brack k} = \begin{cases}
+        1 & n=0\\
+        -1 & n=1\\
+        0 & n\geq 2
+    \end{cases}\]
+\end{theorem}
+\begin{proof}[Sketch]
+    We are effectively counting the permutations with $\pm$ sign according to whether the number of cycles is even or odd.
+
+    It turns out: \[(-1)^{\#\text{ cycles}} = (-1)^{n}\cdot (\text{sign of permutation})\] and follows that \[LHS = (-1)^{n}\cdot \det \begin{bmatrix}
+        1&1&\dots&1\\
+        1&1&\dots&1\\
+        \vdots&\vdots&\ddots &\vdots\\
+        1&1&\dots&1
+    \end{bmatrix}\]
+
+    Since $\det[]=1$, $\det[1]=1$ and $\det=0$ otherwise, we are done.
+\end{proof}
+
+\begin{theorem}
+    \[1+\frac{1}{2}+\frac{1}{3}+\dots+\frac{1}{n} = \frac{{n+1\brack 2}}{n!}\]
+\end{theorem}
+\begin{proof}[Proof by induction]
+    True for: \begin{align*}
+        1 &= \frac{1}{1}\\
+        1+\frac{1}{2} &= \frac{3}{2!}\\
+        1+\frac{1}{2} + \frac{1}{3} &= \frac{11}{3!}
+    \end{align*}
+    Then, suppose true for $n=k-1$. Then \begin{align*}
+        1+\frac{1}{2}+\dots+\frac{1}{k-1}+\frac{1}{n}&=\frac{{k\brack 2}}{(k-1)!}+\frac{1}{k}\\
+        &= \frac{k{k\brack 2}+(k-1)!}{k!}\\
+        &= \frac{k{k\brack 2}+{k\brack 1}}{k!}\\
+        &= \frac{{k+1\brack 2}}{k!}
+    \end{align*}
+\end{proof}
 \end{document} 
