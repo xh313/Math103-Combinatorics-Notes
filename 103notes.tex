@@ -1792,4 +1792,425 @@ Hence, the total ways is ${5\brack 2}=20+30=50$.
         &= \frac{{k+1\brack 2}}{k!}
     \end{align*}
 \end{proof}
+
+\section{The inclusion-exclusion (IE) principle}
+\textit{Sometimes AND is easy, but OR is difficult.} This is when IE can help.
+
+It is really about handling Venn diagrams or indicator functions.
+
+\subsection{Introduction}
+\eg How many anagrams of MATHFUN have \textbf{neither} of the substrings MATH or FUN?
+
+Let $S=\{\text{anagrams of MATHFUN}\}, A_{MATH}=\{\text{anagrams of MATH}\}$ and $A_{FUN}=\{\text{anagrams of FUN}\}$. We can draw the following Venn diagram:
+\[
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Rectangle [id:dp38802884054568243] 
+        \draw   (100,119) -- (302.59,119) -- (302.59,234.76) -- (100,234.76) -- cycle ;
+        %Shape: Circle [id:dp7635323589331515] 
+        \draw   (190.26,188.26) .. controls (190.26,168.37) and (206.37,152.26) .. (226.26,152.26) .. controls (246.14,152.26) and (262.26,168.37) .. (262.26,188.26) .. controls (262.26,208.14) and (246.14,224.26) .. (226.26,224.26) .. controls (206.37,224.26) and (190.26,208.14) .. (190.26,188.26) -- cycle ;
+        %Shape: Circle [id:dp7030560583467587] 
+        \draw   (144.26,187.26) .. controls (144.26,167.37) and (160.37,151.26) .. (180.26,151.26) .. controls (200.14,151.26) and (216.26,167.37) .. (216.26,187.26) .. controls (216.26,207.14) and (200.14,223.26) .. (180.26,223.26) .. controls (160.37,223.26) and (144.26,207.14) .. (144.26,187.26) -- cycle ;
+        
+        % Text Node
+        \draw (311,107.4) node [anchor=north west][inner sep=0.75pt]    {$S$};
+        % Text Node
+        \draw (122,135.4) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+        % Text Node
+        \draw (238,134.4) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+        
+        
+        \end{tikzpicture}      
+\]
+Where:
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Rectangle [id:dp4731520072226425] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (55,36.82) -- (211.53,36.82) -- (211.53,126.26) -- (55,126.26) -- cycle ;
+    %Shape: Ellipse [id:dp805463853475932] 
+    \draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (124.74,91.33) .. controls (124.74,75.97) and (137.19,63.51) .. (152.55,63.51) .. controls (167.92,63.51) and (180.37,75.97) .. (180.37,91.33) .. controls (180.37,106.69) and (167.92,119.14) .. (152.55,119.14) .. controls (137.19,119.14) and (124.74,106.69) .. (124.74,91.33) -- cycle ;
+    %Shape: Circle [id:dp23502392099226754] 
+    \draw  [fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (89.19,90.56) .. controls (89.19,75.19) and (101.65,62.74) .. (117.01,62.74) .. controls (132.37,62.74) and (144.83,75.19) .. (144.83,90.56) .. controls (144.83,105.92) and (132.37,118.37) .. (117.01,118.37) .. controls (101.65,118.37) and (89.19,105.92) .. (89.19,90.56) -- cycle ;
+    %Shape: Ellipse [id:dp335874410640951] 
+    \draw   (124.74,91.33) .. controls (124.74,75.97) and (137.19,63.51) .. (152.55,63.51) .. controls (167.92,63.51) and (180.37,75.97) .. (180.37,91.33) .. controls (180.37,106.69) and (167.92,119.14) .. (152.55,119.14) .. controls (137.19,119.14) and (124.74,106.69) .. (124.74,91.33) -- cycle ;
+    %Shape: Rectangle [id:dp7196978245248316] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (57,166.82) -- (213.53,166.82) -- (213.53,256.26) -- (57,256.26) -- cycle ;
+    %Shape: Ellipse [id:dp9282199642226638] 
+    \draw   (126.74,221.33) .. controls (126.74,205.97) and (139.19,193.51) .. (154.55,193.51) .. controls (169.92,193.51) and (182.37,205.97) .. (182.37,221.33) .. controls (182.37,236.69) and (169.92,249.14) .. (154.55,249.14) .. controls (139.19,249.14) and (126.74,236.69) .. (126.74,221.33) -- cycle ;
+    %Shape: Circle [id:dp035150929059933445] 
+    \draw   (91.19,220.56) .. controls (91.19,205.19) and (103.65,192.74) .. (119.01,192.74) .. controls (134.37,192.74) and (146.83,205.19) .. (146.83,220.56) .. controls (146.83,235.92) and (134.37,248.37) .. (119.01,248.37) .. controls (103.65,248.37) and (91.19,235.92) .. (91.19,220.56) -- cycle ;
+    %Shape: Rectangle [id:dp5897864622911284] 
+    \draw   (295,163.82) -- (451.53,163.82) -- (451.53,253.26) -- (295,253.26) -- cycle ;
+    %Shape: Ellipse [id:dp2470635995527788] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (364.74,218.33) .. controls (364.74,202.97) and (377.19,190.51) .. (392.55,190.51) .. controls (407.92,190.51) and (420.37,202.97) .. (420.37,218.33) .. controls (420.37,233.69) and (407.92,246.14) .. (392.55,246.14) .. controls (377.19,246.14) and (364.74,233.69) .. (364.74,218.33) -- cycle ;
+    %Shape: Circle [id:dp3814434746266411] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (329.19,217.56) .. controls (329.19,202.19) and (341.65,189.74) .. (357.01,189.74) .. controls (372.37,189.74) and (384.83,202.19) .. (384.83,217.56) .. controls (384.83,232.92) and (372.37,245.37) .. (357.01,245.37) .. controls (341.65,245.37) and (329.19,232.92) .. (329.19,217.56) -- cycle ;
+    %Shape: Ellipse [id:dp249347285064065] 
+    \draw   (364.74,218.33) .. controls (364.74,202.97) and (377.19,190.51) .. (392.55,190.51) .. controls (407.92,190.51) and (420.37,202.97) .. (420.37,218.33) .. controls (420.37,233.69) and (407.92,246.14) .. (392.55,246.14) .. controls (377.19,246.14) and (364.74,233.69) .. (364.74,218.33) -- cycle ;
+    
+    % Text Node
+    \draw (216.67,27.13) node [anchor=north west][inner sep=0.75pt]    {$S$};
+    % Text Node
+    \draw (66.97,41.53) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+    % Text Node
+    \draw (156.97,43.76) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+    % Text Node
+    \draw (55,15) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {Want:};
+    % Text Node
+    \draw (24,173.4) node [anchor=north west][inner sep=0.75pt]    {$=$};
+    % Text Node
+    \draw (218.67,157.13) node [anchor=north west][inner sep=0.75pt]    {$S$};
+    % Text Node
+    \draw (68.97,171.53) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+    % Text Node
+    \draw (158.97,173.76) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+    % Text Node
+    \draw (244,203.4) node [anchor=north west][inner sep=0.75pt]    {$-$};
+    % Text Node
+    \draw (456.67,154.13) node [anchor=north west][inner sep=0.75pt]    {$S$};
+    % Text Node
+    \draw (306.97,168.53) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+    % Text Node
+    \draw (396.97,170.76) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+    
+    
+    \end{tikzpicture}
+    \]
+Note that \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Rectangle [id:dp5763862696816828] 
+    \draw   (57,24.81) -- (213.53,24.81) -- (213.53,114.25) -- (57,114.25) -- cycle ;
+    %Shape: Ellipse [id:dp05980937945318687] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (126.74,79.32) .. controls (126.74,63.96) and (139.19,51.5) .. (154.55,51.5) .. controls (169.92,51.5) and (182.37,63.96) .. (182.37,79.32) .. controls (182.37,94.68) and (169.92,107.13) .. (154.55,107.13) .. controls (139.19,107.13) and (126.74,94.68) .. (126.74,79.32) -- cycle ;
+    %Shape: Circle [id:dp4971746073701815] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (91.19,78.55) .. controls (91.19,63.18) and (103.65,50.73) .. (119.01,50.73) .. controls (134.37,50.73) and (146.83,63.18) .. (146.83,78.55) .. controls (146.83,93.91) and (134.37,106.36) .. (119.01,106.36) .. controls (103.65,106.36) and (91.19,93.91) .. (91.19,78.55) -- cycle ;
+    %Shape: Ellipse [id:dp8356592235586819] 
+    \draw   (126.74,79.32) .. controls (126.74,63.96) and (139.19,51.5) .. (154.55,51.5) .. controls (169.92,51.5) and (182.37,63.96) .. (182.37,79.32) .. controls (182.37,94.68) and (169.92,107.13) .. (154.55,107.13) .. controls (139.19,107.13) and (126.74,94.68) .. (126.74,79.32) -- cycle ;
+    %Shape: Rectangle [id:dp11788061120560678] 
+    \draw   (59,138.09) -- (215.53,138.09) -- (215.53,227.54) -- (59,227.54) -- cycle ;
+    %Shape: Circle [id:dp742012315778511] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (93.19,191.83) .. controls (93.19,176.47) and (105.65,164.01) .. (121.01,164.01) .. controls (136.37,164.01) and (148.83,176.47) .. (148.83,191.83) .. controls (148.83,207.19) and (136.37,219.65) .. (121.01,219.65) .. controls (105.65,219.65) and (93.19,207.19) .. (93.19,191.83) -- cycle ;
+    %Shape: Ellipse [id:dp6649356813499605] 
+    \draw   (128.74,192.6) .. controls (128.74,177.24) and (141.19,164.79) .. (156.55,164.79) .. controls (171.92,164.79) and (184.37,177.24) .. (184.37,192.6) .. controls (184.37,207.96) and (171.92,220.42) .. (156.55,220.42) .. controls (141.19,220.42) and (128.74,207.96) .. (128.74,192.6) -- cycle ;
+    %Shape: Rectangle [id:dp3887579247680759] 
+    \draw   (265,138.09) -- (421.53,138.09) -- (421.53,227.54) -- (265,227.54) -- cycle ;
+    %Shape: Circle [id:dp654203325014189] 
+    \draw   (299.19,191.83) .. controls (299.19,176.47) and (311.65,164.01) .. (327.01,164.01) .. controls (342.37,164.01) and (354.83,176.47) .. (354.83,191.83) .. controls (354.83,207.19) and (342.37,219.65) .. (327.01,219.65) .. controls (311.65,219.65) and (299.19,207.19) .. (299.19,191.83) -- cycle ;
+    %Shape: Ellipse [id:dp8217413530832947] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (334.74,192.6) .. controls (334.74,177.24) and (347.19,164.79) .. (362.55,164.79) .. controls (377.92,164.79) and (390.37,177.24) .. (390.37,192.6) .. controls (390.37,207.96) and (377.92,220.42) .. (362.55,220.42) .. controls (347.19,220.42) and (334.74,207.96) .. (334.74,192.6) -- cycle ;
+    %Shape: Circle [id:dp6982878886377983] 
+    \draw   (299.19,191.83) .. controls (299.19,176.47) and (311.65,164.01) .. (327.01,164.01) .. controls (342.37,164.01) and (354.83,176.47) .. (354.83,191.83) .. controls (354.83,207.19) and (342.37,219.65) .. (327.01,219.65) .. controls (311.65,219.65) and (299.19,207.19) .. (299.19,191.83) -- cycle ;
+    %Shape: Rectangle [id:dp08306957984161611] 
+    \draw   (474,135.09) -- (630.53,135.09) -- (630.53,224.54) -- (474,224.54) -- cycle ;
+    %Shape: Circle [id:dp8242567873480398] 
+    \draw   (508.19,188.83) .. controls (508.19,173.47) and (520.65,161.01) .. (536.01,161.01) .. controls (551.37,161.01) and (563.83,173.47) .. (563.83,188.83) .. controls (563.83,204.19) and (551.37,216.65) .. (536.01,216.65) .. controls (520.65,216.65) and (508.19,204.19) .. (508.19,188.83) -- cycle ;
+    %Shape: Ellipse [id:dp5235224069392781] 
+    \draw   (543.74,189.6) .. controls (543.74,174.24) and (556.19,161.79) .. (571.55,161.79) .. controls (586.92,161.79) and (599.37,174.24) .. (599.37,189.6) .. controls (599.37,204.96) and (586.92,217.42) .. (571.55,217.42) .. controls (556.19,217.42) and (543.74,204.96) .. (543.74,189.6) -- cycle ;
+    %Shape: Path Data [id:dp3308211305694244] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (563.83,188.83) .. controls (563.83,197.65) and (559.72,205.51) .. (553.32,210.61) .. controls (547.45,205.51) and (543.74,197.99) .. (543.74,189.6) .. controls (543.74,180.78) and (547.84,172.92) .. (554.25,167.82) .. controls (560.12,172.92) and (563.83,180.44) .. (563.83,188.83) -- cycle ;
+    
+    % Text Node
+    \draw (218.67,15.12) node [anchor=north west][inner sep=0.75pt]    {$S$};
+    % Text Node
+    \draw (68.97,29.52) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+    % Text Node
+    \draw (158.97,31.75) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+    % Text Node
+    \draw (12,137.4) node [anchor=north west][inner sep=0.75pt]    {$=$};
+    % Text Node
+    \draw (220.67,128.4) node [anchor=north west][inner sep=0.75pt]    {$S$};
+    % Text Node
+    \draw (70.97,142.81) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+    % Text Node
+    \draw (160.97,145.03) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+    % Text Node
+    \draw (426.67,128.4) node [anchor=north west][inner sep=0.75pt]    {$S$};
+    % Text Node
+    \draw (276.97,142.81) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+    % Text Node
+    \draw (366.97,145.03) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+    % Text Node
+    \draw (635.67,125.4) node [anchor=north west][inner sep=0.75pt]    {$S$};
+    % Text Node
+    \draw (485.97,139.81) node [anchor=north west][inner sep=0.75pt]    {$A_{MATH}$};
+    % Text Node
+    \draw (575.97,142.03) node [anchor=north west][inner sep=0.75pt]    {$A_{FUN}$};
+    % Text Node
+    \draw (234,146.4) node [anchor=north west][inner sep=0.75pt]    {$+$};
+    % Text Node
+    \draw (441,149.4) node [anchor=north west][inner sep=0.75pt]    {$-$};
+    % Text Node
+    \draw (128,239.4) node [anchor=north west][inner sep=0.75pt]    {$4!$};
+    % Text Node
+    \draw (330,238.4) node [anchor=north west][inner sep=0.75pt]    {$5!$};
+    % Text Node
+    \draw (545,236.4) node [anchor=north west][inner sep=0.75pt]    {$2!$};
+    
+    
+    \end{tikzpicture}
+    \]
+And hence, the answer is $7!-(4!+5!-2!)=4898$.
+
+\subsubsection{Indicator functions}
+These are $\{0,1\}$-valued functions on $S$.
+\eg Let: \begin{align*}
+    \1_s(x) &=1 \text{\quad for all anagrams of $x$}\\
+    \1_{MATH}(x) &= \begin{cases}
+        1 & \text{if $x$ contains MATH}\\
+        0 & \text{otherwise}
+    \end{cases}\\
+    \1_{FUN}(x) &= \begin{cases}
+        1 & \text{if $x$ contains FUN}\\
+        0 & \text{otherwise}
+    \end{cases}\\
+\end{align*}
+
+\begin{proposition} Key facts about indicator functions:
+    \begin{itemize}[align=left]
+        \item[AND:] $$\1_{A\cap B}=\1_A\1_B$$
+        \item[COMPLEMENT:] $$\1_{A}^c = 1-\1_A$$
+        \item[OR:] \begin{align*}
+            \1_{A\cup B} &= 1- \1_{A^c\cap B^c}\\
+            &= 1-\1_{A^c}\1_{B^c}\\
+            &= 1-(1-\1_A)(1-\1_B)\\
+            &= \1_A+\1_B-\1_{A\cap B}
+        \end{align*}  
+    \end{itemize}
+\end{proposition}
+
+So we get the same formula for the previous example: \[\1_{\text{MATH or FUN}} = \1_{MATH} + \1_{FUN} - \1_{\text{MATH and FUN}}\qquad (*)\]
+
+\defn For any function $f:S\to \R$, we can define \[\int f = \sum_{x\in S} f(x)\] For indicator functions,\[\int {\1_A} = \sum_{x\in S}\begin{cases}
+    1 & x\in A\\ 0 & x\not \in A
+\end{cases} = \sum_{x\in A} 1 = |A|\] we get the cardinality of $A$.
+
+Therefore, we integrate both sides of $(*)$ and get the cardinality of $A_{MATH}\cup A_{FUN}$.
+
+\eg How many anagrams of MATHISFUN do contain at least one of MATH, IS or FUN?
+
+\textbf{Method 1:} \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,384); %set diagram left start at 0, and has height of 384
+    
+    %Shape: Rectangle [id:dp1385864763397704] 
+    \draw   (560,13.48) -- (647.49,13.48) -- (647.49,100.97) -- (560,100.97) -- cycle ;
+    %Shape: Ellipse [id:dp6084455910460216] 
+    \draw   (586.73,45.56) .. controls (586.73,35.51) and (594.88,27.36) .. (604.93,27.36) .. controls (614.98,27.36) and (623.13,35.51) .. (623.13,45.56) .. controls (623.13,55.61) and (614.98,63.76) .. (604.93,63.76) .. controls (594.88,63.76) and (586.73,55.61) .. (586.73,45.56) -- cycle ;
+    %Shape: Ellipse [id:dp9503734948864271] 
+    \draw   (573.29,61.97) .. controls (573.29,51.93) and (581.44,43.78) .. (591.49,43.78) .. controls (601.54,43.78) and (609.68,51.93) .. (609.68,61.97) .. controls (609.68,72.02) and (601.54,80.17) .. (591.49,80.17) .. controls (581.44,80.17) and (573.29,72.02) .. (573.29,61.97) -- cycle ;
+    %Shape: Ellipse [id:dp3309171920842988] 
+    \draw   (595.87,62.57) .. controls (595.87,52.52) and (604.01,44.37) .. (614.06,44.37) .. controls (624.11,44.37) and (632.26,52.52) .. (632.26,62.57) .. controls (632.26,72.62) and (624.11,80.77) .. (614.06,80.77) .. controls (604.01,80.77) and (595.87,72.62) .. (595.87,62.57) -- cycle ;
+    %Shape: Rectangle [id:dp20126277047926977] 
+    \draw   (22.76,9.55) -- (126.5,9.55) -- (126.5,113.29) -- (22.76,113.29) -- cycle ;
+    %Shape: Path Data [id:dp8391565900615001] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (76.04,26.01) .. controls (87.95,26.01) and (97.62,35.67) .. (97.62,47.59) .. controls (97.62,48.07) and (97.6,48.54) .. (97.57,49.02) .. controls (104.07,52.73) and (108.45,59.73) .. (108.45,67.76) .. controls (108.45,79.67) and (98.78,89.34) .. (86.87,89.34) .. controls (81.6,89.34) and (76.78,87.45) .. (73.04,84.32) .. controls (69.43,87.03) and (64.95,88.63) .. (60.1,88.63) .. controls (48.18,88.63) and (38.52,78.97) .. (38.52,67.05) .. controls (38.52,57.07) and (45.3,48.67) .. (54.5,46.21) .. controls (55.22,34.93) and (64.59,26.01) .. (76.04,26.01) -- cycle ;
+    %Shape: Ellipse [id:dp46046756094481256] 
+    \draw   (54.46,47.59) .. controls (54.46,35.67) and (64.12,26.01) .. (76.04,26.01) .. controls (87.95,26.01) and (97.62,35.67) .. (97.62,47.59) .. controls (97.62,59.51) and (87.95,69.17) .. (76.04,69.17) .. controls (64.12,69.17) and (54.46,59.51) .. (54.46,47.59) -- cycle ;
+    %Shape: Ellipse [id:dp4217247992143103] 
+    \draw   (38.52,67.05) .. controls (38.52,55.14) and (48.18,45.48) .. (60.1,45.48) .. controls (72.01,45.48) and (81.67,55.14) .. (81.67,67.05) .. controls (81.67,78.97) and (72.01,88.63) .. (60.1,88.63) .. controls (48.18,88.63) and (38.52,78.97) .. (38.52,67.05) -- cycle ;
+    %Shape: Ellipse [id:dp9992002108420008] 
+    \draw   (65.29,67.76) .. controls (65.29,55.84) and (74.95,46.18) .. (86.87,46.18) .. controls (98.78,46.18) and (108.45,55.84) .. (108.45,67.76) .. controls (108.45,79.67) and (98.78,89.34) .. (86.87,89.34) .. controls (74.95,89.34) and (65.29,79.67) .. (65.29,67.76) -- cycle ;
+    %Shape: Rectangle [id:dp18255589750601886] 
+    \draw   (160,10) -- (263.74,10) -- (263.74,113.74) -- (160,113.74) -- cycle ;
+    %Shape: Ellipse [id:dp5641527242529034] 
+    \draw   (191.7,48.04) .. controls (191.7,36.13) and (201.36,26.47) .. (213.28,26.47) .. controls (225.2,26.47) and (234.86,36.13) .. (234.86,48.04) .. controls (234.86,59.96) and (225.2,69.62) .. (213.28,69.62) .. controls (201.36,69.62) and (191.7,59.96) .. (191.7,48.04) -- cycle ;
+    %Shape: Ellipse [id:dp465443294411954] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (175.76,67.51) .. controls (175.76,55.59) and (185.42,45.93) .. (197.34,45.93) .. controls (209.26,45.93) and (218.92,55.59) .. (218.92,67.51) .. controls (218.92,79.42) and (209.26,89.08) .. (197.34,89.08) .. controls (185.42,89.08) and (175.76,79.42) .. (175.76,67.51) -- cycle ;
+    %Shape: Ellipse [id:dp6017902480771649] 
+    \draw   (202.53,68.21) .. controls (202.53,56.29) and (212.19,46.63) .. (224.11,46.63) .. controls (236.03,46.63) and (245.69,56.29) .. (245.69,68.21) .. controls (245.69,80.13) and (236.03,89.79) .. (224.11,89.79) .. controls (212.19,89.79) and (202.53,80.13) .. (202.53,68.21) -- cycle ;
+    %Shape: Ellipse [id:dp9660606654384503] 
+    \draw   (191.7,48.04) .. controls (191.7,36.13) and (201.36,26.47) .. (213.28,26.47) .. controls (225.2,26.47) and (234.86,36.13) .. (234.86,48.04) .. controls (234.86,59.96) and (225.2,69.62) .. (213.28,69.62) .. controls (201.36,69.62) and (191.7,59.96) .. (191.7,48.04) -- cycle ;
+    %Shape: Rectangle [id:dp3119329977387051] 
+    \draw   (290,10) -- (393.74,10) -- (393.74,113.74) -- (290,113.74) -- cycle ;
+    %Shape: Ellipse [id:dp9145122221690523] 
+    \draw   (319.94,48.5) .. controls (319.94,36.58) and (329.61,26.92) .. (341.52,26.92) .. controls (353.44,26.92) and (363.1,36.58) .. (363.1,48.5) .. controls (363.1,60.41) and (353.44,70.07) .. (341.52,70.07) .. controls (329.61,70.07) and (319.94,60.41) .. (319.94,48.5) -- cycle ;
+    %Shape: Ellipse [id:dp04954559590183538] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (304,67.96) .. controls (304,56.04) and (313.66,46.38) .. (325.58,46.38) .. controls (337.5,46.38) and (347.16,56.04) .. (347.16,67.96) .. controls (347.16,79.88) and (337.5,89.54) .. (325.58,89.54) .. controls (313.66,89.54) and (304,79.88) .. (304,67.96) -- cycle ;
+    %Shape: Ellipse [id:dp9968900799399258] 
+    \draw   (330.77,68.67) .. controls (330.77,56.75) and (340.44,47.09) .. (352.35,47.09) .. controls (364.27,47.09) and (373.93,56.75) .. (373.93,68.67) .. controls (373.93,80.58) and (364.27,90.24) .. (352.35,90.24) .. controls (340.44,90.24) and (330.77,80.58) .. (330.77,68.67) -- cycle ;
+    %Shape: Ellipse [id:dp43041773033581743] 
+    \draw   (319.94,48.5) .. controls (319.94,36.58) and (329.61,26.92) .. (341.52,26.92) .. controls (353.44,26.92) and (363.1,36.58) .. (363.1,48.5) .. controls (363.1,60.41) and (353.44,70.07) .. (341.52,70.07) .. controls (329.61,70.07) and (319.94,60.41) .. (319.94,48.5) -- cycle ;
+    %Shape: Rectangle [id:dp18968448045815234] 
+    \draw   (420,10) -- (523.74,10) -- (523.74,113.74) -- (420,113.74) -- cycle ;
+    %Shape: Ellipse [id:dp2831761645994837] 
+    \draw   (449.94,48.5) .. controls (449.94,36.58) and (459.61,26.92) .. (471.52,26.92) .. controls (483.44,26.92) and (493.1,36.58) .. (493.1,48.5) .. controls (493.1,60.41) and (483.44,70.07) .. (471.52,70.07) .. controls (459.61,70.07) and (449.94,60.41) .. (449.94,48.5) -- cycle ;
+    %Shape: Ellipse [id:dp9745880968688798] 
+    \draw   (434,67.96) .. controls (434,56.04) and (443.66,46.38) .. (455.58,46.38) .. controls (467.5,46.38) and (477.16,56.04) .. (477.16,67.96) .. controls (477.16,79.88) and (467.5,89.54) .. (455.58,89.54) .. controls (443.66,89.54) and (434,79.88) .. (434,67.96) -- cycle ;
+    %Shape: Ellipse [id:dp5809407409841494] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (460.77,68.67) .. controls (460.77,56.75) and (470.44,47.09) .. (482.35,47.09) .. controls (494.27,47.09) and (503.93,56.75) .. (503.93,68.67) .. controls (503.93,80.58) and (494.27,90.24) .. (482.35,90.24) .. controls (470.44,90.24) and (460.77,80.58) .. (460.77,68.67) -- cycle ;
+    %Shape: Ellipse [id:dp42102921291137463] 
+    \draw   (449.94,48.5) .. controls (449.94,36.58) and (459.61,26.92) .. (471.52,26.92) .. controls (483.44,26.92) and (493.1,36.58) .. (493.1,48.5) .. controls (493.1,60.41) and (483.44,70.07) .. (471.52,70.07) .. controls (459.61,70.07) and (449.94,60.41) .. (449.94,48.5) -- cycle ;
+    %Shape: Ellipse [id:dp5296385237610579] 
+    \draw   (434,67.96) .. controls (434,56.04) and (443.66,46.38) .. (455.58,46.38) .. controls (467.5,46.38) and (477.16,56.04) .. (477.16,67.96) .. controls (477.16,79.88) and (467.5,89.54) .. (455.58,89.54) .. controls (443.66,89.54) and (434,79.88) .. (434,67.96) -- cycle ;
+    %Shape: Rectangle [id:dp7264671340932358] 
+    \draw   (160,120) -- (263.74,120) -- (263.74,223.74) -- (160,223.74) -- cycle ;
+    %Shape: Ellipse [id:dp6822275359492851] 
+    \draw   (191.7,158.04) .. controls (191.7,146.13) and (201.36,136.47) .. (213.28,136.47) .. controls (225.2,136.47) and (234.86,146.13) .. (234.86,158.04) .. controls (234.86,169.96) and (225.2,179.62) .. (213.28,179.62) .. controls (201.36,179.62) and (191.7,169.96) .. (191.7,158.04) -- cycle ;
+    %Shape: Ellipse [id:dp133375669588228] 
+    \draw   (176.85,178.42) .. controls (176.85,166.51) and (186.51,156.85) .. (198.42,156.85) .. controls (210.34,156.85) and (220,166.51) .. (220,178.42) .. controls (220,190.34) and (210.34,200) .. (198.42,200) .. controls (186.51,200) and (176.85,190.34) .. (176.85,178.42) -- cycle ;
+    %Shape: Ellipse [id:dp7094409731784375] 
+    \draw   (202.53,178.21) .. controls (202.53,166.29) and (212.19,156.63) .. (224.11,156.63) .. controls (236.03,156.63) and (245.69,166.29) .. (245.69,178.21) .. controls (245.69,190.13) and (236.03,199.79) .. (224.11,199.79) .. controls (212.19,199.79) and (202.53,190.13) .. (202.53,178.21) -- cycle ;
+    %Shape: Path Data [id:dp3269729749030599] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (213.28,179.62) .. controls (201.36,179.62) and (191.7,169.96) .. (191.7,158.04) .. controls (191.7,158) and (191.7,157.96) .. (191.7,157.91) .. controls (193.82,157.22) and (196.08,156.85) .. (198.42,156.85) .. controls (210.34,156.85) and (220,166.51) .. (220,178.42) .. controls (220,178.47) and (220,178.51) .. (220,178.55) .. controls (217.88,179.25) and (215.63,179.62) .. (213.28,179.62) -- cycle ;
+    %Shape: Ellipse [id:dp5030553664227198] 
+    \draw   (202.53,178.21) .. controls (202.53,166.29) and (212.19,156.63) .. (224.11,156.63) .. controls (236.03,156.63) and (245.69,166.29) .. (245.69,178.21) .. controls (245.69,190.13) and (236.03,199.79) .. (224.11,199.79) .. controls (212.19,199.79) and (202.53,190.13) .. (202.53,178.21) -- cycle ;
+    %Shape: Rectangle [id:dp1921528399722785] 
+    \draw   (290,120) -- (393.74,120) -- (393.74,223.74) -- (290,223.74) -- cycle ;
+    %Shape: Ellipse [id:dp904576386471551] 
+    \draw   (321.7,158.04) .. controls (321.7,146.13) and (331.36,136.47) .. (343.28,136.47) .. controls (355.2,136.47) and (364.86,146.13) .. (364.86,158.04) .. controls (364.86,169.96) and (355.2,179.62) .. (343.28,179.62) .. controls (331.36,179.62) and (321.7,169.96) .. (321.7,158.04) -- cycle ;
+    %Shape: Ellipse [id:dp25226409277586437] 
+    \draw   (306.85,178.42) .. controls (306.85,166.51) and (316.51,156.85) .. (328.42,156.85) .. controls (340.34,156.85) and (350,166.51) .. (350,178.42) .. controls (350,190.34) and (340.34,200) .. (328.42,200) .. controls (316.51,200) and (306.85,190.34) .. (306.85,178.42) -- cycle ;
+    %Shape: Ellipse [id:dp15511924061052307] 
+    \draw   (332.53,178.21) .. controls (332.53,166.29) and (342.19,156.63) .. (354.11,156.63) .. controls (366.03,156.63) and (375.69,166.29) .. (375.69,178.21) .. controls (375.69,190.13) and (366.03,199.79) .. (354.11,199.79) .. controls (342.19,199.79) and (332.53,190.13) .. (332.53,178.21) -- cycle ;
+    %Shape: Path Data [id:dp38832991798092986] 
+    \draw  [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (354.11,156.63) .. controls (358,156.63) and (361.66,157.67) .. (364.81,159.47) .. controls (364.08,170.72) and (354.72,179.62) .. (343.28,179.62) .. controls (339.39,179.62) and (335.73,178.59) .. (332.58,176.78) .. controls (333.31,165.53) and (342.67,156.63) .. (354.11,156.63) -- cycle ;
+    %Shape: Ellipse [id:dp36417968462836003] 
+    \draw   (306.85,178.42) .. controls (306.85,166.51) and (316.51,156.85) .. (328.42,156.85) .. controls (340.34,156.85) and (350,166.51) .. (350,178.42) .. controls (350,190.34) and (340.34,200) .. (328.42,200) .. controls (316.51,200) and (306.85,190.34) .. (306.85,178.42) -- cycle ;
+    %Shape: Rectangle [id:dp8050006164360177] 
+    \draw   (523.74,120) -- (523.74,223.74) -- (420,223.74) -- (420,120) -- cycle ;
+    %Shape: Ellipse [id:dp1542080690290697] 
+    \draw   (494.2,159.56) .. controls (504.48,165.59) and (507.92,178.81) .. (501.88,189.09) .. controls (495.85,199.36) and (482.63,202.8) .. (472.35,196.77) .. controls (462.07,190.74) and (458.64,177.51) .. (464.67,167.24) .. controls (470.7,156.96) and (483.93,153.52) .. (494.2,159.56) -- cycle ;
+    %Shape: Ellipse [id:dp48293382805299734] 
+    \draw   (484.15,136.42) .. controls (494.43,142.46) and (497.87,155.68) .. (491.83,165.96) .. controls (485.8,176.23) and (472.58,179.67) .. (462.3,173.64) .. controls (452.02,167.6) and (448.58,154.38) .. (454.62,144.11) .. controls (460.65,133.83) and (473.87,130.39) .. (484.15,136.42) -- cycle ;
+    %Shape: Ellipse [id:dp12515371889753424] 
+    \draw   (471.33,158.68) .. controls (481.6,164.72) and (485.04,177.94) .. (479.01,188.21) .. controls (472.97,198.49) and (459.75,201.93) .. (449.48,195.9) .. controls (439.2,189.86) and (435.76,176.64) .. (441.79,166.36) .. controls (447.83,156.09) and (461.05,152.65) .. (471.33,158.68) -- cycle ;
+    %Shape: Path Data [id:dp8064306480110812] 
+    \draw  [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (479.01,188.21) .. controls (477.04,191.57) and (474.3,194.2) .. (471.14,196.01) .. controls (461.81,189.68) and (458.88,177.1) .. (464.67,167.24) .. controls (466.64,163.88) and (469.38,161.25) .. (472.53,159.44) .. controls (481.86,165.78) and (484.8,178.35) .. (479.01,188.21) -- cycle ;
+    %Shape: Ellipse [id:dp6798281969702227] 
+    \draw   (484.15,136.42) .. controls (494.43,142.46) and (497.87,155.68) .. (491.83,165.96) .. controls (485.8,176.23) and (472.58,179.67) .. (462.3,173.64) .. controls (452.02,167.6) and (448.58,154.38) .. (454.62,144.11) .. controls (460.65,133.83) and (473.87,130.39) .. (484.15,136.42) -- cycle ;
+    %Shape: Rectangle [id:dp2018454976411257] 
+    \draw   (562.51,122.51) -- (650,122.51) -- (650,210) -- (562.51,210) -- cycle ;
+    %Shape: Ellipse [id:dp21594179213200082] 
+    \draw   (589.25,154.6) .. controls (589.25,144.55) and (597.4,136.4) .. (607.45,136.4) .. controls (617.49,136.4) and (625.64,144.55) .. (625.64,154.6) .. controls (625.64,164.65) and (617.49,172.79) .. (607.45,172.79) .. controls (597.4,172.79) and (589.25,164.65) .. (589.25,154.6) -- cycle ;
+    %Shape: Ellipse [id:dp670043073325592] 
+    \draw   (575.81,171.01) .. controls (575.81,160.96) and (583.95,152.81) .. (594,152.81) .. controls (604.05,152.81) and (612.2,160.96) .. (612.2,171.01) .. controls (612.2,181.06) and (604.05,189.21) .. (594,189.21) .. controls (583.95,189.21) and (575.81,181.06) .. (575.81,171.01) -- cycle ;
+    %Shape: Ellipse [id:dp1324063228187844] 
+    \draw   (598.38,171.6) .. controls (598.38,161.55) and (606.53,153.41) .. (616.58,153.41) .. controls (626.63,153.41) and (634.77,161.55) .. (634.77,171.6) .. controls (634.77,181.65) and (626.63,189.8) .. (616.58,189.8) .. controls (606.53,189.8) and (598.38,181.65) .. (598.38,171.6) -- cycle ;
+    %Shape: Rectangle [id:dp027873497486135212] 
+    \draw   (160,236.26) -- (263.74,236.26) -- (263.74,340) -- (160,340) -- cycle ;
+    %Shape: Ellipse [id:dp18051473507320437] 
+    \draw   (191.7,274.3) .. controls (191.7,262.38) and (201.36,252.72) .. (213.28,252.72) .. controls (225.2,252.72) and (234.86,262.38) .. (234.86,274.3) .. controls (234.86,286.22) and (225.2,295.88) .. (213.28,295.88) .. controls (201.36,295.88) and (191.7,286.22) .. (191.7,274.3) -- cycle ;
+    %Shape: Ellipse [id:dp30587606474262885] 
+    \draw   (176.85,294.68) .. controls (176.85,282.76) and (186.51,273.1) .. (198.42,273.1) .. controls (210.34,273.1) and (220,282.76) .. (220,294.68) .. controls (220,306.6) and (210.34,316.26) .. (198.42,316.26) .. controls (186.51,316.26) and (176.85,306.6) .. (176.85,294.68) -- cycle ;
+    %Shape: Ellipse [id:dp8409696478377897] 
+    \draw   (202.53,294.47) .. controls (202.53,282.55) and (212.19,272.89) .. (224.11,272.89) .. controls (236.03,272.89) and (245.69,282.55) .. (245.69,294.47) .. controls (245.69,306.39) and (236.03,316.05) .. (224.11,316.05) .. controls (212.19,316.05) and (202.53,306.39) .. (202.53,294.47) -- cycle ;
+    %Shape: Path Data [id:dp5141504149992335] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (213.28,295.88) .. controls (209.39,295.88) and (205.73,294.85) .. (202.58,293.04) .. controls (203,286.59) and (206.26,280.91) .. (211.12,277.24) .. controls (216.5,281.16) and (220,287.51) .. (220,294.68) .. controls (220,294.72) and (220,294.77) .. (220,294.81) .. controls (217.88,295.5) and (215.63,295.88) .. (213.28,295.88) -- cycle ;
+    
+    % Text Node
+    \draw (599.06,49.56) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$3$};
+    % Text Node
+    \draw (608.66,45.09) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$2$};
+    % Text Node
+    \draw (612.82,61.5) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$1$};
+    % Text Node
+    \draw (585.19,12.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{math}$};
+    % Text Node
+    \draw (610.77,79.69) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{is}$};
+    % Text Node
+    \draw (563.94,77.16) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{fun}$};
+    % Text Node
+    \draw (55.6,9.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{math}$};
+    % Text Node
+    \draw (84.73,89.19) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{is}$};
+    % Text Node
+    \draw (30.12,86.19) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{fun}$};
+    % Text Node
+    \draw (131,48.4) node [anchor=north west][inner sep=0.75pt]    {$=$};
+    % Text Node
+    \draw (601.57,158.6) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$0$};
+    % Text Node
+    \draw (611.17,154.12) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$1$};
+    % Text Node
+    \draw (615.33,170.54) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$1$};
+    % Text Node
+    \draw (587.7,121.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{math}$};
+    % Text Node
+    \draw (613.29,188.72) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{is}$};
+    % Text Node
+    \draw (566.45,186.19) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$A_{fun}$};
+    % Text Node
+    \draw (271,52.4) node [anchor=north west][inner sep=0.75pt]    {$+$};
+    % Text Node
+    \draw (401,52.4) node [anchor=north west][inner sep=0.75pt]    {$+$};
+    % Text Node
+    \draw (136,242.4) node [anchor=north west][inner sep=0.75pt]    {$+$};
+    % Text Node
+    \draw (136,132.4) node [anchor=north west][inner sep=0.75pt]    {$-$};
+    % Text Node
+    \draw (271,132.4) node [anchor=north west][inner sep=0.75pt]    {$-$};
+    % Text Node
+    \draw (401,132.4) node [anchor=north west][inner sep=0.75pt]    {$-$};
+    
+    
+    \end{tikzpicture}
+    \]
+Hence: \begin{align*}
+    ANS =& 6!+8!+7!\\
+    &-5!-6!-4!\\
+    &+3!\\
+    =& 45222
+\end{align*}
+
+\textbf{Method 2:} Let $\1_M,\1_I,\1_F$ be the indicator functions. Then: \begin{align*}
+    \1_{M\lor I\lor F} &= 1-\1_{M^c\land I^c \land F^c}\\
+    &= 1-(1-\1_M)(1-\1_I)(1-\1_F)
+\end{align*}
+and the formula is the same as method 1.
+
+\subsection{G2 The IE formula}
+Let $S$ be a set of objects (e.g. anagrams). Let $P_1,\dots,P_n$ be properties these objects could satisfy (e.g. ``contains MATH''). Then sets $A_i = \{x\in S\mid P(x) \text{ true}\}$.
+
+\begin{theorem}\hfill
+    \begin{enumerate}
+        \item[0.] $$|S|=|S|$$
+        \item $$\left|A_1^c\right| = |S|-|A_1|$$
+        \item \[\left|A_1^c\cap A_2^c\right| = |S| -|A_1|-|A_2|+|A_1\cap A_2|\]
+        \item \begin{align*}
+            \left|A_1^c\cap A_2^c\cap A_3^c\right| =& |S|\\
+            &- |A_1|-|A_2|-|A_3|\\
+            &+ |A_1\cap A_2| + |A_2\cap A_3| + |A_3\cap A_1|\\
+            &- |A_1\cap A_2\cap A_3|
+        \end{align*}
+        \item[$\vdots$]
+        \item[$n$.] \begin{align*}
+            \left|A_1^c\cap \dots\cap A_n^c\right| &= \sum_{I\subseteq [n]}(-1)^{|I|}\left|\bigcap_{i\in I}A_i\right|\\
+            &= |S|-(|A_1|+\dots+|A_n|)+(\dots+|A_i\cap A_j|+\dots)-\dots+(-1)^n|A_1\cap\dots\cap A_n|
+        \end{align*}
+    \end{enumerate}
+\end{theorem}
+\begin{proof}[Proof by indicator function]
+    We observe: \begin{align*}
+        \1_{A_1^c\cap\dots\cap A_n^c} &= \1_{A_1^c}\cdot \dots\cdot \1_{A_n^c}\\
+        &= \sum_{I\subseteq[n]}\prod_{i=1}^{n}\begin{cases}
+            -\1_{A_i} &\text{if }c\in I\\
+            1 & \text{if }c\not\in I
+        \end{cases}\\
+        &= \sum_{I\subseteq[n]} \prod_{i\in I}(-\1_{A_i})\\
+        &= \sum_{I\subseteq[n]} (-1)^{|I|} \1_{\bigcap_{i\in I}A_i}
+    \end{align*}
+    Now integrate both sides and get the result.
+\end{proof}
+
+\spl
+
+\eg How many integers in $S=\{1,2,\dots,1000\}$ are not divisible by 5 or 6 or 8?
+
+Let $A_i=\{x\in S \mid x \text{ divisible by }i\}$. We want $\left|A_2^c\cap A_5^c\cap A_8^c\right|$.
+
+We know that we need to subtract from 1000: \begin{align*}
+    |A_5| &= \frac{1000}{5}=200\\
+    |A_6| &= \lfloor\frac{1000}{6}\rfloor=166\\
+    |A_8| &= \frac{1000}{8}=125
+\end{align*}
+The least common multiple (lcm) helps with the rest to add back:\begin{align*}
+    |A_5\cap A_6| &= |A_{30}| = \lfloor\frac{1000}{30}\rfloor=33\\
+    |A_6\cap A_8| &= |A_{24}| = \lfloor\frac{1000}{24}\rfloor=41\\
+    |A_8\cap A_5| &= |A_{40}| = \frac{1000}{40}=25\\
+    -|A_5\cap A_6\cap A_8| &= -|A_{120}| = -\lfloor\frac{1000}{120}\rfloor=-8\\
+\end{align*}
+Therefore, ANS = 600.
+
 \end{document} 
