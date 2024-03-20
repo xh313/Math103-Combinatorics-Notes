@@ -1204,7 +1204,7 @@ And therefore,
     Similar to proof (a) but we first multiply both sides of the differentiated equation in (a) by $x$: $\sum_{k=1}^{n}k\binom{n}{k}x^{k}\equiv xn(1+x)^{n-1}$. Then we differentiate it again and plug in $x=1$.\sidenote{check this!}
 \end{proof}
 \begin{proof}[Proof (a), method 2]
-    We let there be $n$ people, with $k$ of them selected to jointhe  elite squad™. One of the person in elite squad™ is given a secret microfiche. In how many ways can this be done?
+    We let there be $n$ people, with $k$ of them selected to join the  elite squad™. One of the people in elite squad™ is given a secret microfiche. In how many ways can this be done?
 
     \begin{itemize}[align=left]
         \item[Way 1:] Choose $k$ be the size of the elite squad™, so $k$ could be anything from 1 to $n$. We need to choose $k$ people among $n$, giving us $n\choose k$ ways. Then, we choose one person among the $k$ to give a microfiche. The total number of ways is $\sum_{k=1}^{n}{n\choose k}k$.
@@ -1793,12 +1793,12 @@ Hence, the total ways is ${5\brack 2}=20+30=50$.
     \end{align*}
 \end{proof}
 
-\section{The inclusion-exclusion (IE) principle}
+\section{G The inclusion-exclusion (IE) principle}
 \textit{Sometimes AND is easy, but OR is difficult.} This is when IE can help.
 
 It is really about handling Venn diagrams or indicator functions.
 
-\subsection{Introduction}
+\subsection{G1 Introduction}
 \eg How many anagrams of MATHFUN have \textbf{neither} of the substrings MATH or FUN?
 
 Let $S=\{\text{anagrams of MATHFUN}\}, A_{MATH}=\{\text{anagrams of MATH}\}$ and $A_{FUN}=\{\text{anagrams of FUN}\}$. We can draw the following Venn diagram:
@@ -1991,7 +1991,7 @@ Therefore, we integrate both sides of $(*)$ and get the cardinality of $A_{MATH}
 
 \eg How many anagrams of MATHISFUN do contain at least one of MATH, IS or FUN?
 
-\textbf{Method 1:} \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+\textbf{Method 1:} \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1.08,xscale=1.08]
     %uncomment if require: \path (0,384); %set diagram left start at 0, and has height of 384
     
     %Shape: Rectangle [id:dp1385864763397704] 
@@ -2213,4 +2213,269 @@ The least common multiple (lcm) helps with the rest to add back:\begin{align*}
 \end{align*}
 Therefore, ANS = 600.
 
+\eg How many anagrams of HAPPYMATH contain neither HAPPY nor MATH?
+\begin{align*}
+    S&=\{\text{all anagrams}\} &&|S| = \frac{9!}{2!2!2!}\\
+    A_1 &= \{\text{Anagrams with HAPPY}\} && |A_1|=5!&\text{\circled{HAPPY}MATH}\\
+    A_2 &= \{\text{Anagrams with MATH}\} && |A_2|=\frac{6!}{2!}&\text{HAPPY\circled{MATH}}\\
+    A_1\cap A_2  &= \{\text{Anagrams with MATH and HAPPY}\}
+\end{align*}
+\begin{enumerate}[label=\textit{Case} \arabic*:]
+    \item \circled{HAPPY}\circled{MATH} \hfill 2!
+    \item \circled{MATHAPPY}H\hfill 2!
+\end{enumerate}
+So $|A_1\cap A_2|=4$. Hence, ANS is \[|S|-|A_1|-|A_2|+|A_1\cap A_2| = 45360-120-360+4=44884\]
+
+
+\subsection{G3 Combinations of a multiset}
+\begin{itemize}
+    \item How many ways to take 7 scrabble tiles from a bag?
+
+    \item How many ways to get a bag of 12 bagels from limited supply of different bags?
+    \item How many ways to place $r$ identical pigeons in $k$ pigeonholes without exceeding capacities $n_1,n_2,\dots, n_k$.
+\end{itemize}
+
+In general, let $X=\{n_1\cdot a_1,n_2\cdot a_2,\dots, n_k\cdot a_k\}$ be a multiset. How many $r$-combinations of $X$ are there? (i.e. objects of types $a_1,\dots,a_k$ of maximum quantities $n_1,n_2,\dots,n_k$.)
+
+\textbf{Special cases:} \begin{enumerate}
+    \item If $n_1=\dots=n_k=1$: \hfill$k\choose r$
+    \item If $n_1=n_2=\dots=n_k=\infty$: \hfill$\left({k\choose r}\right) = {r+k-1\choose r}$
+    \item If $n_1,n_2,\dots,n_k\geq r$: \hfill$\left({k\choose r}\right) = {r+k-1\choose r}$
+    \item If $r>n_1+n_2+\dots+n_k$: \hfill0\sidenote{by Strong Pigeonhole}
+\end{enumerate}
+
+\eg How many ways to select 10 jewels from a bag of 3 Amethyst, 4 Beryl and 5 Citrine?
+
+\textbf{Method 1}: Easy answer by complement: choose which 2 to stay in the bag: AA, AB, AC, BB, BC, CC\hfill \circled{6 ways}
+
+\textbf{Method 2}: Integer solutions to $a+b+c=10$ such that \begin{align*}
+    0\leq a&\leq 3\\
+    0\leq b&\leq 4\\
+    0\leq c&\leq 5
+\end{align*}
+We first pretend there are infinite supply of jewels and call the set of ways $S$. Let the sets $S_A,S_B,S_C$ be the ways with too many A ($a\geq 4$), B ($b\geq 5$) and C ($c\geq 6$) respectively. Then:
+\begin{align*}
+    |S| &= \left({3\choose 10}\right) = {12\choose 10} = 66\\
+    |S_A| &= \left({3\choose 6}\right) = {8\choose 6} = 28\\
+    |S_B| &= \left({3\choose 5}\right) = {7\choose 5} = 21\\
+    |S_C| &= \left({3\choose 4}\right) = {6\choose 4} = 15\\
+    |S_A\cap S_B| &= \left({3\choose 1}\right) = {3\choose 1} = 3\\
+    |S_A\cap S_C| &= \left({3\choose 0}\right) = 1\\
+    |S_B\cap S_C| &= 0\\
+    |S_A\cap S_B\cap S_C| &= 0
+\end{align*}
+Hence, the answer would be, by IE, $66-(28+21+15)+(3+1+0)-0=6$.
+
+\subsection{G4 Symmetric IE}
+\rmk The previous example is not symmetric since the three jewels have different constraints.
+
+Now suppose $|A_{i_1}\cap A_{i_2}\cap\dots\cap A_{i_h}| $ depends only on the number of distinct indices chosen and not on which indices are chosen. 
+
+Then set \begin{align*}
+    \alpha_0&=|S|\\
+    \alpha_1&=|A_1|=\dots =|A_n|\\
+    \alpha_2 &= |A_1\cap A_2|=\dots = |A_i\cap A_j|=\dots\\
+    \vdots\\
+    \alpha_n &= |A_1\cap A_2\cap \dots \cap A_n|
+\end{align*}
+Then the $2^n$ terms of the IE formula collapse to $n+1$ terms:\begin{align*}
+    |A_1^c\cap \dots\cap A_n^c| &= \rt{\alpha_0}-n\rt{\alpha_1}+\dots+(-1)^i {n\choose i}\rt{\alpha_i}+\dots +(-1)^n\rt{\alpha_n}\\
+    &=\sum_{k=0}^{n}(-1)^k{n\choose k}\alpha_k
+\end{align*}
+
+\eg How many integers $0,1,\dots, 99999$ contain each of $2,5,8$ in their digits?
+
+We know $(5)_3\cdot 7^2<ANS<(5)_3\cdot 10^2$. Using symmetric IE, let $A_i$ be the set of numbers without digit $i$. Then: \begin{align*}
+    \alpha_0&=|S| = 10^5\\
+    \alpha_1&=|A_2|=|A_5|=|A_8| = 9^5\\
+    \alpha_2 &= |A_2\cap A_5|=\dots = |A_5\cap A_8|= 8^5\\
+    \alpha_3 &= |A_2\cap A_5\cap A_8| = 7^5
+\end{align*}
+Hence, \[ANS = 10^5-{3\choose 1}9^5+{3\choose 2}8^5-{3\choose 3}7^5=4350\]
+
+\subsection{G5 Rook problems}
+
+\eg How many ways to place 6 identical rooks on $6\times6$ board such that \begin{enumerate}
+    \item no two in the same row or column
+    \item no rook on blue squares:\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Grid [id:dp5859411922947491] 
+        \draw  [draw opacity=0] (130,56.37) -- (250.26,56.37) -- (250.26,176.88) -- (130,176.88) -- cycle ; \draw   (130,56.37) -- (130,176.88)(150,56.37) -- (150,176.88)(170,56.37) -- (170,176.88)(190,56.37) -- (190,176.88)(210,56.37) -- (210,176.88)(230,56.37) -- (230,176.88)(250,56.37) -- (250,176.88) ; \draw   (130,56.37) -- (250.26,56.37)(130,76.37) -- (250.26,76.37)(130,96.37) -- (250.26,96.37)(130,116.37) -- (250.26,116.37)(130,136.37) -- (250.26,136.37)(130,156.37) -- (250.26,156.37)(130,176.37) -- (250.26,176.37) ; \draw    ;
+        %Shape: Square [id:dp8831764696734834] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (190,96.37) -- (210,96.37) -- (210,116.37) -- (190,116.37) -- cycle ;
+        %Shape: Square [id:dp5537318101713737] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (130,56.37) -- (150,56.37) -- (150,76.37) -- (130,76.37) -- cycle ;
+        %Shape: Square [id:dp1925471334706612] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (150,56.37) -- (170,56.37) -- (170,76.37) -- (150,76.37) -- cycle ;
+        %Shape: Square [id:dp9750373039987941] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (150,76.37) -- (170,76.37) -- (170,96.37) -- (150,96.37) -- cycle ;
+        %Shape: Square [id:dp1124365862723069] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (130,76.37) -- (150,76.37) -- (150,96.37) -- (130,96.37) -- cycle ;
+        \end{tikzpicture}
+        \]
+\end{enumerate}
+
+\textbf{Solution}: We'll solve the problem for distinct rooks labelled $1,2,\dots,6$ and then divide by $6!$. Let $S=$ all arrangements ignoring blue squares and $A_i=$ arrangements where rook $i$ is on a blue square.
+
+We use symmetric IE:\sidenote{choose rows and choose columns} \begin{align*}
+    \alpha_0 &= |S| = 6!\times 6!\\
+    \alpha_1 &= |A_1| = \bt{5}\times (5!)^2\\
+    \alpha_2 &= |A_1\cap A_2| = \bt{6}\cdot \rt{2!}\cdot (4!)^2
+\end{align*}
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Square [id:dp8831764696734834] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (115,85.37) -- (135,85.37) -- (135,105.37) -- (115,105.37) -- cycle ;
+    %Shape: Square [id:dp5537318101713737] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (55,45.37) -- (75,45.37) -- (75,65.37) -- (55,65.37) -- cycle ;
+    %Shape: Square [id:dp1925471334706612] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (75,45.37) -- (95,45.37) -- (95,65.37) -- (75,65.37) -- cycle ;
+    %Shape: Square [id:dp9750373039987941] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (75,65.37) -- (95,65.37) -- (95,85.37) -- (75,85.37) -- cycle ;
+    %Shape: Square [id:dp1124365862723069] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (55,65.37) -- (75,65.37) -- (75,85.37) -- (55,85.37) -- cycle ;
+    %Shape: Circle [id:dp5567487821346038] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (57.87,55.37) .. controls (57.87,51.43) and (61.06,48.24) .. (65,48.24) .. controls (68.94,48.24) and (72.13,51.43) .. (72.13,55.37) .. controls (72.13,59.31) and (68.94,62.5) .. (65,62.5) .. controls (61.06,62.5) and (57.87,59.31) .. (57.87,55.37) -- cycle ;
+    %Shape: Circle [id:dp6716432582969902] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (77.87,75.37) .. controls (77.87,71.43) and (81.06,68.24) .. (85,68.24) .. controls (88.94,68.24) and (92.13,71.43) .. (92.13,75.37) .. controls (92.13,79.31) and (88.94,82.5) .. (85,82.5) .. controls (81.06,82.5) and (77.87,79.31) .. (77.87,75.37) -- cycle ;
+    %Shape: Square [id:dp4680473069566855] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (232,84.37) -- (252,84.37) -- (252,104.37) -- (232,104.37) -- cycle ;
+    %Shape: Square [id:dp14960112082385857] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (172,44.37) -- (192,44.37) -- (192,64.37) -- (172,64.37) -- cycle ;
+    %Shape: Square [id:dp428788690057446] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (192,44.37) -- (212,44.37) -- (212,64.37) -- (192,64.37) -- cycle ;
+    %Shape: Square [id:dp04451289815970538] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (192,64.37) -- (212,64.37) -- (212,84.37) -- (192,84.37) -- cycle ;
+    %Shape: Square [id:dp259419935190194] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (172,64.37) -- (192,64.37) -- (192,84.37) -- (172,84.37) -- cycle ;
+    %Shape: Circle [id:dp4647101461804377] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (174.87,74.37) .. controls (174.87,70.43) and (178.06,67.24) .. (182,67.24) .. controls (185.94,67.24) and (189.13,70.43) .. (189.13,74.37) .. controls (189.13,78.31) and (185.94,81.5) .. (182,81.5) .. controls (178.06,81.5) and (174.87,78.31) .. (174.87,74.37) -- cycle ;
+    %Shape: Circle [id:dp611186225390719] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (194.87,54.37) .. controls (194.87,50.43) and (198.06,47.24) .. (202,47.24) .. controls (205.94,47.24) and (209.13,50.43) .. (209.13,54.37) .. controls (209.13,58.31) and (205.94,61.5) .. (202,61.5) .. controls (198.06,61.5) and (194.87,58.31) .. (194.87,54.37) -- cycle ;
+    %Shape: Square [id:dp8903745605566249] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (115,178.37) -- (135,178.37) -- (135,198.37) -- (115,198.37) -- cycle ;
+    %Shape: Square [id:dp849694591772084] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (55,138.37) -- (75,138.37) -- (75,158.37) -- (55,158.37) -- cycle ;
+    %Shape: Square [id:dp04633393218424331] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (75,138.37) -- (95,138.37) -- (95,158.37) -- (75,158.37) -- cycle ;
+    %Shape: Square [id:dp8918671859575977] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (75,158.37) -- (95,158.37) -- (95,178.37) -- (75,178.37) -- cycle ;
+    %Shape: Square [id:dp5490922197293115] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (55,158.37) -- (75,158.37) -- (75,178.37) -- (55,178.37) -- cycle ;
+    %Shape: Circle [id:dp011688520313485773] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (57.87,148.37) .. controls (57.87,144.43) and (61.06,141.24) .. (65,141.24) .. controls (68.94,141.24) and (72.13,144.43) .. (72.13,148.37) .. controls (72.13,152.31) and (68.94,155.5) .. (65,155.5) .. controls (61.06,155.5) and (57.87,152.31) .. (57.87,148.37) -- cycle ;
+    %Shape: Circle [id:dp48423444740504906] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (117.87,188.37) .. controls (117.87,184.43) and (121.06,181.24) .. (125,181.24) .. controls (128.94,181.24) and (132.13,184.43) .. (132.13,188.37) .. controls (132.13,192.31) and (128.94,195.5) .. (125,195.5) .. controls (121.06,195.5) and (117.87,192.31) .. (117.87,188.37) -- cycle ;
+    %Shape: Square [id:dp42908952577197135] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (235,178.37) -- (255,178.37) -- (255,198.37) -- (235,198.37) -- cycle ;
+    %Shape: Square [id:dp2376698716530623] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (175,138.37) -- (195,138.37) -- (195,158.37) -- (175,158.37) -- cycle ;
+    %Shape: Square [id:dp44221223901669493] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (195,138.37) -- (215,138.37) -- (215,158.37) -- (195,158.37) -- cycle ;
+    %Shape: Square [id:dp07104162862528662] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (195,158.37) -- (215,158.37) -- (215,178.37) -- (195,178.37) -- cycle ;
+    %Shape: Square [id:dp206940095815624] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (175,158.37) -- (195,158.37) -- (195,178.37) -- (175,178.37) -- cycle ;
+    %Shape: Circle [id:dp5074157301280751] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (197.87,148.37) .. controls (197.87,144.43) and (201.06,141.24) .. (205,141.24) .. controls (208.94,141.24) and (212.13,144.43) .. (212.13,148.37) .. controls (212.13,152.31) and (208.94,155.5) .. (205,155.5) .. controls (201.06,155.5) and (197.87,152.31) .. (197.87,148.37) -- cycle ;
+    %Shape: Circle [id:dp842906997930893] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (237.87,188.37) .. controls (237.87,184.43) and (241.06,181.24) .. (245,181.24) .. controls (248.94,181.24) and (252.13,184.43) .. (252.13,188.37) .. controls (252.13,192.31) and (248.94,195.5) .. (245,195.5) .. controls (241.06,195.5) and (237.87,192.31) .. (237.87,188.37) -- cycle ;
+    %Shape: Square [id:dp3632936104650424] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (346,177.37) -- (366,177.37) -- (366,197.37) -- (346,197.37) -- cycle ;
+    %Shape: Square [id:dp8656436396921494] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (286,137.37) -- (306,137.37) -- (306,157.37) -- (286,157.37) -- cycle ;
+    %Shape: Square [id:dp3111030828407515] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (306,137.37) -- (326,137.37) -- (326,157.37) -- (306,157.37) -- cycle ;
+    %Shape: Square [id:dp49317680881038295] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (306,157.37) -- (326,157.37) -- (326,177.37) -- (306,177.37) -- cycle ;
+    %Shape: Square [id:dp659501862336836] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (286,157.37) -- (306,157.37) -- (306,177.37) -- (286,177.37) -- cycle ;
+    %Shape: Circle [id:dp8099820734048515] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (288.87,167.37) .. controls (288.87,163.43) and (292.06,160.24) .. (296,160.24) .. controls (299.94,160.24) and (303.13,163.43) .. (303.13,167.37) .. controls (303.13,171.31) and (299.94,174.5) .. (296,174.5) .. controls (292.06,174.5) and (288.87,171.31) .. (288.87,167.37) -- cycle ;
+    %Shape: Circle [id:dp4627082431613787] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (348.87,187.37) .. controls (348.87,183.43) and (352.06,180.24) .. (356,180.24) .. controls (359.94,180.24) and (363.13,183.43) .. (363.13,187.37) .. controls (363.13,191.31) and (359.94,194.5) .. (356,194.5) .. controls (352.06,194.5) and (348.87,191.31) .. (348.87,187.37) -- cycle ;
+    %Shape: Square [id:dp4889034753402557] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (461,177.37) -- (481,177.37) -- (481,197.37) -- (461,197.37) -- cycle ;
+    %Shape: Square [id:dp8539531217122311] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (401,137.37) -- (421,137.37) -- (421,157.37) -- (401,157.37) -- cycle ;
+    %Shape: Square [id:dp18832607171881954] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (421,137.37) -- (441,137.37) -- (441,157.37) -- (421,157.37) -- cycle ;
+    %Shape: Square [id:dp018087259514916187] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (421,157.37) -- (441,157.37) -- (441,177.37) -- (421,177.37) -- cycle ;
+    %Shape: Square [id:dp6676767610401377] 
+    \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (401,157.37) -- (421,157.37) -- (421,177.37) -- (401,177.37) -- cycle ;
+    %Shape: Circle [id:dp9658612427583175] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (423.87,167.37) .. controls (423.87,163.43) and (427.06,160.24) .. (431,160.24) .. controls (434.94,160.24) and (438.13,163.43) .. (438.13,167.37) .. controls (438.13,171.31) and (434.94,174.5) .. (431,174.5) .. controls (427.06,174.5) and (423.87,171.31) .. (423.87,167.37) -- cycle ;
+    %Shape: Circle [id:dp9203997506720898] 
+    \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (463.87,187.37) .. controls (463.87,183.43) and (467.06,180.24) .. (471,180.24) .. controls (474.94,180.24) and (478.13,183.43) .. (478.13,187.37) .. controls (478.13,191.31) and (474.94,194.5) .. (471,194.5) .. controls (467.06,194.5) and (463.87,191.31) .. (463.87,187.37) -- cycle ;
+    
+    % Text Node
+    \draw (51,223) node [anchor=north west][inner sep=0.75pt]   [align=left] {\rt{(And then label the two rooks)}};
+    
+    
+    \end{tikzpicture}
+    \]
+    \begin{align*}
+        \alpha_3 &= |A_1\cap A_2\cap A_3| = \bt{2}\cdot \rt{3!}\cdot (3!)^2
+    \end{align*}
+    \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Square [id:dp7647996785236888] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (115,85.37) -- (135,85.37) -- (135,105.37) -- (115,105.37) -- cycle ;
+        %Shape: Square [id:dp015685356939575845] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (55,45.37) -- (75,45.37) -- (75,65.37) -- (55,65.37) -- cycle ;
+        %Shape: Square [id:dp43847879373489773] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (75,45.37) -- (95,45.37) -- (95,65.37) -- (75,65.37) -- cycle ;
+        %Shape: Square [id:dp6228251360346071] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (75,65.37) -- (95,65.37) -- (95,85.37) -- (75,85.37) -- cycle ;
+        %Shape: Square [id:dp38618928842407807] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (55,65.37) -- (75,65.37) -- (75,85.37) -- (55,85.37) -- cycle ;
+        %Shape: Circle [id:dp29543074502201283] 
+        \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (57.87,55.37) .. controls (57.87,51.43) and (61.06,48.24) .. (65,48.24) .. controls (68.94,48.24) and (72.13,51.43) .. (72.13,55.37) .. controls (72.13,59.31) and (68.94,62.5) .. (65,62.5) .. controls (61.06,62.5) and (57.87,59.31) .. (57.87,55.37) -- cycle ;
+        %Shape: Circle [id:dp05505992816398875] 
+        \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (77.87,75.37) .. controls (77.87,71.43) and (81.06,68.24) .. (85,68.24) .. controls (88.94,68.24) and (92.13,71.43) .. (92.13,75.37) .. controls (92.13,79.31) and (88.94,82.5) .. (85,82.5) .. controls (81.06,82.5) and (77.87,79.31) .. (77.87,75.37) -- cycle ;
+        %Shape: Square [id:dp47440460175044663] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (232,84.37) -- (252,84.37) -- (252,104.37) -- (232,104.37) -- cycle ;
+        %Shape: Square [id:dp976583308270353] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (172,44.37) -- (192,44.37) -- (192,64.37) -- (172,64.37) -- cycle ;
+        %Shape: Square [id:dp12942166734557947] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (192,44.37) -- (212,44.37) -- (212,64.37) -- (192,64.37) -- cycle ;
+        %Shape: Square [id:dp09091446381146073] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (192,64.37) -- (212,64.37) -- (212,84.37) -- (192,84.37) -- cycle ;
+        %Shape: Square [id:dp8035752753802121] 
+        \draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (172,64.37) -- (192,64.37) -- (192,84.37) -- (172,84.37) -- cycle ;
+        %Shape: Circle [id:dp26388211245030435] 
+        \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (174.87,74.37) .. controls (174.87,70.43) and (178.06,67.24) .. (182,67.24) .. controls (185.94,67.24) and (189.13,70.43) .. (189.13,74.37) .. controls (189.13,78.31) and (185.94,81.5) .. (182,81.5) .. controls (178.06,81.5) and (174.87,78.31) .. (174.87,74.37) -- cycle ;
+        %Shape: Circle [id:dp009695476041065465] 
+        \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (194.87,54.37) .. controls (194.87,50.43) and (198.06,47.24) .. (202,47.24) .. controls (205.94,47.24) and (209.13,50.43) .. (209.13,54.37) .. controls (209.13,58.31) and (205.94,61.5) .. (202,61.5) .. controls (198.06,61.5) and (194.87,58.31) .. (194.87,54.37) -- cycle ;
+        %Shape: Circle [id:dp49805507666280247] 
+        \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (117.87,95.37) .. controls (117.87,91.43) and (121.06,88.24) .. (125,88.24) .. controls (128.94,88.24) and (132.13,91.43) .. (132.13,95.37) .. controls (132.13,99.31) and (128.94,102.5) .. (125,102.5) .. controls (121.06,102.5) and (117.87,99.31) .. (117.87,95.37) -- cycle ;
+        %Shape: Circle [id:dp09557794098498462] 
+        \draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (234.87,94.37) .. controls (234.87,90.43) and (238.06,87.24) .. (242,87.24) .. controls (245.94,87.24) and (249.13,90.43) .. (249.13,94.37) .. controls (249.13,98.31) and (245.94,101.5) .. (242,101.5) .. controls (238.06,101.5) and (234.87,98.31) .. (234.87,94.37) -- cycle ;
+        
+        % Text Node
+        \draw (47,125) node [anchor=north west][inner sep=0.75pt]   [align=left] {\rt{(And then label the 3 rooks)}};
+        
+        
+        \end{tikzpicture}
+        \]
+        \begin{align*}
+            \alpha_4=\alpha_5=\alpha_6=0
+        \end{align*}
+
+Hence, by symmetric IE, the answer for labelled rooks would be: \begin{align*}
+    &(6!)^2-\pt{6\choose 1}\cdot \bt{5}\cdot \rt 1!\cdot (5!)^2 + \pt{6\choose 2}\cdot \bt{6}\cdot \rt{2!}\cdot (4!)^2 -\pt{6\choose 3}\cdot \bt{2}\cdot \rt{3!}\cdot (3!)^2\\
+    =& 6!6! - \pt{\frac{6!}{1!5!}}\cdot \bt{5}\cdot \rt{1}\cdot5!5!+\pt{\frac{6!}{2!4!}}\cdot\bt{6}\cdot\rt{2!}\cdot4!4! - \pt{\frac{6!}{3!3!}}\cdot\bt{2}\cdot \rt{3!}3!3!\\
+    =& 6!(6!-\bt{5}\cdot5!+\bt{6}\cdot4!-\bt{2}\cdot3!)
+\end{align*}
+Therefore, the \textbf{unlabelled} rooks have an answer of $6!-\bt{5}\cdot5!+\bt{6}\cdot4!-\bt{2}\cdot3!=252$.
+
+\subsubsection{General rook formula}
+The number of ways to place $n$ rooks on a $n\times n$ board such that \begin{enumerate}
+    \item no two in the same row or column
+    \item no rook on blue squares\end{enumerate}
+is \[n!-\bt{r_1}(n-1)!+\dots+(-1)^n\bt{r_n}0!\] where $\bt{r_k}$ is the number of ways to place $k$ identical rooks on blue squares satisfying rule 1.
 \end{document} 
