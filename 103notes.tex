@@ -2478,4 +2478,189 @@ The number of ways to place $n$ rooks on a $n\times n$ board such that \begin{en
     \item no two in the same row or column
     \item no rook on blue squares\end{enumerate}
 is \[n!-\bt{r_1}(n-1)!+\dots+(-1)^n\bt{r_n}0!\] where $\bt{r_k}$ is the number of ways to place $k$ identical rooks on blue squares satisfying rule 1.
+
+\section{H Power series}
+\subsection{H1 Geometric series}
+Let $$\begin{matrix}
+    S &= 1+&x+x^2+\dots + x^n\\
+    xS &= &x+x^2+\dots + x^n +x^{n+1}
+\end{matrix}$$
+Hence, \rt{$1+x+\dots+x^n = \frac{1-x^{n+1}}{1-x}$} whenever $x\neq 1$. If $x=1$, then the sum is simply $n+1$.\sidenote{Works in any division ring!}
+
+\rmk A variation: 
+\tbd{Do notes from 3/25 and 3/27}
+
+\begin{theorem}
+    It is impossible to tile a $10\times 10$ square using $1\times 4$ tiles.
+\end{theorem}
+
+\subsection{H3 9899\textsuperscript{-1}}
+Mystery: \[\frac{1}{9899}=0.00\,01\,01\,02\,03\,05\dots\]
+
+Explanation: If we have $f_0=0, f_1=1$ and $f_n=f_{n-1}+f_{n-2}$, then the RHS looks like \[\sum_{k=0}^{\infty}\frac{f_k}{100^{k+1}}=\frac{1}{100}\sum_{k=0}^{\infty}f_k\left(\frac{1}{100}\right)^k\]
+Consider \(F(x)=\sum_{k=0}^{\infty}f_kx^k\). The series converges for $|x|<\frac{1}{2}$ because we can easily bound it above through $f_k\leq 2^k$\sidenote{There exists a better bound, but this is sufficient.} by induction. Hence, we observe:\[\begin{array}{rlll}
+    F &= 0+x+ & x^2+  & 2x^3+\dots +f_nx^n+\dots \\
+    xF &= & x^2+ & x^3+\dots +f_{n-1}x^n+\dots\\
+    x^2F &= & & x^3+\dots +f_{n-2}x^n+\dots\\ \hline
+    F-xF-x^2F &= 0+x + & 0x^2 + &\dots
+    \end{array}
+    \]
+Therefore, we have a closed form for $f_n$: \[\sum f_n x^n = \frac{x}{1-x-x^2}\]
+Therefore, the RHS could be written as: \begin{align*}
+    0.0001010203\dots &= \frac{1}{100}\sum f_n\left(\frac{1}{100}\right)^n\\
+    &= \frac{1}{100}\cdot \frac{\frac{1}{100}}{1-\frac{1}{100}-\frac{1}{100^2}}\\
+    &= \frac{1}{9899}\\
+    &= LHS
+\end{align*}\qed
+
+\subsubsection{More on the closed form of $f_n$}
+Write $1-x-x^2=(x-\alpha)(x-\beta)$. 
+Therefore, $\alpha,\beta=-\frac{1\pm \sqrt{5}}{2}$. We then use partial fractions to get \begin{align*}
+    \sum f_nx^n &=\frac{x}{1-x-x^2}\\
+    &= \frac{-\alpha}{\alpha-\beta}\cdot \frac{1}{x-\alpha}+\frac{\beta}{\alpha-\beta}\cdot \frac{1}{x-\beta}\\
+    &= \frac{-1}{\alpha-\beta}\left(\frac{1}{\frac{x}{\alpha}-1}-\frac{1}{\frac{x}{\beta}-1}\right)\\
+    &= \frac{1}{\alpha-\beta}\left(\frac{1}{1-\frac{x}{\alpha}}-\frac{1}{1-\frac{x}{\beta}}\right)\qquad \text{by geometric series formula,}\\
+    &= \frac{1}{\alpha-\beta}\left(\sum_{i=0}^{\infty}\left(\frac{x}{\alpha}\right)^i-\sum_{i=0}^{\infty}\left(\frac{x}{\beta}\right)^i\right)
+\end{align*}
+Hence, we get the constant term of the $n$-th derivative:
+	\begin{align*}
+		\frac{f^{(n)}(0)}{n!} &= \frac{1}{\alpha-\beta}\cdot \left(n!\frac{1}{\alpha^n}-n!\frac{1}{\beta^n}\right)\cdot \frac{1}{n!}\\
+		&= \frac{1}{\alpha-\beta}\cdot \left(\frac{1}{\alpha^n}-\frac{1}{\beta^n}\right)\\
+		&=\frac{1}{\sqrt{5}}\left(\frac{1}{\beta^n}-\frac{1}{\alpha^n}\right)
+	\end{align*}
+	Since $\alpha=\frac{-(1+\sqrt{5})}{2}, \beta=\frac{-(1-\sqrt{5})}{2}$, we observe that $\frac{1}{\alpha}=\frac{1-\sqrt{5}}{2}$ and $\frac{1}{\beta}=\frac{1+\sqrt{5}}{2}$. Thus, we substitute them back in:
+	\begin{align*}
+		\frac{f^{(n)}(0)}{n!} &= \frac{1}{\sqrt{5}}\left(\frac{1}{\beta^n}-\frac{1}{\alpha^n}\right)\\
+		&=\frac{1}{\sqrt{5}} \bigg( \bigg( \frac{1 + \sqrt{5}}{2}\bigg)^n - \bigg( \frac{1 - \sqrt{5}}{2}\bigg)^n \bigg)
+	\end{align*}
+	which is Binet's formula.
+
+\begin{theorem}[Binet's formula]
+    $\displaystyle
+				f_n = \frac{1}{\sqrt{5}} \bigg( \bigg( \frac{1 + \sqrt{5}}{2}\bigg)^n - \bigg( \frac{1 - \sqrt{5}}{2}\bigg)^n \bigg)$
+\end{theorem}
+
+\begin{corollary}
+    $\displaystyle
+				f_n \to \frac{1}{\sqrt{5}} \bigg( \frac{1 + \sqrt{5}}{2}\bigg)^n$ as $n\to \infty$.
+\end{corollary}
+
+\tbd{Type the $\sigma$ example}
+\subsection{H4 Polynomial power series}
+
+We were able to obtain a formula for the Fibonnacci numbers \[0,1,1,2,3,5,8,\dots\]
+by converting the sequence into a function \[F(x)=\sum_{n=0}^{\infty}f_nx^n\]
+We showed that \[F(x)=\frac{x}{1-x-x^2} = \frac{A}{1-\alpha x}+\frac{B}{1-\beta x}\]
+and we used the geometric series \[\frac{1}{1-\alpha x}=\sum_{n=0}^{\infty}(\alpha x)^n\]
+to get \[f_n=A\alpha^n +B\beta^n\]
+\spl
+
+In general, partial fractions will involve terms of the form \[\frac{1}{1-\alpha x},\frac{1}{(1-\alpha x)^2},\frac{1}{(1-\alpha x)^3},\dots\]
+
+\begin{theorem}
+    \[\frac{1}{(1-x)^k}=\sum_{n=0}^{\infty}\left({k\choose n}\right)x^n\]
+    valid when $|x|<1$. \sidenote{\(\left({k\choose n}\right) = {k+n-1\choose n}\)}
+    It follows that:
+    \[\frac{1}{(1-\alpha x)^k}=\sum_{n=0}^{\infty}\left({k\choose n}\right)\alpha^nx^n\] when \(|x|<\left|\frac{1}{\alpha}\right|\).
+\end{theorem}
+
+\begin{proof}
+    We observe that when the geometric sequence converges absolutely: \begin{align*}
+        LHS &= (1+x+x^2+\dots)^k\\
+        &= \underset{k}{\underbrace{(1+x+x^2+\dots)\cdot (1+x+x^2+\dots)\cdot \dots \cdot (1+x+x^2+\dots)}}
+    \end{align*}
+    To get the coefficient for $x^n$, we want to select terms from each bracket \[x^{a_1},x^{a_2},\dots,x^{a_k}\]
+    such that $a_1+a_2+\dots+a_k=n$. This is equivalent to the problem of choosing a bag of $n$ bagels of $k$ different types.
+\end{proof}
+
+\spl
+
+Last time, we found a formula \[\sum_{n=0}^{\infty}n^2x^n = \frac{x+x^2}{(1-x)^3}\] using derivatives.
+
+We now have an alternative approach:
+\begin{align*}
+    \mchoose{1}{n} &= {n+0\choose 0}=1\\
+    \mchoose{2}{n} &= {n+1\choose 1}=n+1\\
+    \mchoose{3}{n} &= {n+2\choose 2} = \frac{(n+2)(n+1)}{2}
+\end{align*}
+Write $n^2$ as a linear combination of them:\[n^2 = \rt{2}\cdot \frac{(n+2)(n+1)}{2} \rt{-3}(n+1)+\rt{1}\cdot1\]
+And so \begin{align*}
+    \sum_{n=0}^{\infty}n^2x^n &= \sum_{n=0}^{\infty}\left(\rt{2}\cdot \frac{(n+2)(n+1)}{2} -\rt{3}(n+1)+\rt{1}\cdot1\right)x^n\\
+    &= \frac{\rt{2}}{(1-x)^3}+\frac{\rt{-3}}{(1-x)^2}+\frac{\rt{1}}{1-x}\\
+    &= \frac{x^2+x}{(1-x)^3}
+\end{align*}
+
+\rmk We have two natural bases for the vector space of polynomials in $n$:\[\begin{matrix}
+    1,&n,&n^2,&n^3,\dots\\
+    \mchoose{1}{n},&\mchoose{2}{n},&\mchoose{3}{n},&\mchoose{4}{n},\dots
+\end{matrix}\]
+
+\subsection{H5 Linear recurrence relations}
+We can apply our analysis of the Fibonacci series $f_0=0,f_1=1,f_n=f_{n-1}+f_{n-2}$ to more general recursively-defined sequences.
+
+\subsubsection{Homogeneous order-$k$ linear recurrence}
+\[g_n=c_{1}g_{n-1} + c_{2}g_{n-2} +\dots + c_{k}g_{n-k}\]
+with $n\geq k$ and initial conditions $g_0=a_0, g_1=a_1,\dots, g_{k-1}=a_{k-1}$.
+
+\eg Order 2 with distinct roots: \[\begin{cases}
+    g_n = 2g_{n-1}+3g_{n-2}\\
+    g_0=3,g_1=5
+\end{cases}\]
+And so $(g_n)=(3,5,19,53,163,\dots)$.
+
+Let $G(x)=\sum_{n=0}^{\infty}g_nx^n$.
+\[\begin{array}{rlll}
+    G &= 3+&5x+ & 19x^2+   \dots +g_nx^n+\dots \\
+    xG &= &3x+& 5x^2+\dots +g_{n-1}x^n+\dots\\
+    x^2G &= && 3x^2 + \dots +g_{n-2}x^n+\dots\\ \hline
+    G-2xG-3x^2G &= 3-&x + & 0x^2 + \dots
+    \end{array}
+    \]
+And hence $(1-2x-3x^2)G=3-x$. Therefore, \begin{align*}
+    G= \frac{3-x}{1-2x-3x^2} &= \frac{3-x}{(1-3x)(1+x)}\\
+    &= \frac{2}{1-3x}+\frac{1}{1+x}\\
+    &= \sum_{n=0}^{\infty}(2\cdot 3^n + 1\cdot(-1)^n)x^n
+\end{align*}
+And so $g_n=2\cdot 3^n + (-1)^n$.
+
+\eg Order 2 with repeated roots:
+\[\begin{cases}
+    g_n = 4g_{n-1}+4g_{n-2}\\
+    g_0=1,g_1=6
+\end{cases}\]
+Thus, the sequence is $(g_n)=(1,6,20,56,144\dots)$.
+
+Let $G(x)=\sum_{n=0}^{\infty}g_nx^n$.
+\[\begin{array}{rlll}
+    G &= 1+&6x+ & 20x^2+   \dots +g_nx^n+\dots \\
+    xG &= &x+& 6x^2+\dots +g_{n-1}x^n+\dots\\
+    x^2G &= && x^2 + \dots +g_{n-2}x^n+\dots\\ \hline
+    G-4xG-4x^2G &=1+&2x + & 0x^2 + \dots
+    \end{array}
+    \]
+    And hence $(1-4x-4x^2)G=1+2x$. Therefore, \begin{align*}
+        G= \frac{1+2x}{1-4x-4x^2} &= \frac{1+2x}{(1-2x)^2}\\
+        &= \frac{2}{(1-2x)^2}+\frac{-1}{1-2x}\\
+        &= \sum_{n=0}^{\infty}(2\cdot \mchoose{2}{n}2^n +(-1)2^n)x^n
+    \end{align*}
+We observe $\mchoose{2}{n} = n+1$, so $g_n=2^n(2n+1)$.
+
+\subsubsection{Inhomogeneous recurrence}
+Inhomogeneous: there are some other known sequences added.
+\eg Inhomogeneous, order 1:\[\begin{cases}
+    g_n=-g_{n-1}+2^n\\
+    g_0=1
+\end{cases}\]
+Then $(g_n)=(1,1,3,5,11,\dots)$.
+
+Let $G =\sum_{n=0}^{\infty}g_nx^n$ and observe that $H= \sum_{n=0}^{\infty}2^nx^n=\frac{1}{1-2x}$.
+\[\begin{array}{rlll}
+    G &= 1+&x+ & 3x^2+   \dots +g_nx^n+\dots \\
+    xG &= &x+& x^2+\dots +g_{n-1}x^n+\dots\\
+    H &= 1 + &2x & 4x^2 + \dots +g_{n-2}x^n+\dots\\ \hline
+    G+xG-H &=1+&2x + & 4x^2 + 0 + \dots
+    \end{array}
+ \]
+Thus, $G=\frac{1}{(1+x)(1-2x)}=\frac{2/3}{1-2x}+\frac{1/3}{1+x} = \sum_{n=0}^{\infty}(\frac{2}{3}\cdot 2^n +\frac{1}{3}(-1)^n)$. Hence, $g_n = \frac{2^{n+1}+(-1)^n}{3}$.
+
 \end{document} 
