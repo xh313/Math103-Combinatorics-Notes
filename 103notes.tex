@@ -2663,4 +2663,109 @@ Let $G =\sum_{n=0}^{\infty}g_nx^n$ and observe that $H= \sum_{n=0}^{\infty}2^nx^
  \]
 Thus, $G=\frac{1}{(1+x)(1-2x)}=\frac{2/3}{1-2x}+\frac{1/3}{1+x} = \sum_{n=0}^{\infty}(\frac{2}{3}\cdot 2^n +\frac{1}{3}(-1)^n)$. Hence, $g_n = \frac{2^{n+1}+(-1)^n}{3}$.
 
+\subsection{H6 Nickels and dimes}
+\eg \label[example]{nickels-only} How many ways are there to make \$1.03 out of nickels (5¢) and pennies (1¢)?
+
+Answer: that would be the number of solutions to $5a+b=103$ with $a,b\in \N$. We can have: \[(a,b)=(0,103),(1,98),\dots,(20,3)\]
+
+More generally, the number of solutions to $5a+b=n$ is $\lfloor \frac{n}{5}\rfloor + 1$ since the number of nickels have to be $a=0,1,\dots,\lfloor\frac{n}{5}\rfloor$.
+
+\eg \label[example]{nickels-dime} How many ways are there to make \$1.03 out of dimes (10¢), nickels (5¢) and pennies (1¢)?
+
+We use the previous solution: \begin{itemize}
+    \item 0 dimes: $\lfloor\frac{103}{5}\rfloor + 1 = 21$
+    \item 1 dimes: $\lfloor\frac{93}{5}\rfloor + 1 = 19$
+    \item \dots
+    \item 10 dimes: $\lfloor\frac{3}{5}\rfloor + 1 = 1$
+\end{itemize}
+Then we sum them up. Since they are consecutive odd numbers, \[21+19+17+\dots+1=11^2=121\]
+
+\subsubsection{Another method}
+Revisit \cref{nickels-only}. 
+
+Consider the rational function \[\frac{1}{1-x}\cdot \frac{1}{1-x^5}= (1+x+x^2+x^3+\dots)(1+x^5+x^{10}+x^{15}+\dots)\]
+we want to know what the coefficient for $x^{103}$ is. Note this is equivalent to the previous example since we are choosing $x^p$ terms from the first part and $x^{5q}$ terms from the second part, and we are looking for ways to get $5q+p=103$.
+
+To get the coefficient of $x^{103}$, consider \[1+x+x^2+x^3+x^4 = \frac{1-x^5}{1-x}\]
+
+And hence $\frac{1}{1-x}=\frac{1+x+x^2+x^3+x^4}{1-x^5}$. Furthermore, we see that \[\frac{1}{(1-x^5)^2}=\sum_{n\geq 0}\mchoose{2}{n}(x^5)^n\] We observe that the LHS becomes: \begin{align*}
+    \frac{1}{1-x}\cdot \frac{1}{1-x^5} &= \frac{1+x+x^2+x^3+x^4}{1-x^5}\cdot \frac{1}{1-x^5}\\
+    &= (\rt{1+x+x^2+x^3+x^4})\cdot \bt{\sum_{n\geq 0}\mchoose{2}{n}(x^5)^n}
+\end{align*}
+To get $x^{103}$, we want $x^p \cdot x^{5q}=x^{103}$ such that $0\leq p\leq 4$ and $q\geq 0$. The only solution is $(p,q)=(3,20)$. The coefficient is therefore \[\rt{1}\cdot \bt{\mchoose{2}{20}}=21\]
+
+Now revisit \cref{nickels-dime}
+Similarly, consider \[\frac{1}{1-x}\cdot \frac{1}{1-x^5}\cdot \frac{1}{1-x^{10}}= (1+x+x^2+x^3+\dots)(1+x^5+x^{10}+x^{15}+\dots)(1+x^{10}+x^{20}+\dots)\]
+We now want to get the coefficient of $x^{103}$, which are from choosing terms $x^{a}, x^{5b}$, and $x^{10c}$ from the parts above such that $a+5b+10c=103$.
+
+Also, we prepare that \[\frac{1}{1-x}=\frac{1+x+x^2+x^3+\dots+x^9}{1-x^{10}}\] and \[\frac{1}{1-x^5}=\frac{1+x^5}{1-x^{10}}\]
+We observe that the LHS becomes:
+\begin{align*}
+    &\frac{1}{1-x}\cdot \frac{1}{1-x^5}\cdot \frac{1}{1-x^{10}}\\
+    =& \frac{1+x+x^2+x^3+\dots+x^9}{1-x^{10}}\cdot \frac{1+x^5}{1-x^{10}} + \frac{1}{1-x^{10}}\\
+    =& \rt{(1+x+\dots + x^4 + 2(x^5+\dots+x^9)+x^{10}+\dots + x^{14})} \cdot \bt{\sum_{n\geq 0}\mchoose{3}{n}x^{10}}
+\end{align*}
+We pick an $\rt{x^p}$ term from the first part and a $\bt{x^{10q}}$ term from the 2nd part such that $p+10q=103$, $0\leq p\leq 14$ and $q\geq 0$. 
+
+There are two solutions: $(p,q)=(3,10)$ or $(13,9)$. The coefficient of $x^{103}$ is $$1\cdot \mchoose{3}{10}+1\cdot \mchoose{3}{9}=66+55=121$$
+
+\subsection{H7 Characteristic ops and egf}
+\cref{nickels-only} and \cref{nickels-dime} are equivalent to asking \textit{How many ways to get a bag of 103 bagels}:
+\begin{enumerate}
+    \item of 2 types, plain + garlic such that we can get any number of plain but garlic must be a multiple of 5?
+    \item of 3 types, plain + garlic + onion, where can get any number of plain, but garlic must be a multiple of 5 and onion has to be a multiple of 10?
+\end{enumerate}
+
+These are combinations with constraints. That is, we want to put 103 ``balls'' in buckets \[U_{p}, U_{g}, U_{o}\] with capacities \begin{align*}
+    U_p&\in \{0,1,2,\dots\} = N_p\\
+    U_g&\in \{0,5,10,\dots\}= N_g\\
+    U_o&\in \{0,10,20,\dots\}= N_0\\
+\end{align*}
+Effectively, we convert each set to a power series. There are two ways to convert a subset $N\subseteq\N$ into a power series. \begin{itemize}
+    \item Step 1: Convert $N$ into a 0-1 sequence: \[a=(a_n) \text{ where }a_n=\begin{cases}
+        1 & \text{if }n\in N\\
+        0 & \text{ otherwise}
+    \end{cases}\]
+    \item Step 2: \begin{itemize}
+        \item Characteristic OPS (ordinary power series) $X_N$ of $N$: \[(a_n)\mapsto \sum_{n\geq 0 }a_nx^n\]
+        \item Characteristic EGF (exponential generating function) $\mathfrak{X}_n$ of $N$: \[(a_n)\mapsto \sum_{n\geq 0}\frac{a_n}{n!}x^n\]
+    \end{itemize}
+\end{itemize}
+
+\eg $N=\{0,1,2,\dots\}$ \hfill(no constraint)\begin{align*}
+    a^N &= 1,1,1,\dots\\
+    X_N &= 1+x+x^2 +\dots = \frac{1}{1-x}\\
+    \mathfrak{X}_N &= 1+x+\frac{x^2}{2!}+\dots = e^x
+\end{align*}
+
+\eg $N=\{1,2,3,\dots\}$ \hfill(at least 1 object)\begin{align*}
+    a^N &= 0,1,1,\dots\\
+    X_N &= x+x^2 +\dots = \frac{x}{1-x}\\
+    \mathfrak{X}_N &= x+\frac{x^2}{2!}+\dots = e^x-1
+\end{align*}
+
+\eg $N=\{0,1\}$ \hfill(at most 1 object)\begin{align*}
+    a^N &= 1,1,0,0,\dots\\
+    X_N &= 1+x\\
+    \mathfrak{X}_N &= 1+x
+\end{align*}
+
+\eg $N=\{0,2,4,6,\dots\}$ \hfill(even numbers of object)\begin{align*}
+    a^N &= 1,0,1,0,\dots\\
+    X_N &= 1+x^2 +x^4+\dots = \frac{x}{1-x^2}\\
+    \mathfrak{X}_N &= 1+\frac{x^2}{2!}+\frac{x^4}{4!}+\dots = \cosh x = \frac{e^x+e^{-x}}{2}
+\end{align*}
+
+\eg $N=\{1,3,5,7,\dots\}$ \hfill(odd numbers of object)\begin{align*}
+    a^N &= 0,1,0,1,\dots\\
+    X_N &= x+x^3 +x^5+\dots = \frac{x}{1-x^2}\\
+    \mathfrak{X}_N &= x+\frac{x^3}{3!}+\frac{x^5}{5!}+\dots = \sinh x = \frac{e^x-e^{-x}}{2}
+\end{align*}
+
+\eg $N=\{0,5,10,15,\dots\}$ \hfill(multiples of 5 numbers of object)\begin{align*}
+    a^N &= 1,0,0,0,0,1,0,\dots\\
+    X_N &= 1+x^5 +x^10+\dots = \frac{1}{1-x^5}\\
+    \mathfrak{X}_N &= 1+\frac{x^5}{5!}+\frac{x^{10}}{10!}+\dots = \frac{1}{5}\sum_{k=0}^{4}e^{\omega^k x}
+\end{align*}
+where $\omega=e^{2\pi i/5}$ is a primitive 5th root of unity.
 \end{document} 
