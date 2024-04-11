@@ -2949,7 +2949,25 @@ For each $k=0,1,\dots,47$:\begin{itemize}
 \end{itemize}
 Hence the only choices made are through choosing $k$, which gives us 48 ways.
 
-\textbf{Generating function:} \tbd{type up from photo}
+\textbf{Generating function:} Consider this as a combinations with constraints problem. Let $c_n$ be the number of ways  to choose $n$ fruit with the aforementioned conditions. Then \[f\left( x\right) =\sum _{n}c_{n}x^{n}\] satisfies \[f=X_{A}X_{B}X_{c}X_{D}\]
+Now since \begin{align*}
+    N_{A}&=\left\{ 0,2,4,\ldots \right\}\\
+    N_B &= \{0,5,10,\dots\}\\
+    N_C&=\{0,1,2,3,4\}\\
+    N_D &= \{0,1\}
+\end{align*}
+We could write their OPS:
+\begin{align*}
+    X_{A}&=1+x^{2}+x^{4}+\ldots =\dfrac{1}{1-x^{2}}\\ 
+    X_{B}&=1+x^{5}+x^{10}+\ldots =\dfrac{1}{1-x^{5}}\\
+    X_{c}&=1+x+x^{2}+x^{3}+x^{4}=\dfrac{1-x^{5}}{1-x}\\ X_{D}&=1+x
+\end{align*}
+Thus, \begin{align*}
+    f\left( x\right) &=\dfrac{1}{1-x^{2}}\cdot \dfrac{1}{1-x^{5}}\cdot \dfrac{1-x^{5}}{1-x}\cdot \left( 1+x\right) \\ &=\dfrac{1+x}{\left( 1+x\right) \left( 1-x\right) \left( 1-x\right) }\\ &=\dfrac{1}{(1-x)^{2}}\\
+    &=\sum _{n=0}\left( \begin{pmatrix} 2 \\ n \end{pmatrix}\right) x^{n}\\ &=\sum _{n\geq 0}\left( n+1\right) x^{n}\\ \Rightarrow c_{n}&=n+1
+\end{align*}
+Therefore, $c_{47}=47+1=48$.
+% \tbd{type up from photo}
 
 \subsection{I4 Permutations with constraints}
 \eg We have R, G, B marbles. We want to place 7 of them in a row such that \begin{itemize}
@@ -2975,6 +2993,13 @@ We want the coefficients for each such case. For instance, \[(r,g,b)=(1,3,3) \qq
 Thus, the answer is $7![x^7:F]$.
 
 In general, if $p_n$ is the number of ways to line up $n$ marbles with the aforementioned constraints, then $p_n = n![x^n :\mathfrak{X}_R\mathfrak{X}_G \mathfrak{X}_B]$. That is, \[(p_n)\xrightarrow{egf}\mathfrak{X}_R\mathfrak{X}_G \mathfrak{X}_B\]
+
+General formula\sidenote{(Optional content)} for $F = \mathfrak{X}_R\mathfrak{X}_G \mathfrak{X}_B$:
+\begin{align*}
+    F&=\dfrac{1}{6}\left( e^{x}-e^{-x}\right) \left( e^{x}+e^{\zeta _{3}x}+e^{\zeta _{3}^{2}x}\right) e^{x}\\
+    &= \dfrac{1}{6}\left( e^{3x}-e^{x}+e^{\left( 2+\zeta_3\right) x}+e^{\zeta_3x}+e^{\left( 2+\zeta_3^{2}\right) x}-e^{\zeta_3^{2}x}\right)
+\end{align*}
+Thus \[ANS = \dfrac{1}{6}\left( 3^{n}-\left( -1\right) ^{n}+\left( z+\zeta_3\right) ^{n}-\zeta_3^{n}+\left( z+\zeta_3 ^{2}\right) ^{n}-\zeta_3^{2n}\right)\]
 
 \begin{theorem}
     Let constraints $N_1,N_2,\dots,N_t\subseteq \N$. Let $p_s=\#\, s$-permutations of $\{\infty\cdot 1, \infty\cdot 2,\dots ,\infty\cdot t\}$ such that \# of type $k$ is in the set $N_k$.
@@ -3019,5 +3044,6 @@ We have \begin{align*}
     &= \frac{1}{16}\left(e^{10x}-4e^{8x}+6e^{6x}-4e^{4x}+e^{2x}\right)
 \end{align*}
 Therefore, the answer is \[\frac{1}{16}\left(10^n-4\cdot 8^n+6\cdot 6^n-4\cdot 4^n + 2^n\right)\]
+
 
 \end{document}
