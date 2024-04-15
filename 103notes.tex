@@ -38,7 +38,7 @@
 
 We have $f(n)=f(n-1)+f(n-2)$ for all $n\geq 2$. Hence, $f(n)$ is the sequence that satisfies the recurrence relation and the initial conditions $f(0)=1, f(1)=2$.
 
-\subsection{A2 Fibonnacci sequence}
+\subsection{A2 Fibonacci sequence}
 \begin{align*}
     0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,\dots
 \end{align*}
@@ -109,7 +109,7 @@ We have $f(n)=f(n-1)+f(n-2)$ for all $n\geq 2$. Hence, $f(n)$ is the sequence th
         \arrow[no head, from=5-3, to=5-5]
     \end{tikzcd}
 \end{itemize}
-Conjecture: maybe Fibonnacci?
+Conjecture: maybe Fibonacci?
 
 }
 \begin{proof}
@@ -1559,7 +1559,7 @@ We use the following bijection:
 
 \rmk Observe: \[\begin{array}[t]{l|l|l|}
     \cline{2-3}
-    u_i\geq 0 & {^{\circled{5}}\quad} t^s&{^{\circled{7}}\quad} \sum_{k=0}^{t}\squig{s}{k}\\\cline{2-3}
+    u_i\geq 0 & {^{\circled{5}}\quad} t^s&{^{\circled{7}}\quad} \sum_{k=0}^{t}\squig{s}{k}\\[6pt]\cline{2-3}
     u_i\geq 1 & {^{\circled{9}}\quad}t!\squig{s}{t}& {^{\circled{11}}\quad}\squig{s}{t}\\
     \cline{2-3}
 \end{array}\]
@@ -2548,7 +2548,7 @@ Hence, we get the constant term of the $n$-th derivative:
 \tbd{Type the $\sigma$ example}
 \subsection{H4 Polynomial power series}
 
-We were able to obtain a formula for the Fibonnacci numbers \[0,1,1,2,3,5,8,\dots\]
+We were able to obtain a formula for the Fibonacci numbers \[0,1,1,2,3,5,8,\dots\]
 by converting the sequence into a function \[F(x)=\sum_{n=0}^{\infty}f_nx^n\]
 We showed that \[F(x)=\frac{x}{1-x-x^2} = \frac{A}{1-\alpha x}+\frac{B}{1-\beta x}\]
 and we used the geometric series \[\frac{1}{1-\alpha x}=\sum_{n=0}^{\infty}(\alpha x)^n\]
@@ -3045,5 +3045,94 @@ We have \begin{align*}
 \end{align*}
 Therefore, the answer is \[\frac{1}{16}\left(10^n-4\cdot 8^n+6\cdot 6^n-4\cdot 4^n + 2^n\right)\]
 
+\subsection{I5 Return of the counting table}
+Now we re-calculate these entries using generating functions:
+\[\begin{array}[t]{l|l|l|l}
+    \cline{2-3}
+    u_i\leq 1 & {^{\circled{1}}\quad} (t)_s & {^{\circled{2}}\quad} {t\choose s}&N=\{0,1\}\\[6pt]\cline{2-3}
+    u_i\geq 0 & {^{\circled{5}}\quad} t^s & {^{\circled{6}}\quad} \mchoose{t}{s} &N=\{0,1,2,\dots\}\\[6pt]\cline{2-3}
+    u_i\geq 1 & {^{\circled{9}}\quad}\pt{t!\squig{s}{t}} & {^{\circled{10}}\quad}\mchoose{t}{s-t}={s-1\choose t-1}&N = \{1,2,3,\dots\}\\[6pt]\cline{2-3}
+\end{array}\]
+
+\begin{itemize}
+    \item[] We use OPS for \textbf{combinations}.
+    \item[\circled{2}] We observe \[N=\{0,1\}\xrightarrow[ops]{char} 1+x\] 
+    since there are $t$ distinct boxes, we need to do this for each box, so we have $(1+x)^t$. Let \[F\xleftarrow{ops}(1+x)^t=\sum_{s=0}^{t}{t\choose s}x^s\] and we have $[x^s:F]={t\choose s}$.
+    \item[\circled{6}] We observe \[N=\{0,1,2,\dots\}\xrightarrow[ops]{char} 1+x+x^2+\dots \stackrel{geom}{=} \frac{1}{1-x}\] we do that for all $t$ distinct boxes, so we have $\left(\frac{1}{1-x}\right)^t$. Let \[F\xleftarrow{ops}\left(\frac{1}{1-x}\right)^t=\sum_{s=0}^{\infty}\mchoose{t}{s}x^s\] and we have $[x^s:F]=\left({t\choose s}\right)$.
+    \item[\circled{10}]  We observe \[N=\{1,2,\dots\}\xrightarrow[ops]{char} x+x^2+\dots \stackrel{geom}{=} \frac{x}{1-x}\] we do that for all $t$ distinct boxes, so we have $\left(\frac{x}{1-x}\right)^t$. Let \[F\xleftarrow{ops}\left(\frac{x}{1-x}\right)^t=\sum_{s=0}^{\infty}x^t \mchoose{t}{s}x^s = \sum_{r=t}^{\infty}\mchoose{t}{r-t}x^r\] and we have $[x^s:F]=\mchoose{t}{s-t}={s-1\choose t-1}$.
+    \item[] Now we have to use EGF for the \textbf{permutations}.
+    \item[\circled 1] We observe \[N=\{0,1\}\xrightarrow[egf]{char} 1+x\] since there are $t$ distinct boxes, we need to do this for each box, so we have $(1+x)^t$. Let \[F\xleftarrow{egf}(1+x)^t=\sum_{s=0}^{t}{t\choose s}x^s\] and we have $s![x^s:F]=s!{t\choose s} = (t)_s$.
+    \item[\circled 5] We observe \[N=\{0,1,2,\dots\}\xrightarrow[egf]{char} 1+x+\frac{1}{2!}x^2+\dots \stackrel{taylor}{=} e^x\] we do that for all $t$ distinct boxes, so we have $e^{tx}$. Let \[F\xleftarrow{egf}e^{tx}=\sum_{s=0}^{\infty}\frac{t^s}{s!}x^s\] and we have $s![x^s:F]=t^s$.
+    \item[\circled 9] We observe \[N=\{1,2,\dots\}\xrightarrow[egf]{char} x+\frac{1}{2!}x^2+\dots \stackrel{taylor}{=} e^x-1\] we do that for all $t$ distinct boxes, so we have $(e^{x}-1)^t$. Let \begin{align*}
+        F\xleftarrow{egf}(e^{x}-1)^t&=\sum_{s=0}^{t}{t\choose k} \rt{(e^x)^{t-k}}(-1)^k &&\text{binomial thm.}\\
+        &= \sum_{k=0}^{t}(-1)^k{t\choose k}\rt{\frac{1}{s!}(t-k)^sx^s}\\
+        &= \sum_{s=0}^{\infty}\pt{\sum_{k=0}^{t}(-1)^k{t\choose k}(t-k)^s}\frac{x^s}{s!}
+    \end{align*} and we have $s![x^s:F]=\pt{\sum_{k=0}^{t}(-1)^k{t\choose k}(t-k)^s}$.
+\end{itemize}
+Surprise: we got a formula for Stirling numbers of the second kind!
+\begin{proposition}
+    \[t!\squig{s}{t} = \sum_{k=0}^{t}(-1)^k{t\choose k}(t-k)^s\]
+\end{proposition}
+\begin{proof}[Alternate proof (counting argument)]
+    Use symmetric IE. The LHS means placing $s$ people into $t$ named groups.
+
+    Let $S =$ all ways to place $s$ people into $t$ \textbf{possibly empty} named groups. \sidenote{But we want nonempty groups!} We let $A_i$ be the ways where team $i$ is empty.
+    Then $\alpha_k=\left|A_{i_1}\cap A_{i_2}\cap \dots\cap A_{i_k}\right| = (t-k)^s$. We use the formula for symmetric IE. 
+\end{proof}
+
+\section{J Partitions}
+We tackle table entries \circled{8} and \circled{12}.
+
+\subsection{J1 Integer partitions}
+\circled{12}: How many ways to put $s$ identical objects into $t$ identical boxes with \textbf{no empty boxes}?
+
+i.e. ways to write $s=x_1+\dots+x_t$ where $x_i$ are positive integer and the \textit{order doesn't matter}. \underline{WLOG let $x_1\geq x_2\geq \dots\geq x_t\geq 1$.}
+
+Let $p_t(s)$ denote the answer (the number of partitions of the integer $s$ into $t$ parts). 
+
+\eg $s=8, t=3$ could be partitioned into: \begin{align*}
+    6+1+1\\
+    5+2+1\\
+    4+3+1\\
+    4+2+2\\
+    3+3+2
+\end{align*}
+Hence, $p_3(8)=5$.
+
+\circled{8}: How many ways to put $s$ identical objects into $t$ identical boxes, possibly with some empty boxes?
+
+\textbf{Answer}: $\displaystyle \sum_{k=0}^{t}p_k(s)$ where $k$ is the number of nonempty parts.
+
+\addlink{Partition function}
+Special cases for \circled 8:
+\begin{itemize}[align=left]
+    \item[$t\geq s$:] define the \textbf{partition function} \[p(s):= p_0(s)+p_1(s)+\dots+p_s(s)\]
+    \[\begin{tabular}{|l|l|l}
+        \cline{1-2}
+        $s$ & $p(s)$ &                            \\ \cline{1-2}
+        0 & 1    & $0 =$ empty sum                  \\ \cline{1-2}
+        1 & 1    & $1$                              \\ \cline{1-2}
+        2 & 2    & $2 = 1+1$                        \\ \cline{1-2}
+        3 & 3    & $3 = 2+1 = 1+1+1 $               \\ \cline{1-2}
+        4 & 5    & $4 = 3+1 = 2+2 = 2+1+1 = 1+1+1+1$ \\ \cline{1-2}
+        5 & \rt{7}    & $5 = 4+1 = 3+2 = 3+1+1  =  2 +2 +1 = 2+1 + 1 + 1= 1+1+1+1+1$ \\ \cline{1-2}
+        \end{tabular}\]
+
+        \rmk \textit{Not Fibonacci}!! But why does it start out like Fibonacci?
+
+        \textbf{Answer}: Let's consider the generating function \[P(x) = \sum_{s=0}^{\infty}p(s)x^s\] As an example, consider the partitioning of 4¢ of money out of coins of \textbf{all} integer values: 1¢, 2¢, 3¢, 4¢, \dots{ } 
+        The generating function for this is \[P(x) = \underbrace{(1+x+x^2+\dots)}_{1¢}\underbrace{(1+x^2+x^4\dots)}_{2¢}\underbrace{(1+x^3+x^6+\dots)}_{3¢}\dots = \prod_{k=1}^{\infty}\frac{1}{1-x^k}\]
+        \addlink{Euler's pentagonal number formula}
+        Euler showed that the denominator is\sidenote{Euler's pentagonal number formula} \[\prod_{k=1}^{\infty} (1-x^k) = \bt{1}\rt{-x-x^2}\bt{+x^5+x^7}\rt{-x^{12}-x^{15}}+\dots\]
+        Every term either has a 0, 1 or $-1$ coefficient.
+
+        We compare with the generating function for Fibonacci numbers: \[(F_n) = 1,1,2,3,5,\dots \xrightarrow{ops}\frac{1}{1-x-x^2}\]
+        while \[(p(n))\xrightarrow{ops} \frac{1}{1-x-x^2\bt{+x^5+\dots}}\]
+        should agree up to $n=4$. 
+\end{itemize}
+
+\ontangent{
+    In 1918, Hardy and Ramanujan showed that \[p(n)\approx \frac{1}{4n\sqrt{3}}\exp \left(\pi \sqrt{\frac{2n}{3}}\right)\qquad n\to \infty\]
+}
 
 \end{document}
