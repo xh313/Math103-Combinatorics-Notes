@@ -3132,7 +3132,135 @@ Special cases for \circled 8:
 \end{itemize}
 
 \ontangent{
-    In 1918, Hardy and Ramanujan showed that \[p(n)\approx \frac{1}{4n\sqrt{3}}\exp \left(\pi \sqrt{\frac{2n}{3}}\right)\qquad n\to \infty\]
+    In 1918, Hardy and Ramanujan showed that \[p(n)\approx \frac{1}{4n\sqrt{3}}\exp \left(\pi \sqrt{\frac{2n}{3}}\right)\qquad \text{as } n\to \infty\]
 }
+
+\subsection{J2 Properties of partition numbers}
+
+Recall that $p_k(n)$ is \# of ways to group $n$ \textbf{identical} robots into $k$ nonempty teams, also number of positive integer solutions to \[n=x_1+x_2+\dots+x_k\] where $x_1\geq x_2\geq \dots \geq x_k\geq 1$.\sidenote{Note that if the robots are distinct, then we have Stirling numbers of the 2nd kind.}
+
+\subsubsection{Table of partition numbers}
+
+\[\begin{matrix}
+    n\backslash k & 1 &2&3&4&5&6&7&\text{sum}\\[0.5em]
+    1 &            1&0&0&0&0&  0&         0        & 1\cr             
+    2 &            1&              1&0&0& 0&0&0& 2\cr
+    3 &            1&              1&              1&   0&0&0&          0       & 3\cr
+    4 &            1&              2& \gt 1&               1&0&0&         0        & 5\cr
+    5 &            1&   \color{red}2&              2&               1&               1&0&0& 7\cr
+    6 & \color{red}1& \gt 3&  \pt3& \color{orange}2& \color{purple}1& \color{magenta}1&      0           & 11\cr
+    7 &            1&   \color{red}3& \gt 4&   \pt3& \color{orange}2&  \color{purple}1& \color{magenta}1& 15\cr
+\end{matrix}\]
+
+
+\addlink{Properties of partition numbers}
+\begin{proposition}Properties of partition numbers:
+    \begin{enumerate}
+        \item $p_k(n)=0$ if $k> n$\hfill [too many parts]
+        \item $p_n(n)=1$ \hfill [$1+1+\dots+1$]
+        \item $p_1(n)=1$\hfill [just a team of $n$ bots]
+        \item $p_k(0)=0$ if $k\geq 1$\hfill [obvious]
+        \item $p_2(s)=\lfloor\frac{s}{2}\rfloor$ \hfill [The smaller part is anything from $1,2,\dots, \lfloor\frac{s}{2}\rfloor$]
+        \item $p_{s-1}(s)=1$ for $s\geq 2$ \hfill [$2+1+\dots +1$ only option]
+        \item $p_{s-2}(s)=2$ for $s\geq 4$ \hfill $\left[\begin{cases}
+            2+2+1+\dots +1\\
+            3+1+\dots +1
+        \end{cases}\text{ only options} \right]$
+
+        \item \textbf{The recursive formula}: \[p_k(n) = p_{k-1}(n-1) + p_k(n-k)\] \begin{itemize}
+            \item[\underline{LHS}:] Group $n$ bots into $k$ teams
+            \item[\underline{RHS}:] \begin{itemize}[align=left]
+                \item[\textit{First term}: ] there exists a solo robot. We place the $n-1$ robots into $k-1$ teams and add the solo robot to the rest.
+                \item[\textit{Second term}: ] there are no solo robots, so each team has size $\geq 2$. We place 1 robot into each team, and then pretend they don't exist. Then we place the leftover $n-k$ robots so that each team is `nonempty'. Now we have ensured that each team has $\geq 2$ robots.
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
+\end{proposition}
+
+\subsection{J3 Ferros diagrams}
+A partition can be drawn as a configuration of dots. 
+\eg 8=4+3+1 
+\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
+	\bullet \& \bullet \& \bullet \& \bullet \\
+	\bullet \& \bullet \& \bullet \\
+	\bullet
+\end{tikzcd}
+
+\begin{proposition}
+    For any $n$, there is an \textbf{involution} (self-inverse map) on the set of partitions of $n$: simply reflect the Ferros diagram along the diagonal: \[\begin{tabular}[t]{ccc}
+        {\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
+            \bullet \& \bullet \& \bullet \& \bullet \\
+            \bullet \& \bullet \& \bullet \\
+            \bullet
+        \end{tikzcd}} & $\longleftrightarrow $ & {\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
+            \bullet \& \bullet \& \bullet \\
+            \bullet \& \bullet \\
+            \bullet \& \bullet \\
+            \bullet
+        \end{tikzcd}}
+    \end{tabular}\]
+    This is called \textbf{conjugation}.
+\end{proposition}
+
+\subsection{J4 Partition identities}
+\begin{theorem}
+    \rt{The number of partitions of $n$ into $k$ parts} is equal to \gt{the number of partitions of $n$ with largest part $k$}
+\end{theorem}
+\begin{proof}
+    \rt{The number of Ferros diagrams with $k$ rows} is the same as \gt{the number of Ferros diagrams with $k$ columns}
+\end{proof}
+
+\begin{theorem}
+    \rt{The number of partitions of $n$} is congruent to ($\equiv$) \gt{the number of partitions of $n$ into distinct odd parts} mod 2.
+\end{theorem}
+\begin{proof}
+    Consider the set of \rt{partitions of $n$}. Conjugation split this set into conjugate \textbf{pairs}\sidenote{Pairs are even and don't change parities} and self-conjugate elements. Hence, the \# of partitions of $n$ is $\equiv$ \# self-conjugate partitions of $n$ mod 2. 
+
+    \textit{Claim}: self-conjugate elements $\longleftrightarrow$ \gt{odd distinct partitions}. By example: \[\begin{tikzcd}[ampersand replacement=\&,cramped, sep=tiny]
+        \bullet \& \bullet \& \bullet \& \bullet \\
+        \bullet \& \bullet \& \bullet \\
+        \bullet \& \bullet \& \bullet \\
+        \bullet
+        \arrow[no head, from=1-1, to=1-4]
+        \arrow[no head, from=1-1, to=4-1]
+        \arrow[no head, from=2-2, to=2-3]
+        \arrow[no head, from=2-2, to=3-2]
+        \arrow[no head, from=3-3, to=3-3, loop, in=90, out=180, distance=1mm]
+    \end{tikzcd}\]
+\end{proof}
+
+\begin{theorem}
+    \rt{\# distinct parts} $\longleftrightarrow$ \bt{\# no gaps} $\longleftrightarrow$ \gt{\# odd parts}
+\end{theorem}
+\begin{proof}[Proof of \rt{\#} $=$ \bt{\#}]
+    \rt{Distinct parts} means F.D. has all rows different: e.g. $14=7+4+2+1$ \[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
+        \bullet \& \bullet \& \bullet \& \bullet \& \bullet \& \bullet \& \bullet \\
+        \bullet \& \bullet \& \bullet \& \bullet \\
+        \bullet \& \bullet \\
+        \bullet
+    \end{tikzcd}\]
+    \bt{No gaps} means F.D. has all columns different: $14=4+3+2+2+1+1+1$ \[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
+        \bullet \& \bullet \& \bullet \& \bullet \\
+        \bullet \& \bullet \& \bullet \\
+        \bullet \& \bullet \\
+        \bullet \& \bullet \\
+        \bullet \\
+        \bullet \\
+        \bullet
+    \end{tikzcd}\]
+    Why? A gap means one row is 2 or more shorter than the previous one, implying equal columns.
+
+    By conjugation, \rt{\# distinct parts} $\longleftrightarrow$ \bt{\# no gaps}.
+\end{proof}
+
+\begin{proof}[Proof of \rt{\#} $=$ \gt{\#}]
+    Define generating functions for \rt{\# distinct parts} and \gt{\# odd parts}: \[\rt{C(x)=\sum c_nx^n}, \qquad \gt{D(x)=\sum d_nx^n}\]
+    We observe: \begin{align*}
+        C(x) &= (1+x)(1+x^2)\dots = \prod_{n=1}^{\infty}(1+x^n)\\
+        &= \left(\frac{1-x^2}{1-x}\right)\left(\frac{1-x^4}{1-x^2}\right)\left(\frac{1-x^6}{1-x^3}\right)\dots\\
+        &= \frac{1}{1-x}\cdot\frac{1}{1-x^3}\cdot\dots\\
+        &= \prod_{n \, \mathrm{odd}} \frac{1}{1-x^n}=D(x)
+    \end{align*}
+\end{proof}
 
 \end{document}
