@@ -3230,16 +3230,16 @@ A partition can be drawn as a configuration of dots.
 \end{proof}
 
 \begin{theorem}
-    \rt{\# distinct parts} $\longleftrightarrow$ \bt{\# no gaps} $\longleftrightarrow$ \gt{\# odd parts}
+    \rt{\# distinct parts} $\longleftrightarrow$ \pt{\# no gaps} $\longleftrightarrow$ \gt{\# odd parts}
 \end{theorem}
-\begin{proof}[Proof of \rt{\#} $=$ \bt{\#}]
+\begin{proof}[Proof of \rt{\#} $=$ \pt{\#}]
     \rt{Distinct parts} means F.D. has all rows different: e.g. $14=7+4+2+1$ \[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
         \bullet \& \bullet \& \bullet \& \bullet \& \bullet \& \bullet \& \bullet \\
         \bullet \& \bullet \& \bullet \& \bullet \\
         \bullet \& \bullet \\
         \bullet
     \end{tikzcd}\]
-    \bt{No gaps} means F.D. has all columns different: $14=4+3+2+2+1+1+1$ \[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
+    \pt{No gaps} means F.D. has all columns different: $14=4+3+2+2+1+1+1$ \[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=0pt]
         \bullet \& \bullet \& \bullet \& \bullet \\
         \bullet \& \bullet \& \bullet \\
         \bullet \& \bullet \\
@@ -3250,7 +3250,7 @@ A partition can be drawn as a configuration of dots.
     \end{tikzcd}\]
     Why? A gap means one row is 2 or more shorter than the previous one, implying equal columns.
 
-    By conjugation, \rt{\# distinct parts} $\longleftrightarrow$ \bt{\# no gaps}.
+    By conjugation, \rt{\# distinct parts} $\longleftrightarrow$ \pt{\# no gaps}.
 \end{proof}
 
 \begin{proof}[Proof of \rt{\#} $=$ \gt{\#}]
@@ -3262,5 +3262,258 @@ A partition can be drawn as a configuration of dots.
         &= \prod_{n \, \mathrm{odd}} \frac{1}{1-x^n}=D(x)
     \end{align*}
 \end{proof}
+
+\section{K Counting with symmetries}
+\subsection{K1 Chessboard}
+How many colorings of a 5-by-5 chessboard in 4 colors do we have? \hfill ANS: $4^{25}$
+
+What if 2 colorings are considered the same if they are rotationally equivalent?\sidenote{In the example, white is also a color}
+\[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Shape: Rectangle [id:dp06222359392950061] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (92.49,110) -- (112.49,110) -- (112.49,130) -- (92.49,130) -- cycle ;
+    %Shape: Rectangle [id:dp8787181520000242] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (112.49,130) -- (132.49,130) -- (132.49,150) -- (112.49,150) -- cycle ;
+    %Shape: Rectangle [id:dp8843662801590229] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (152.49,130) -- (172.49,130) -- (172.49,150) -- (152.49,150) -- cycle ;
+    %Shape: Rectangle [id:dp594605756309508] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (112.49,170) -- (132.49,170) -- (132.49,190) -- (112.49,190) -- cycle ;
+    %Shape: Rectangle [id:dp4973176741292076] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (132.49,170) -- (152.49,170) -- (152.49,190) -- (132.49,190) -- cycle ;
+    %Shape: Rectangle [id:dp48750050163020564] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (152.49,170) -- (172.49,170) -- (172.49,190) -- (152.49,190) -- cycle ;
+    %Shape: Grid [id:dp38920287799224806] 
+    \draw  [draw opacity=0] (92.49,110) -- (192.49,110) -- (192.49,210) -- (92.49,210) -- cycle ; \draw   (112.49,110) -- (112.49,210)(132.49,110) -- (132.49,210)(152.49,110) -- (152.49,210)(172.49,110) -- (172.49,210) ; \draw   (92.49,130) -- (192.49,130)(92.49,150) -- (192.49,150)(92.49,170) -- (192.49,170)(92.49,190) -- (192.49,190) ; \draw   (92.49,110) -- (192.49,110) -- (192.49,210) -- (92.49,210) -- cycle ;
+    
+    %Shape: Rectangle [id:dp07405696435517428] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (330,110) -- (330,130) -- (310,130) -- (310,110) -- cycle ;
+    %Shape: Rectangle [id:dp2999851790930883] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (310,130) -- (310,150) -- (290,150) -- (290,130) -- cycle ;
+    %Shape: Rectangle [id:dp3976751845049544] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (310,170) -- (310,190) -- (290,190) -- (290,170) -- cycle ;
+    %Shape: Rectangle [id:dp95157657313268] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (270,130) -- (270,150) -- (250,150) -- (250,130) -- cycle ;
+    %Shape: Rectangle [id:dp9173428399994787] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (270,150) -- (270,170) -- (250,170) -- (250,150) -- cycle ;
+    %Shape: Rectangle [id:dp878485319044743] 
+    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (270,170) -- (270,190) -- (250,190) -- (250,170) -- cycle ;
+    %Shape: Grid [id:dp8867295874263446] 
+    \draw  [draw opacity=0] (330,110) -- (330,210) -- (230,210) -- (230,110) -- cycle ; \draw   (330,130) -- (230,130)(330,150) -- (230,150)(330,170) -- (230,170)(330,190) -- (230,190) ; \draw   (310,110) -- (310,210)(290,110) -- (290,210)(270,110) -- (270,210)(250,110) -- (250,210) ; \draw   (330,110) -- (330,210) -- (230,210) -- (230,110) -- cycle ;
+    
+    
+    % Text Node
+    \draw (207,142.4) node [anchor=north west][inner sep=0.75pt]  [xscale=0.8,yscale=0.8]  {$\equiv $};
+    
+    
+    \end{tikzpicture}
+    \]
+\textit{Strategy}: Let \begin{itemize}[align=left]
+    \item[$n_4$]: number of patterns with 4 equivalent forms, e.g. 
+    \[\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        %Shape: Rectangle [id:dp06222359392950061] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (50,110) -- (70,110) -- (70,130) -- (50,130) -- cycle ;
+        %Shape: Rectangle [id:dp8787181520000242] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (70,130) -- (90,130) -- (90,150) -- (70,150) -- cycle ;
+        %Shape: Rectangle [id:dp8843662801590229] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (110,130) -- (130,130) -- (130,150) -- (110,150) -- cycle ;
+        %Shape: Rectangle [id:dp594605756309508] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (70,170) -- (90,170) -- (90,190) -- (70,190) -- cycle ;
+        %Shape: Rectangle [id:dp4973176741292076] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (90,170) -- (110,170) -- (110,190) -- (90,190) -- cycle ;
+        %Shape: Rectangle [id:dp48750050163020564] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (110,170) -- (130,170) -- (130,190) -- (110,190) -- cycle ;
+        %Shape: Grid [id:dp38920287799224806] 
+        \draw  [draw opacity=0] (50,110) -- (150,110) -- (150,210) -- (50,210) -- cycle ; \draw   (70,110) -- (70,210)(90,110) -- (90,210)(110,110) -- (110,210)(130,110) -- (130,210) ; \draw   (50,130) -- (150,130)(50,150) -- (150,150)(50,170) -- (150,170)(50,190) -- (150,190) ; \draw   (50,110) -- (150,110) -- (150,210) -- (50,210) -- cycle ;
+        
+        %Shape: Rectangle [id:dp07405696435517428] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (280,110) -- (280,130) -- (260,130) -- (260,110) -- cycle ;
+        %Shape: Rectangle [id:dp2999851790930883] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (260,130) -- (260,150) -- (240,150) -- (240,130) -- cycle ;
+        %Shape: Rectangle [id:dp3976751845049544] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (260,170) -- (260,190) -- (240,190) -- (240,170) -- cycle ;
+        %Shape: Rectangle [id:dp95157657313268] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (220,130) -- (220,150) -- (200,150) -- (200,130) -- cycle ;
+        %Shape: Rectangle [id:dp9173428399994787] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (220,150) -- (220,170) -- (200,170) -- (200,150) -- cycle ;
+        %Shape: Rectangle [id:dp878485319044743] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (220,170) -- (220,190) -- (200,190) -- (200,170) -- cycle ;
+        %Shape: Grid [id:dp8867295874263446] 
+        \draw  [draw opacity=0] (280,110) -- (280,210) -- (180,210) -- (180,110) -- cycle ; \draw   (280,130) -- (180,130)(280,150) -- (180,150)(280,170) -- (180,170)(280,190) -- (180,190) ; \draw   (260,110) -- (260,210)(240,110) -- (240,210)(220,110) -- (220,210)(200,110) -- (200,210) ; \draw   (280,110) -- (280,210) -- (180,210) -- (180,110) -- cycle ;
+        
+        %Shape: Rectangle [id:dp1459753738426901] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (410,210) -- (390,210) -- (390,190) -- (410,190) -- cycle ;
+        %Shape: Rectangle [id:dp047714909261835414] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (390,190) -- (370,190) -- (370,170) -- (390,170) -- cycle ;
+        %Shape: Rectangle [id:dp7752200286439173] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (350,190) -- (330,190) -- (330,170) -- (350,170) -- cycle ;
+        %Shape: Rectangle [id:dp6751745224965142] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (390,150) -- (370,150) -- (370,130) -- (390,130) -- cycle ;
+        %Shape: Rectangle [id:dp8698376063283959] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (370,150) -- (350,150) -- (350,130) -- (370,130) -- cycle ;
+        %Shape: Rectangle [id:dp813968733924255] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (350,150) -- (330,150) -- (330,130) -- (350,130) -- cycle ;
+        %Shape: Grid [id:dp0328044922353814] 
+        \draw  [draw opacity=0] (410,210) -- (310,210) -- (310,110) -- (410,110) -- cycle ; \draw   (390,210) -- (390,110)(370,210) -- (370,110)(350,210) -- (350,110)(330,210) -- (330,110) ; \draw   (410,190) -- (310,190)(410,170) -- (310,170)(410,150) -- (310,150)(410,130) -- (310,130) ; \draw   (410,210) -- (310,210) -- (310,110) -- (410,110) -- cycle ;
+        
+        %Shape: Rectangle [id:dp05493049941517203] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (440,210) -- (440,190) -- (460,190) -- (460,210) -- cycle ;
+        %Shape: Rectangle [id:dp9338392263695683] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (460,190) -- (460,170) -- (480,170) -- (480,190) -- cycle ;
+        %Shape: Rectangle [id:dp035596717155100155] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (460,150) -- (460,130) -- (480,130) -- (480,150) -- cycle ;
+        %Shape: Rectangle [id:dp7624099427520501] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (500,190) -- (500,170) -- (520,170) -- (520,190) -- cycle ;
+        %Shape: Rectangle [id:dp5363742427401106] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (500,170) -- (500,150) -- (520,150) -- (520,170) -- cycle ;
+        %Shape: Rectangle [id:dp1052878278253464] 
+        \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (500,150) -- (500,130) -- (520,130) -- (520,150) -- cycle ;
+        %Shape: Grid [id:dp08023816682136653] 
+        \draw  [draw opacity=0] (440,210) -- (440,110) -- (540,110) -- (540,210) -- cycle ; \draw   (440,190) -- (540,190)(440,170) -- (540,170)(440,150) -- (540,150)(440,130) -- (540,130) ; \draw   (460,210) -- (460,110)(480,210) -- (480,110)(500,210) -- (500,110)(520,210) -- (520,110) ; \draw   (440,210) -- (440,110) -- (540,110) -- (540,210) -- cycle ;
+        
+        
+        
+        
+        
+        \end{tikzpicture}
+        \]
+    \item[$n_2$]: number of patterns with 2 equivalent forms;
+    \item[$n_1$]: number of patterns with 1 equivalent forms. 
+\end{itemize}
+\begin{itemize}
+    \item Let $A_4$ be all patterns on a fixed board. Then $|A_4|=4^{25}$ and $|A_4|=4n_4+2n_2+n_1$. 
+
+    \item Let $A_2$ be all patterns on a fixed board\sidenote{\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        
+        
+        %Shape: Grid [id:dp2046265074316873] 
+        \draw  [draw opacity=0] (70,107.62) -- (170,107.62) -- (170,207.62) -- (70,207.62) -- cycle ; \draw   (90,107.62) -- (90,207.62)(110,107.62) -- (110,207.62)(130,107.62) -- (130,207.62)(150,107.62) -- (150,207.62) ; \draw   (70,127.62) -- (170,127.62)(70,147.62) -- (170,147.62)(70,167.62) -- (170,167.62)(70,187.62) -- (170,187.62) ; \draw   (70,107.62) -- (170,107.62) -- (170,207.62) -- (70,207.62) -- cycle ;
+        
+        % Text Node
+        \draw (75,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$1$};
+        % Text Node
+        \draw (95,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$2$};
+        % Text Node
+        \draw (115,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$3$};
+        % Text Node
+        \draw (135,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$4$};
+        % Text Node
+        \draw (155,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$5$};
+        % Text Node
+        \draw (75,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$6$};
+        % Text Node
+        \draw (95,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$7$};
+        % Text Node
+        \draw (115,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$8$};
+        % Text Node
+        \draw (135,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$9$};
+        % Text Node
+        \draw (152,131.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$10$};
+        % Text Node
+        \draw (72,151.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$11$};
+        % Text Node
+        \draw (92,151.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$12$};
+        % Text Node
+        \draw (112,151.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$13$};
+        
+        
+        \end{tikzpicture}
+        } that are symmetric when rotated 180º. Then $|A_2|=4^{13}$ and $|A_2|=2n_2+n_1$.
+
+        \item Let $A_2$ be all patterns on a fixed board\sidenote{\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+            
+            
+            %Shape: Grid [id:dp2046265074316873] 
+            \draw  [draw opacity=0] (70,107.62) -- (170,107.62) -- (170,207.62) -- (70,207.62) -- cycle ; \draw   (90,107.62) -- (90,207.62)(110,107.62) -- (110,207.62)(130,107.62) -- (130,207.62)(150,107.62) -- (150,207.62) ; \draw   (70,127.62) -- (170,127.62)(70,147.62) -- (170,147.62)(70,167.62) -- (170,167.62)(70,187.62) -- (170,187.62) ; \draw   (70,107.62) -- (170,107.62) -- (170,207.62) -- (70,207.62) -- cycle ;
+            
+            % Text Node
+            \draw (75,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$1$};
+            % Text Node
+            \draw (95,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$2$};
+            % Text Node
+            \draw (115,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$3$};
+            % Text Node
+            \draw (135,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$4$};
+            % Text Node
+            % \draw (155,111.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$5$};
+            % Text Node
+            % \draw (75,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$6$};
+            % Text Node
+            \draw (95,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$5$};
+            % Text Node
+            \draw (115,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$6$};
+            % Text Node
+            % \draw (135,131.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$9$};
+            % Text Node
+            % \draw (152,131.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$10$};
+            % Text Node
+            % \draw (72,151.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$11$};
+            % Text Node
+            % \draw (92,151.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$12$};
+            % Text Node
+            \draw (115,151.02) node [anchor=north west][inner sep=0.75pt]  [font=\small,xscale=0.8,yscale=0.8]  {$7$};
+            
+            
+            \end{tikzpicture}
+            } that are symmetric when rotated 90º. Then $|A_2|=4^{7}$ and $|A_1|=n_1$.
+\end{itemize}
+
+Thus: \begin{align*}
+    4n_4+2n_2+n_1&=4^{25}\\
+    2n_2+n_1&=4^{13}\\
+    n_1&=4^{7}\\
+\end{align*}
+So we write \[\begin{bmatrix}
+    4&2&1\\0&2&1\\0&0&1
+\end{bmatrix}\cdot \begin{bmatrix}
+    n_4\\n_2\\n_1
+\end{bmatrix} = \begin{bmatrix}
+    4^{25}\\4^{13}\\4^{7}
+\end{bmatrix}\]
+Notice that\sidenote{note the RHS represents $n_1+n_2+n_4$} \[\frac{1}{4}\begin{bmatrix}
+    1&1&2
+\end{bmatrix}\begin{bmatrix}
+    4&2&1\\0&2&1\\0&0&1
+\end{bmatrix} =  \begin{bmatrix}
+    1&1&1
+\end{bmatrix}\]
+Solve for LHS and we are done.
+
+\eg How many ways too place plates of $a$ colors on a circular table with 6 places, up to rotational equivalece?
+
+Let $n_k$ be the number of such arrangements that have $k$ vertices on a fixed table. Then $ANS=n_6+n_3+n_2+n_1$. Now: \begin{itemize}
+    \item $|A_6|=a^6=6n_6+3n_3+2n_2+n_1$
+    \item $|A_3|=a^3=3n_3+n_1$
+    \item $|A_2|=a^2=2n_2+n_1$
+    \item $|A_1|=a=n_1$
+\end{itemize}
+So we write \[\begin{bmatrix}
+    6&3&2&1\\0&3&0&1\\0&0&0&1
+\end{bmatrix}\cdot \begin{bmatrix}
+    n_6\\n_3\\n_2\\n_1
+\end{bmatrix} = \begin{bmatrix}
+    a^6\\a^3\\a^2\\a
+\end{bmatrix}\]
+Notice that\sidenote{note the RHS represents $n_1+n_2+n_4$} \[\frac{1}{6}\begin{bmatrix}
+    1&1&2&2
+\end{bmatrix}\begin{bmatrix}
+    6&3&2&1\\0&3&0&1\\0&0&0&1
+\end{bmatrix} =  \begin{bmatrix}
+    1&1&1&1
+\end{bmatrix}\]
+Solve for LHS: \[ANS = \frac{1}{6}\begin{bmatrix}
+    1&1&2&2
+\end{bmatrix}\begin{bmatrix}
+    a^6\\a^3\\a^2\\a
+\end{bmatrix} = \frac{a^6+a^3+2a^2+2a}{6}\]
+
+\subsection{K2 Group actions on sets}
+Both of the problems above are about counting \textbf{orbits} of a group action. We look at actions of group $G$ on a set $X$. 
+
+\eg $G=\znz{4}$ and $X$ be the set of colorings/patterns in 4 colors of a $5\times 5$ chessboard. We ``relabel'' the group elements as $\{R_0, R_{90}, R_{180}, R_{270}\}$ where $R_k$ is rotation by $k$ degrees. Then the group action $R_k\cdot x$ would just be taking a coloring $x\in X$ and rotate it by $k$º. The \textbf{orbits} are the equivalence classes under the group action.
 
 \end{document}
