@@ -3516,4 +3516,98 @@ Both of the problems above are about counting \textbf{orbits} of a group action.
 
 \eg $G=\znz{4}$ and $X$ be the set of colorings/patterns in 4 colors of a $5\times 5$ chessboard. We ``relabel'' the group elements as $\{R_0, R_{90}, R_{180}, R_{270}\}$ where $R_k$ is rotation by $k$ degrees. Then the group action $R_k\cdot x$ would just be taking a coloring $x\in X$ and rotate it by $k$º. The \textbf{orbits} are the equivalence classes under the group action.
 
+\eg Visually, let $G=\{0,\rt{1},2\}$ be a cyclic group of order 3 under + and let $X$ be the set: \sidenote{the actions corresponding to 2 are just those of \rt{1} in reverse direction due to 2 being the inverse of 1}
+\[\begin{tikzcd}[ampersand replacement=\&,cramped,sep=scriptsize]
+	\&\&\&\& \bullet \\
+	\bullet \& \bullet \&\& \bullet \\
+	\&\& \bullet \&\& \bullet \\
+	\& \bullet \&\& \bullet
+	\arrow[color=magenta, from=1-5, to=2-4]
+	\arrow[color=magenta, from=2-1, to=2-2]
+	\arrow[color=magenta, from=2-2, to=3-3]
+	\arrow[color=magenta, from=3-3, to=2-1]
+	\arrow[color=magenta, from=3-5, to=1-5]
+	\arrow[color=magenta, from=3-5, to=2-4]
+	\arrow[color=magenta, from=4-2, to=4-2, loop, in=55, out=125, distance=10mm]
+	\arrow[color=magenta, from=4-4, to=4-4, loop, in=55, out=125, distance=10mm]
+\end{tikzcd}\]
+We observe that we have 4 \textbf{orbits}.
+
+\begin{theorem}
+    Let $G=\znz{3}$ act on a \textbf{finite} set $X$. Then $X$ is \textbf{partitioned} into orbits of size 3 and orbits of size 1. That is, \[|X|\equiv \underbrace{|\text{orbits of size 1}|}_{|X^G|} \mod 3\]
+    where $X^G$ is the set of \textbf{fixed points} of the action.
+\end{theorem}
+\begin{proof}
+    For each $x\in X$, \begin{itemize}[align=left]
+        \item[\textbf{Either:}] $\rt{1}\cdot x=x$
+        
+        Then $2x = \rt{1}(\rt{1}x) = \rt{1}\cdot x = x$ and so $x$ is \textbf{completely} fixed by the group action. This means the orbit of $x$ has size 1.
+
+        \item[\textbf{Or:}]  $\rt{1}\cdot x = x'\neq x$
+        
+        Then claim that $x'' = 2\cdot x $ is distinct from $x$ and $x'$. This is because if $2x=x$, then $\rt{1}\cdot 2x = 1\cdot x = x$ resulting in a contradiction of $x=x'$. Similarly, if $2x = \rt{1}x$, then $2\cdot 2x = 2\cdot \rt{1}x$  resulting in a contradiction of $x'=x$. 
+
+        Thus, orbit of this $x$ must have size 3.
+    \end{itemize}
+\end{proof}
+
+\section{K3 Stabilizers}
+\defn[Stabilizer of $x$] For any $x\in X$, define \[G_x = \operatorname*{Stab}(x) = \{g\in G \mid g\cdot x = x\}\]
+That is, all elements that would fix the particular $x$ when acting on it.
+
+\eg Let $G=\znz{6}$.
+\[\input{Images/tables_stab.svg.pdf_tex}\]
+
+\begin{theorem}
+    Stab$(x)$ is a subgroup of $G$.
+\end{theorem}
+
+\addlink{Orbit-stabilizer theorem}
+\begin{theorem}[Orbit-stabilizer]
+    If $G$ is a finite group acting on a set $X$, then \[|\operatorname*{Orbit}(x)||G_x|=|G|\]
+    for all $x\in X$.
+\end{theorem}
+\begin{proof}[Proof omitted, just see abstract alg. notes]
+\end{proof}
+
+\subsection{K4 Fixed points}
+Let $G$ act on $X$. For all $g\in G$, define \[X^g = \{x\in X\mid g\cdot x= x\}\]
+i.e. the set of the elements fixed by $g$.
+
+Define $$X^G = \bigcap_{g\in G}x^g$$ to be the fixed point set of the action, i.e. the set of elements that are fixed by any $g$.
+
+\eg Let $G= \znz{6}$ and $X$ be the set of patterns of plates on a table for 6. Let $g=2$. Then \[X^g =\{\text{tables in the form of }(ababab)\}\]
+where $a,b$ aren't necessarily distinct. Moreover, \[X^G = \{\text{monochromatic tables}\}\]
+
+\theorem \label[theorem]{fixed-points-stab}\[\sum_{x\in X}|G^x| = \sum_{g\in G}|X^g|\]
+\begin{proof}
+    Both are equal to \[\left|\left\{(x,g)\mid g\cdot x = x\right\}\subseteq X\times G\right|\]
+\end{proof}
+
+\subsection{K5 Burnside's lemma}
+\begin{lemma}[Burnside's]
+    Let $G$ be a finite group acting on finite set $X$. Then the number of the orbits are the \pt{average number of fixed points} of the elements of $G$: \sidenote{\pt{$X/G$} is the set of orbits}\[\# \text{ Orbits}  = \pt{|X/G|}= \frac{1}{|G|}\sum_{g\in G}|X^{g}|\]
+\end{lemma}
+\begin{proof}
+    Let $B$ denote orbits.
+    \begin{align*}
+        |X/G| &= \sum_{B\in X/G}1\\
+        &= \sum_{B\in X/G}\sum_{x\in B}\frac{1}{|B|}\\
+        &= \sum_{x\in X}\frac{1}{|\operatorname*{orbit}(x)|}\\
+        &= \sum_{x\in X}\frac{|G_x|}{|G|} && \text{by O-S thm.}\\
+        &= \frac{1}{|G|}\sum_{x\in X}|G_x|\\
+        &= \frac{1}{|G|}\sum_{g\in G}|X^{g}| && \text{by \cref{fixed-points-stab}}
+    \end{align*}
+\end{proof}
+
+\eg Recall Investigation 7: \textit{A dinner party host has unlimited numbers of plates in $a$ different colours.
+How many distinguishable arrangements of coloured plates are there at a circular table with
+6 equally-spaced seats? }
+
+Let $G=\znz{6}$, $X$ be the arrangements on a fixed table. We calculate: \begin{align*}
+    |X/G| &= \frac{1}{|G|}\left(x^0+x^1+x^2+x^3+x^4+x^5\right)\\
+    &= \frac{1}{6}(a^6+a+a^2+a^3+a^2+a)\\
+    &= \frac{a^6+a^3+2a^2+2a}{6}
+\end{align*}
+
 \end{document}
